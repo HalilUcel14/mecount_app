@@ -4,8 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:hucel_core/hucel_core.dart';
 import 'package:provider/provider.dart';
 
-import 'constants.dart/app_string.dart';
-import 'constants.dart/easy_locale.dart';
+import 'core/constants.dart/app_string.dart';
+import 'core/constants.dart/easy_locale.dart';
 import 'core/routes/app_routes.dart';
 import 'core/theme/theme_manager.dart';
 
@@ -68,7 +68,10 @@ class MyApp extends StatelessWidget {
       // Theme Manager Dosyası ile Theme Getirir.
       theme: context.themeProvider,
       // Route Ayarları
-      initialRoute: AppRoutes.initRoute,
+      // Eğer Onboard Önceden Görüntülenmişse Login Sayfası Açılır Değil ise Onboard
+      initialRoute: SharedManager.instance.getBoolPreferences(AppRoutes.onboard)
+          ? AppRoutes.login
+          : AppRoutes.onboard,
       routes: AppRoutes.instance.routes,
     );
   }

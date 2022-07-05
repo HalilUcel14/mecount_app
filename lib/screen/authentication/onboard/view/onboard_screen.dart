@@ -24,5 +24,7 @@ class OnBoardScreen extends BaseStateless {
     );
   }
 
-  Scaffold _scaffold() => const Scaffold();
+  Scaffold _scaffold() => const Scaffold(
+        body: Text("Onboard Page"),
+      );
 }
