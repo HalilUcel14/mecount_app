@@ -4,8 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:hucel_core/hucel_core.dart';
 import 'package:provider/provider.dart';
 
-import 'core/constants.dart/app_string.dart';
-import 'core/constants.dart/easy_locale.dart';
+import 'core/constants/app_string.dart';
+import 'core/constants/easy_locale.dart';
 import 'core/routes/app_routes.dart';
 import 'core/theme/theme_manager.dart';
 
@@ -60,6 +60,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: AppString.instance.appTitle,
       //  Easy Localization Setup Kodlar
       localizationsDelegates: context.localizationDelegates,
