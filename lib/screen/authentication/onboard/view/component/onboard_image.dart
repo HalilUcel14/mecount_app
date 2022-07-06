@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hucel_widget/hucel_widget.dart';
 
 import '../../../../../core/function/size_with_max.dart';
+import '../onboard_constants.dart';
 
 class OnboardImageCard extends StatelessWidget {
   const OnboardImageCard({Key? key}) : super(key: key);
@@ -22,15 +23,17 @@ class OnboardImageCard extends StatelessWidget {
 
   Positioned _skipButton(BuildContext context) {
     return Positioned(
-      right: shortSizeWithMax(context, value: 0.2, max: 30),
-      top: shortSizeWithMax(context, value: 0.2, max: 30),
+      right: shortSizeWithMax(context, value: 0.1, max: 24),
+      top: shortSizeWithMax(context, value: 0.1, max: 24),
       child: ElevatedButtonWithStadiumBorder(
         styleBackgroundColor: Colors.transparent,
-        child: const Text(
-          "Skip",
-          style: TextStyle(
-            fontSize: 20,
-          ),
+        child: Text(
+          OnBoardConstants.instance.skip,
+          style: OnBoardConstants.instance.skipStyle(context),
+        ),
+        fixedSize: Size(
+          shortSizeWithMax(context, value: 0.3, max: 90),
+          shortSizeWithMax(context, value: 0.1, max: 30),
         ),
         onPressed: () {},
       ),

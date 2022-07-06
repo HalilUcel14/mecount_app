@@ -1,5 +1,7 @@
 {
-    "Merhaba":"Hello"
     
+    "Previous":"Previous",
+    "Next":"Next",
+    "Skip": "Skip"
 
 }

@@ -4,6 +4,7 @@ import 'package:hucel_widget/hucel_widget.dart';
 
 import '../../../../../core/function/size_with_max.dart';
 import '../../../../../core/widget/selected_indicator.dart';
+import '../onboard_constants.dart';
 
 class OnboardDetailCard extends StatelessWidget {
   const OnboardDetailCard({Key? key}) : super(key: key);
@@ -15,52 +16,28 @@ class OnboardDetailCard extends StatelessWidget {
       margin: context.padAllS,
       width: double.infinity,
       child: _childColumn(context),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(
-          Radius.circular(
-            shortSizeWithMax(context, value: 0.2, max: 36),
-          ),
-        ),
-        boxShadow: const [
-          BoxShadow(
-            blurRadius: 20,
-            color: Colors.grey,
-            blurStyle: BlurStyle.solid,
-          ),
-        ],
-      ),
+      decoration: OnBoardConstants.instance.detailCard(context),
     );
   }
 
   Widget _childColumn(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _titleAndSubTitle(context),
-              MySelectedIndicator(
-                length: 3,
-                currentIndex: 2,
-                unSelectedColor: Colors.grey,
-              ),
-              _nextPreviousButton(context)
-            ],
-          ),
-        ),
-        //
-        // 2. Expanded
-        //
-        // Expanded(
-        //   child: Column(
-        //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        //     children: const [],
-        //   ),
-        // ),
+        _titleAndSubTitle(context),
+        _selectedIndicator(context),
+        _nextPreviousButton(context)
       ],
+    );
+  }
+
+  MySelectedIndicator _selectedIndicator(BuildContext context) {
+    return MySelectedIndicator(
+      length: 3,
+      currentIndex: 2,
+      selectedSize: shortSizeWithMax(context, value: 0.1, max: 16),
+      unSelectedSize: shortSizeWithMax(context, value: 0.1, max: 10),
+      unSelectedColor: Colors.grey,
     );
   }
 
@@ -68,25 +45,38 @@ class OnboardDetailCard extends StatelessWidget {
     return Row(
       children: [
         const Spacer(),
-        ElevatedButtonWithStadiumBorder(
-          child: const Text("Previous"),
+        _onboardElevationButton(
+          context,
+          text: OnBoardConstants.instance.previous,
           onPressed: () {},
-          fixedSize: Size(
-            shortSizeWithMax(context, value: 0.3, max: 150),
-            shortSizeWithMax(context, value: 0.1, max: 60),
-          ),
         ),
         const Spacer(),
-        ElevatedButtonWithStadiumBorder(
-          child: const Text("Next"),
+        _onboardElevationButton(
+          context,
+          text: OnBoardConstants.instance.next,
           onPressed: () {},
-          fixedSize: Size(
-            shortSizeWithMax(context, value: 0.3, max: 150),
-            shortSizeWithMax(context, value: 0.1, max: 60),
-          ),
         ),
         const Spacer(),
       ],
+    );
+  }
+
+  ElevatedButtonWithStadiumBorder _onboardElevationButton(
+    BuildContext context, {
+    required String text,
+    required void Function()? onPressed,
+  }) {
+    return ElevatedButtonWithStadiumBorder(
+      child: Text(
+        text,
+        style: OnBoardConstants.instance.previousTextStyle(context),
+      ),
+      onPressed: onPressed,
+      styleBackgroundColor: Colors.red,
+      fixedSize: Size(
+        shortSizeWithMax(context, value: 0.3, max: 150),
+        shortSizeWithMax(context, value: 0.1, max: 60),
+      ),
     );
   }
 
@@ -97,19 +87,14 @@ class OnboardDetailCard extends StatelessWidget {
           child: Text(
             "Search a Flight",
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: shortSizeWithMax(context, value: 0.1, max: 36),
-              fontWeight: FontWeight.bold,
-            ),
+            style: OnBoardConstants.instance.titleStyle(context),
           ),
         ),
-        SizedBox(height: shortSizeWithMax(context, value: 0.02, max: 20)),
+        SizedBox(height: shortSizeWithMax(context, value: 0.2, max: 50)),
         Text(
           "   Up to a certain time, with the exception of skills seems to be suitable for The Software Intended Consequence",
           textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: shortSizeWithMax(context, value: 0.05, max: 18),
-          ),
+          style: OnBoardConstants.instance.subTitleStyle(context),
         ),
       ],
     );
