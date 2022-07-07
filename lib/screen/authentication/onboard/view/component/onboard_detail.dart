@@ -1,3 +1,5 @@
+import 'package:account_app/screen/authentication/onboard/model/onboard_model.dart';
+import 'package:account_app/screen/authentication/onboard/viewmodel/onboard_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:hucel_core/hucel_core.dart';
 import 'package:hucel_widget/hucel_widget.dart';
@@ -7,8 +9,19 @@ import '../../../../../core/widget/selected_indicator.dart';
 import '../onboard_constants.dart';
 
 class OnboardDetailCard extends StatelessWidget {
-  const OnboardDetailCard({Key? key}) : super(key: key);
+  const OnboardDetailCard({
+    Key? key,
+    required this.model,
+    required this.length,
+    required this.currentIndex,
+    required this.viewModel,
+  }) : super(key: key);
 
+  final OnBoardModel model;
+  final int length;
+  final int currentIndex;
+  final OnBoardScreenViewModel viewModel;
+  //
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,8 +46,8 @@ class OnboardDetailCard extends StatelessWidget {
 
   MySelectedIndicator _selectedIndicator(BuildContext context) {
     return MySelectedIndicator(
-      length: 3,
-      currentIndex: 2,
+      length: length,
+      currentIndex: currentIndex,
       selectedSize: shortSizeWithMax(context, value: 0.1, max: 16),
       unSelectedSize: shortSizeWithMax(context, value: 0.1, max: 10),
       unSelectedColor: Colors.grey,
@@ -48,13 +61,21 @@ class OnboardDetailCard extends StatelessWidget {
         _onboardElevationButton(
           context,
           text: OnBoardConstants.instance.previous,
-          onPressed: () {},
+          onPressed: () {
+            viewModel.controller.previousPage(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeInCirc);
+          },
         ),
         const Spacer(),
         _onboardElevationButton(
           context,
           text: OnBoardConstants.instance.next,
-          onPressed: () {},
+          onPressed: () {
+            viewModel.controller.nextPage(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.fastOutSlowIn);
+          },
         ),
         const Spacer(),
       ],
@@ -85,16 +106,18 @@ class OnboardDetailCard extends StatelessWidget {
       children: [
         Center(
           child: Text(
-            "Search a Flight",
+            model.title!,
             textAlign: TextAlign.center,
             style: OnBoardConstants.instance.titleStyle(context),
           ),
         ),
         SizedBox(height: shortSizeWithMax(context, value: 0.2, max: 50)),
-        Text(
-          "   Up to a certain time, with the exception of skills seems to be suitable for The Software Intended Consequence",
-          textAlign: TextAlign.center,
-          style: OnBoardConstants.instance.subTitleStyle(context),
+        Center(
+          child: Text(
+            model.subTitle!,
+            textAlign: TextAlign.center,
+            style: OnBoardConstants.instance.subTitleStyle(context),
+          ),
         ),
       ],
     );

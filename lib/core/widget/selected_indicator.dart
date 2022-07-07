@@ -50,9 +50,7 @@ class MySelectedIndicator extends Row {
 
               return AnimatedContainer(
                 key: key,
-                margin: currentIndex == length - 1
-                    ? EdgeInsets.only(right: spaceBetween)
-                    : null,
+                margin: EdgeInsets.only(right: spaceBetween),
                 curve: curve,
                 duration: duration,
                 height: isIndex ? selectedSize : unSelectedSize,

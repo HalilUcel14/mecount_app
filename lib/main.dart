@@ -1,8 +1,10 @@
+import 'package:account_app/firebase_options.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hucel_core/hucel_core.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'core/constants/app_string.dart';
 import 'core/constants/easy_locale.dart';
@@ -13,6 +15,10 @@ Future<void> main() async {
   // Kurulum Komutları
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  // Firebase Setup
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   // Error Ekran Tasarımı İçin
   ErrorWidget.builder = (FlutterErrorDetails details) {
     return ErrorMaterialWidget(
@@ -70,6 +76,7 @@ class MyApp extends StatelessWidget {
       theme: context.themeProvider,
       // Route Ayarları
       // Eğer Onboard Önceden Görüntülenmişse Login Sayfası Açılır Değil ise Onboard
+
       initialRoute: SharedManager.instance.getBoolPreferences(AppRoutes.onboard)
           ? AppRoutes.login
           : AppRoutes.onboard,
