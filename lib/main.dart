@@ -1,15 +1,15 @@
-import 'package:account_app/firebase_options.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hucel_core/hucel_core.dart';
 import 'package:provider/provider.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 import 'core/constants/app_string.dart';
 import 'core/constants/easy_locale.dart';
 import 'core/routes/app_routes.dart';
 import 'core/theme/theme_manager.dart';
+import 'firebase_options.dart';
 
 Future<void> main() async {
   // Kurulum Komutları

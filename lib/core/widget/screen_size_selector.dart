@@ -15,7 +15,6 @@ class ScreenSizeSelector extends StatelessWidget {
   //
   @override
   Widget build(BuildContext context) {
-    print(context.width);
     if (context.isSmallScreen) {
       return XSWidget ?? _emptyWidget("Small");
     } else if (context.isNormalyScreen) {

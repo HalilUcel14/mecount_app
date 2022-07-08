@@ -1,10 +1,10 @@
-import 'package:account_app/core/routes/app_routes.dart';
-import 'package:account_app/screen/authentication/onboard/model/onboard_model.dart';
 import 'package:flutter/material.dart';
-import 'package:hucel_widget/hucel_widget.dart';
 import 'package:hucel_core/hucel_core.dart';
+import 'package:hucel_widget/hucel_widget.dart';
 
 import '../../../../../core/function/size_with_max.dart';
+import '../../../../../core/routes/app_routes.dart';
+import '../../model/onboard_model.dart';
 import '../onboard_constants.dart';
 
 class OnboardImageCard extends StatelessWidget {

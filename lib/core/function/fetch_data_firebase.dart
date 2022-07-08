@@ -1,5 +1,6 @@
-import 'package:account_app/screen/authentication/onboard/model/onboard_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../../screen/authentication/onboard/model/onboard_model.dart';
 
 Future<List<OnBoardModel>> fetchDataFromFirebase(
     {required String collectionName}) async {

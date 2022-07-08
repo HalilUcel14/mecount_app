@@ -1,6 +1,7 @@
-import 'package:account_app/screen/authentication/login/view/login_screen.dart';
-import 'package:account_app/screen/authentication/onboard/view/onboard_screen.dart';
 import 'package:flutter/material.dart';
+
+import '../../screen/authentication/login/view/login_screen.dart';
+import '../../screen/authentication/onboard/view/onboard_screen.dart';
 
 class AppRoutes {
   static AppRoutes? _instance;
@@ -18,6 +19,6 @@ class AppRoutes {
   Map<String, Widget Function(BuildContext)> routes = <String, WidgetBuilder>{
     initRoute: (context) => const Scaffold(),
     onboard: (context) => OnBoardScreen(),
-    login: (context) => const LoginScreen(),
+    login: (context) => LoginScreen(),
   };
 }

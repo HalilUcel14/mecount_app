@@ -1,5 +1,5 @@
-import 'package:account_app/screen/authentication/onboard/model/onboard_model.dart';
-import 'package:account_app/screen/authentication/onboard/viewmodel/onboard_viewmodel.dart';
+import '../../model/onboard_model.dart';
+import '../../viewmodel/onboard_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:hucel_core/hucel_core.dart';
 import 'package:hucel_widget/hucel_widget.dart';

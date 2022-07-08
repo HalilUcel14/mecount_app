@@ -1,7 +1,9 @@
-import 'package:account_app/screen/authentication/onboard/model/onboard_model.dart';
 import 'package:flutter/material.dart';
-import 'package:mobx/mobx.dart';
 import 'package:hucel_core/hucel_core.dart';
+import 'package:mobx/mobx.dart';
+
+import '../model/onboard_model.dart';
+
 part 'onboard_viewmodel.g.dart';
 
 class OnBoardScreenViewModel = _OnBoardScreenViewModelBase
@@ -11,11 +13,7 @@ abstract class _OnBoardScreenViewModelBase with Store, BaseViewModel {
   @override
   void setContext(BuildContext meContext) => baseContext = meContext;
   @override
-  void init() async {
-    //   onboardList =
-    //     await fetchDataFromFirebase(collectionName: onboardCollectionName);
-    //await getDataFromFirebase();
-  }
+  void init() {}
 
   //
 
