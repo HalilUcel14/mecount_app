@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import 'core/constants/app_string.dart';
 import 'core/constants/easy_locale.dart';
+import 'core/extension/context_extension.dart';
 import 'core/routes/app_routes.dart';
 import 'core/theme/theme_manager.dart';
 import 'firebase_options.dart';
@@ -25,6 +26,8 @@ Future<void> main() async {
       details: details,
     );
   };
+  // Sadece Shared Preferences için İnstance Oluşturur.
+  SharedManager sharedManager = SharedManager.instance;
   // AppBar Üzeri Mobil Gösterge ekran Tasarımı için
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
@@ -75,11 +78,10 @@ class MyApp extends StatelessWidget {
       // Theme Manager Dosyası ile Theme Getirir.
       theme: context.themeProvider,
       // Route Ayarları
-      // Eğer Onboard Önceden Görüntülenmişse Login Sayfası Açılır Değil ise Onboard
-
-      initialRoute: SharedManager.instance.getBoolPreferences(AppRoutes.onboard)
-          ? AppRoutes.login
-          : AppRoutes.onboard,
+      // Eğer Onboard Önceden Görüntülenmişse Login Sayfası Açılır Değil ise Onboard Açılır
+      //home: context.sharedManagerOnboard ? LoginScreen() : OnBoardScreen(),
+      initialRoute:
+          context.sharedManagerOnboard ? AppRoutes.login : AppRoutes.onboard,
       routes: AppRoutes.instance.routes,
     );
   }

@@ -1,7 +1,9 @@
+import 'package:account_app/core/extension/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:hucel_core/hucel_core.dart';
 import 'package:hucel_widget/hucel_widget.dart';
 
+import '../../../../../core/constants/shared_string.dart';
 import '../../../../../core/function/size_with_max.dart';
 import '../../../../../core/routes/app_routes.dart';
 import '../../model/onboard_model.dart';
@@ -48,7 +50,10 @@ class OnboardImageCard extends StatelessWidget {
           shortSizeWithMax(context, value: 0.1, max: 30),
         ),
         onPressed: () async {
-          await SharedManager.instance.setBoolValue(AppRoutes.onboard, true);
+          // Onboard ekran Görünme Ortamını True yapar ve uygulama boyunca 1 defa görünür.
+          await context.sharedManager
+              .setBoolValue(SharedConstants.instance.onboardFirstShowed, true);
+          // Geri Dönülmeyen bir yapı ile navigate yapar.
           context.navigateToReset(AppRoutes.login);
         },
       ),

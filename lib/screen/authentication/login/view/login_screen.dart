@@ -1,6 +1,8 @@
+import 'package:account_app/core/widget/Icon_logo.dart';
+import 'package:account_app/core/widget/special_text_form_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:hucel_core/hucel_core.dart';
+import 'package:hucel_widget/hucel_widget.dart';
 
 import '../viewmodel/login_view_model.dart';
 
@@ -25,6 +27,7 @@ class LoginScreen extends BaseStateless {
   }
 
   Scaffold _scaffold() => Scaffold(
+        resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: Container(
             padding: _context.padAllN,
@@ -34,88 +37,92 @@ class LoginScreen extends BaseStateless {
             ),
             child: Column(
               children: [
-                Expanded(child: Container()),
-                Expanded(
-                  child: _expandedFormField(),
+                _spaced(0.1),
+                // Test Logo
+                FlutterLogo(size: _context.dynamicShortSize(0.22)),
+                _spaced(0.06),
+                _titleSubtitleText(),
+                _spaced(0.06),
+                const SpecialTextFormField(
+                  logoIconName: 'mail',
+                  defouldHeight: 80,
                 ),
-                Expanded(child: Container()),
+                _spaced(0.04),
+                const SpecialTextFormField(
+                  logoIconName: 'lock',
+                  defouldHeight: 80,
+                ),
+                _spaced(0.06),
+                ElevatedButtonWithStadiumBorder(
+                  child: const Text('Sign In'),
+                  onPressed: () {},
+                  fixedSize: Size(
+                    _context.dynamicShortSize(0.3),
+                    _context.dynamicShortSize(0.10),
+                  ),
+                ),
+                _spaced(0.14),
+                Row(
+                  children: [
+                    _divider(),
+                    const Text("Or sign in with"),
+                    _divider(),
+                  ],
+                ),
+                _spaced(0.06),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: const [
+                    IconsLogo(size: 60, logoIconName: 'social_facebook'),
+                    IconsLogo(size: 60, logoIconName: 'social_google'),
+                    IconsLogo(size: 60, logoIconName: 'social_twitter'),
+                  ],
+                ),
+                const Spacer(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text("Don't have an account?"),
+                    TextButton(onPressed: () {}, child: const Text('Sign Up'))
+                  ],
+                ),
               ],
             ),
           ),
         ),
       );
 
-  Column _expandedFormField() {
-    return Column(
-      children: [
-        Stack(
-          alignment: AlignmentDirectional.centerStart,
-          children: [
-            Container(
-              child: TextFormField(
-                decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.only(
-                    left: 100,
-                  ),
-                  labelText: 'Username',
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  border: _outlinedBorder(),
-                  disabledBorder: _outlinedBorder(),
-                  enabledBorder: _outlinedBorder(),
-                  focusedBorder: _outlinedBorder(),
-                ),
-              ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
-                color: Colors.white,
-                boxShadow: const [
-                  BoxShadow(
-                    blurRadius: 16,
-                    blurStyle: BlurStyle.solid,
-                    color: Colors.grey,
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              height: 80,
-              width: 80,
-              child: Padding(
-                padding: _context.padAllN,
-                child: SvgPicture.asset(
-                  'user_two'.getSvgIcon,
-                  color: Colors.black87,
-                ),
-              ),
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    blurRadius: 10,
-                    blurStyle: BlurStyle.solid,
-                    color: Colors.grey,
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
-        TextFormField(),
-        TextFormField(),
-      ],
-    );
+  Expanded _divider() {
+    return Expanded(
+        child: Container(
+      margin: const EdgeInsets.symmetric(horizontal: 15),
+      child: const Divider(
+        color: Colors.black,
+        thickness: 1,
+      ),
+    ));
   }
 
-  OutlineInputBorder _outlinedBorder() {
-    return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(30),
-      borderSide: const BorderSide(
-        color: Colors.transparent,
-        style: BorderStyle.solid,
-        width: 0,
+  SizedBox _spaced(double size) =>
+      SizedBox(height: _context.dynamicShortSize(size));
+
+  RichText _titleSubtitleText() {
+    return RichText(
+      textAlign: TextAlign.center,
+      strutStyle: StrutStyle(fontSize: _context.dynamicShortSize(0.05)),
+      text: TextSpan(
+        text: "Welcome Back!\n",
+        style: TextStyle(
+          fontSize: _context.dynamicShortSize(0.06),
+          color: Colors.black54,
+        ),
+        children: [
+          TextSpan(
+            text: "Login to your account",
+            style: TextStyle(fontSize: _context.dynamicShortSize(0.036)),
+          ),
+        ],
       ),
-      gapPadding: 20,
     );
   }
 }
