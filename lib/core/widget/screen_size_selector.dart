@@ -26,5 +26,5 @@ class ScreenSizeSelector extends StatelessWidget {
     }
   }
 
-  Container _emptyWidget(String text) => Container(child: Text("$text Screen"));
+  Widget _emptyWidget(String text) => SizedBox(child: Text("$text Screen"));
 }

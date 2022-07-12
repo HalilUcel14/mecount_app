@@ -75,11 +75,19 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
+      // İnternet Gittiğinde Ekranda Widget Oluşturan Yapı
+      builder: (context, child) {
+        return Stack(
+          children: [
+            child ?? const SizedBox(),
+            const ConnectivityWidget(),
+          ],
+        );
+      },
       // Theme Manager Dosyası ile Theme Getirir.
       theme: context.themeProvider,
       // Route Ayarları
       // Eğer Onboard Önceden Görüntülenmişse Login Sayfası Açılır Değil ise Onboard Açılır
-      //home: context.sharedManagerOnboard ? LoginScreen() : OnBoardScreen(),
       initialRoute:
           context.sharedManagerOnboard ? AppRoutes.login : AppRoutes.onboard,
       routes: AppRoutes.instance.routes,
