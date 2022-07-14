@@ -17,6 +17,7 @@ class SpecialTextFormField extends StatefulWidget {
     this.validator,
     required this.logoIconName,
     required this.controller,
+    this.keyboardType,
   }) : super(key: key);
 
   final EdgeInsetsGeometry? contentPadding;
@@ -25,6 +26,7 @@ class SpecialTextFormField extends StatefulWidget {
   final TextStyle? labelStyle;
   final TextStyle? hintStyle;
   final String? hintText;
+  final TextInputType? keyboardType;
   final void Function(String?)? onSaved;
   final void Function(String)? onChanged;
   final String? Function(String?)? validator;
@@ -53,6 +55,7 @@ class _SpecialTextFormFieldState extends State<SpecialTextFormField> {
           width: double.infinity > 500 ? 500 : double.infinity,
           alignment: Alignment.centerLeft,
           child: TextFormField(
+            keyboardType: widget.keyboardType,
             controller: widget.controller,
             onSaved: widget.onSaved,
             onChanged: widget.onChanged,

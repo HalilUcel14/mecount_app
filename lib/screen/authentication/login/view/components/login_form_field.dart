@@ -13,12 +13,14 @@ class LoginFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: viewModel.formKey,
       child: LayoutBuilder(
         builder: (context, constraints) {
           return Column(
             children: [
               const Spacer(),
               SpecialTextFormField(
+                keyboardType: TextInputType.emailAddress,
                 logoIconName: _loginConstant.mailIcon,
                 defaultHeight: constraints.maxHeight / 2.3,
                 onSaved: (value) {

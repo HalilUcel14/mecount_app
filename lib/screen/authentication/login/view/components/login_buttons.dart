@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hucel_core/hucel_core.dart';
 import 'package:hucel_widget/hucel_widget.dart';
 
-import '../../../../../core/routes/app_routes.dart';
 import '../../../../../core/widget/Icon_logo.dart';
 import '../../viewmodel/login_view_model.dart';
 import '../login_constant.dart';
@@ -58,9 +56,12 @@ class LoginFormButtons extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        IconsLogo(
-          size: constraints.maxHeight * 0.16,
-          logoIconName: _loginConstant.facebookIcon,
+        InkWell(
+          onTap: () {},
+          child: IconsLogo(
+            size: constraints.maxHeight * 0.16,
+            logoIconName: _loginConstant.facebookIcon,
+          ),
         ),
         IconsLogo(
           size: constraints.maxHeight * 0.16,
@@ -98,15 +99,7 @@ class LoginFormButtons extends StatelessWidget {
           fontSize: constraints.maxHeight * 0.05,
         ),
       ),
-      onPressed: () {
-        FirebaseEmailPassAuthHelper()
-            .signIn(context,
-                email: viewModel.emailText!, password: viewModel.passText!)
-            .then((value) {
-          print(value);
-        });
-        context.navigateName(AppRoutes.home);
-      },
+      onPressed: viewModel.buttonPressed,
       fixedSize: Size(
         constraints.maxWidth * 0.3,
         constraints.maxHeight * 0.13,

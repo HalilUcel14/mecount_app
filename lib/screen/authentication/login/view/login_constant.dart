@@ -18,4 +18,13 @@ class LoginConstant {
   String twitterIcon = 'social_twitter';
   String orSignWith = 'Or Sign in With';
   String signInButton = 'Sign In';
+
+  // Validation
+
+  String emailMustContain = '@vakifbanksk.com';
+  String errorEmailContain = 'Not Your Email ...@vakifbanksk.com';
+  String errorEmailNotValid = 'Not your Email is Validate';
+  String errorPassShort = ' Your Password not long 8 character';
+  String errorPassNotValid =
+      'Not your Password is Validate\n Please One Upper Lower Character, Number, ';
 }

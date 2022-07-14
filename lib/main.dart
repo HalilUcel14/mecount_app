@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'core/constants/app_string.dart';
 import 'core/constants/easy_locale.dart';
 import 'core/extension/context_extension.dart';
-import 'core/function/firebase_auth.dart';
+import 'core/firebase/i_firebase_auth_manager.dart';
 import 'core/routes/app_routes.dart';
 import 'core/theme/theme_manager.dart';
 import 'firebase_options.dart';
@@ -28,7 +28,6 @@ Future<void> main() async {
     );
   };
   // Sadece İnstance Oluşturur.
-  DefaultFirebaseAuthHelper helper = DefaultFirebaseAuthHelper.instance;
   SharedManager sharedManager = SharedManager.instance;
   // AppBar Üzeri Mobil Gösterge ekran Tasarımı için
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -70,6 +69,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var authManager = FirebaseAuthManager.instance;
+//
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: AppString.instance.appTitle,
@@ -90,8 +91,12 @@ class MyApp extends StatelessWidget {
       theme: context.themeProvider,
       // Route Ayarları
       // Eğer Onboard Önceden Görüntülenmişse Login Sayfası Açılır Değil ise Onboard Açılır
-      initialRoute:
-          context.sharedManagerOnboard ? AppRoutes.login : AppRoutes.onboard,
+      // Hali Hazırda açık bir kullanıcı mevcut ise Oto Home Screen Gider yada Login Gider
+      initialRoute: context.sharedManagerOnboard
+          ? authManager.auth.currentUser != null
+              ? AppRoutes.home
+              : AppRoutes.login
+          : AppRoutes.onboard,
       routes: AppRoutes.instance.routes,
     );
   }
