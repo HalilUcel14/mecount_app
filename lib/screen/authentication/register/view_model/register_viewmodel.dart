@@ -1,3 +1,4 @@
+import 'package:account_app/core/firebase/i_firebase_auth_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:hucel_core/hucel_core.dart';
 import 'package:mobx/mobx.dart';
@@ -16,6 +17,9 @@ abstract class _RegisterScreenViewModelBase with Store, BaseViewModel {
 
   final RegisterConstant constant = RegisterConstant.instance;
   final formKey = GlobalKey<FormState>();
+
+  @observable
+  FirebaseAuthManager authManager = FirebaseAuthManager.instance;
 
   @observable
   TextEditingController emailController = TextEditingController();

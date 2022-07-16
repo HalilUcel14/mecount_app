@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:twitter_login/twitter_login.dart';
@@ -18,18 +19,25 @@ class FirebaseAuthManager implements IFirebaseAuthManager {
   }
 
   FirebaseAuthManager._init();
+  //
+  late UserCredential credential;
 
   @override
   FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
-  createUserWithEmailAndPassword({String? email, String? pass}) async {
+  createUserWithEmailAndPassword(
+      {BuildContext? context,
+      String? email,
+      String? pass,
+      String? pushName}) async {
     try {
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(
         email: email!,
         password: pass!,
       );
-      return UserCredential;
+      credential = userCredential;
+      Navigator.pushNamedAndRemoveUntil(context!, pushName!, (route) => false);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
@@ -75,14 +83,14 @@ class FirebaseAuthManager implements IFirebaseAuthManager {
     });
   }
 
-  userChanges() {
+  bool isUserActive() {
+    bool isUser = false;
     auth.userChanges().listen((User? user) {
-      if (user == null) {
-        print('User is currently signed out!');
-      } else {
-        print('User is signed in!');
+      if (user != null) {
+        isUser = true;
       }
     });
+    return isUser;
   }
 
   Future<UserCredential> getAnonymousCredential() {

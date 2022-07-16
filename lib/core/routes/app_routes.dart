@@ -24,7 +24,7 @@ class AppRoutes {
     initRoute: (context) => const Scaffold(),
     onboard: (context) => OnBoardScreen(),
     login: (context) => LoginScreen(),
-    home: (context) => const HomeScreen(),
+    home: (context) => HomeScreen(),
     register: (context) => RegisterScreen(),
   };
 }

@@ -23,7 +23,31 @@ class RegisterButtons extends StatelessWidget {
                 style: TextStyle(fontSize: height * 0.075),
               ),
               fixedSize: Size(width * 0.3, height * 0.16),
-              onPressed: registerPressed,
+              onPressed: () {
+                viewModel.formKey.currentState!.save();
+
+                if (viewModel.isNotEmpty()) {
+                  if (viewModel.isMatchPass()) {
+                    if (!viewModel.emailText.isValidEmail) {
+                      print('Not Valid your Email');
+                    } else if (!viewModel.passText.isValidLowPassword) {
+                      print('Not Valid Your Password');
+                    } else {
+                      print('İts Okey');
+                      viewModel.authManager.createUserWithEmailAndPassword(
+                        email: viewModel.emailText,
+                        pass: viewModel.passText,
+                        context: context,
+                        pushName: AppRoutes.home,
+                      );
+                    }
+                  } else {
+                    print('İs Not Match Confirm and Password');
+                  }
+                } else {
+                  print('Your TextField is Empty');
+                }
+              },
             ),
             const Spacer(flex: 5),
             _alreadyHaveAccount(constraints, context),
@@ -56,22 +80,5 @@ class RegisterButtons extends StatelessWidget {
     );
   }
 
-  void registerPressed() {
-    viewModel.formKey.currentState!.save();
-
-    if (viewModel.isNotEmpty()) {
-      if (viewModel.isMatchPass()) {
-        if (!viewModel.emailText.isValidEmail) {
-          print('Not Valid your Email');
-        }
-        if (!viewModel.passText.isValidLowPassword) {
-          print('Not Valid Your Password');
-        }
-      } else {
-        print('İs Not Match Confirm and Password');
-      }
-    } else {
-      print('Your TextField is Empty');
-    }
-  }
+  void registerPressed() async {}
 }
