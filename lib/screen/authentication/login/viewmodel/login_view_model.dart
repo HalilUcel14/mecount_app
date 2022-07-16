@@ -13,19 +13,16 @@ class LoginScreenViewModel = _LoginScreenViewModelBase
 
 abstract class _LoginScreenViewModelBase with Store, BaseViewModel {
   //
-  @observable
-  late FirebaseAuthManager authManager;
 
   @override
   void setContext(BuildContext meContext) => baseContext = meContext;
   @override
-  
   void init() {
     authManager = FirebaseAuthManager.instance;
   }
 
   //
-  @observable
+  late FirebaseAuthManager authManager;
   final formKey = GlobalKey<FormState>();
 
   @observable

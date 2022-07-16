@@ -1,3 +1,4 @@
+import 'package:account_app/core/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:hucel_widget/hucel_widget.dart';
 
@@ -26,7 +27,7 @@ class LoginFormButtons extends StatelessWidget {
             _socialButton(constraints),
             const Spacer(flex: 6),
             // Dont Have Account
-            _dontHaveAccount(constraints),
+            _dontHaveAccount(constraints, context),
             const Spacer(),
           ],
         );
@@ -34,7 +35,7 @@ class LoginFormButtons extends StatelessWidget {
     );
   }
 
-  Row _dontHaveAccount(BoxConstraints constraints) {
+  Row _dontHaveAccount(BoxConstraints constraints, BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -43,7 +44,10 @@ class LoginFormButtons extends StatelessWidget {
           style: TextStyle(fontSize: constraints.maxHeight * 0.05),
         ),
         TextButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, AppRoutes.register, (route) => false);
+            },
             child: Text(
               _loginConstant.signUp,
               style: TextStyle(fontSize: constraints.maxHeight * 0.05),
