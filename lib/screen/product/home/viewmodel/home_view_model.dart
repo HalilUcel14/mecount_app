@@ -1,9 +1,9 @@
-import 'package:account_app/core/theme/theme_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:hucel_core/hucel_core.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../core/firebase/i_firebase_auth_manager.dart';
+import '../../../../core/theme/theme_manager.dart';
 
 part 'home_view_model.g.dart';
 

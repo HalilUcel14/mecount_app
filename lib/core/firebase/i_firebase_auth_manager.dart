@@ -37,6 +37,21 @@ class FirebaseAuthManager implements IFirebaseAuthManager {
     modelUser = model ?? LoginModel.empty();
   }
 
+  changeModelFromFirebaseUser({User? model}) {
+    modelUser = LoginModel(
+      email: model!.email,
+      password: '',
+      displayName: model.displayName,
+      emailVerified: model.emailVerified,
+      hashCod: model.hashCode,
+      isAnonymous: model.isAnonymous,
+      phoneNumber: model.phoneNumber,
+      photoUrl: model.photoURL,
+      refreshToken: model.refreshToken,
+      uuid: model.uid,
+    );
+  }
+
   @override
   createUserWithEmailAndPassword(
       {BuildContext? context,

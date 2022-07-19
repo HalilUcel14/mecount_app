@@ -25,3 +25,7 @@ SizedBox spacedHeight(double size, BuildContext context) =>
 double infinityWithMaxSize(double size) {
   return double.infinity > size ? size : double.infinity;
 }
+
+double sizeWithMinSize(double size, {double minSize = 14}) {
+  return size > minSize ? size : minSize;
+}

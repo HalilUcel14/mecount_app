@@ -39,6 +39,8 @@ class HomeScreen extends BaseStateless {
       builder: (context, snapshot) {
         // Kullanıcı Var İse
         if (snapshot.data != null) {
+          _viewModel.authManager
+              .changeModelFromFirebaseUser(model: snapshot.data);
           return _homePageBuilder();
         }
         // Kullanıcı Yok İse
@@ -54,7 +56,7 @@ class HomeScreen extends BaseStateless {
   Widget _homePageBuilder() {
     return PlatformWidget(
       mobile: HomeViewMobile(viewModel: _viewModel),
-      desktopWeb: const HomeViewDesktopWeb(),
+      desktopWeb: HomeViewDesktopWeb(viewModel: _viewModel),
     );
   }
 
