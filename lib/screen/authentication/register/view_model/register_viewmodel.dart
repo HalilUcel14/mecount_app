@@ -1,9 +1,11 @@
-import 'package:account_app/core/firebase/i_firebase_auth_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:hucel_core/hucel_core.dart';
 import 'package:mobx/mobx.dart';
 
+import '../../../../core/firebase/i_firebase_auth_manager.dart';
+import '../../../../core/firebase/i_firebase_cloud_firestore_manager.dart';
 import '../view/register_constant.dart';
+
 part 'register_viewmodel.g.dart';
 
 class RegisterScreenViewModel = _RegisterScreenViewModelBase
@@ -18,8 +20,9 @@ abstract class _RegisterScreenViewModelBase with Store, BaseViewModel {
   final RegisterConstant constant = RegisterConstant.instance;
   final formKey = GlobalKey<FormState>();
 
-  @observable
   FirebaseAuthManager authManager = FirebaseAuthManager.instance;
+  FirebaseCloudFirestoreManager cloudFirestoreManager =
+      FirebaseCloudFirestoreManager.instance;
 
   @observable
   TextEditingController emailController = TextEditingController();

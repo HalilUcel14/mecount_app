@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hucel_core/hucel_core.dart';
 
+import '../../../../../core/firebase/i_firebase_cloud_firestore_manager.dart';
 import '../../viewmodel/home_view_model.dart';
-import 'home_bottom_sheet.dart';
 
 class HomeViewAppBar extends AppBar {
   HomeViewAppBar({
@@ -37,11 +37,16 @@ class SettingButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(right: 4.0),
       child: IconButton(
-        onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            builder: (_) => HomeBottomSettingsSheet(viewModel: viewModel),
-          );
+        onPressed: () async {
+          var manager = FirebaseCloudFirestoreManager.instance;
+          var ref = manager.reference(collectionName: 'currentuser');
+          var data = await manager.readOneTimeData(
+              reference: ref, docId: 'nyPv8YqMgIBcyF2XGWmv');
+          print(data);
+          // showModalBottomSheet(
+          //   context: context,
+          //   builder: (_) => HomeBottomSettingsSheet(viewModel: viewModel),
+          // );
         },
         icon: SvgPicture.asset(
           'settings'.getSvgIcon,

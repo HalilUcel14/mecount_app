@@ -1,8 +1,10 @@
-import 'package:account_app/screen/authentication/register/view_model/register_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:hucel_widget/hucel_widget.dart';
 import 'package:hucel_core/hucel_core.dart';
+import 'package:hucel_widget/hucel_widget.dart';
+
 import '../../../../../core/routes/app_routes.dart';
+import '../../model/register_model.dart';
+import '../../view_model/register_viewmodel.dart';
 
 class RegisterButtons extends StatelessWidget {
   const RegisterButtons({Key? key, required this.viewModel}) : super(key: key);
@@ -23,7 +25,7 @@ class RegisterButtons extends StatelessWidget {
                 style: TextStyle(fontSize: height * 0.075),
               ),
               fixedSize: Size(width * 0.3, height * 0.16),
-              onPressed: () {
+              onPressed: () async {
                 viewModel.formKey.currentState!.save();
 
                 if (viewModel.isNotEmpty()) {
@@ -34,12 +36,24 @@ class RegisterButtons extends StatelessWidget {
                       print('Not Valid Your Password');
                     } else {
                       print('İts Okey');
-                      viewModel.authManager.createUserWithEmailAndPassword(
+                      await viewModel.authManager
+                          .createUserWithEmailAndPassword(
                         email: viewModel.emailText,
                         pass: viewModel.passText,
                         context: context,
                         pushName: AppRoutes.home,
                       );
+                      RegisterModel model = RegisterModel(
+                        email: viewModel.emailText,
+                        password: viewModel.passText,
+                        uuid: viewModel.authManager.credential.user!.uid,
+                        isOnline: true,
+                      );
+                      var userRef = viewModel.cloudFirestoreManager
+                          .reference(collectionName: 'user');
+                      await viewModel.cloudFirestoreManager
+                          .addCollectionData(userRef, model.toJson());
+                      print('add Data $model.');
                     }
                   } else {
                     print('İs Not Match Confirm and Password');

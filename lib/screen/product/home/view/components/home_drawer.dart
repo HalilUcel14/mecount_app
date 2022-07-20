@@ -41,7 +41,7 @@ class HomeDrawerLayout extends StatelessWidget {
           ),
           SizedBox(height: sizeHeight * 0.1),
           Text(
-            viewModel.authManager.modelUser.displayName!,
+            viewModel.authManager.modelUser.displayName ?? '',
             style: TextStyle(
               fontSize: sizeHeight * 0.2,
               color: Colors.white,
@@ -89,9 +89,11 @@ class HomeDrawerLayout extends StatelessWidget {
             onTap: () {},
           ),
           ListTile(
-            leading: const Icon(Icons.alarm_on_outlined),
-            title: const Text('Notifications'),
-            onTap: () {},
+            leading: const Icon(Icons.exit_to_app_sharp),
+            title: const Text('Sign Out'),
+            onTap: () async {
+              await viewModel.authManager.signOuth();
+            },
           ),
         ],
       ),
