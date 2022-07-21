@@ -26,7 +26,9 @@ class FirebaseCloudFirestoreManager extends IFirebaseCloudFirestoreManager {
   }
 
   @override
-  CollectionReference<Object?> reference({required String collectionName}) {
+  CollectionReference<Object?> reference({
+    required String collectionName,
+  }) {
     return cloudFirestore.collection(collectionName);
   }
 
@@ -66,5 +68,6 @@ class FirebaseCloudFirestoreManager extends IFirebaseCloudFirestoreManager {
 
   ///
   ///
+
   ///
 }

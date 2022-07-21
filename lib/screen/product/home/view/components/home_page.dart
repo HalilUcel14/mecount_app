@@ -1,35 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:hucel_core/hucel_core.dart';
 
+import '../../../../../core/extension/list_extension.dart';
 import '../../../../../core/function/size_with_max.dart';
 import '../../viewmodel/home_view_model.dart';
 import '../home_constants.dart';
 
 class HomeViewPage extends StatelessWidget {
-  HomeViewPage({Key? key, required this.viewModel}) : super(key: key);
+  HomeViewPage({Key? key}) : super(key: key);
   //
-  final HomeScreenViewModel viewModel;
+  final HomeScreenViewModel viewModel = HomeScreenViewModel();
   final HomeConstants constants = HomeConstants.instance;
   //
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constrains) {
-      return SingleChildScrollView(
-        child: Column(
-          children: [
-            // get companyName
-            // StreamBuilder(
-            //   stream: ,
-            //   builder: (context, snapshot) {},
-            // ),
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: _animatedContainer(context, constrains),
-            ),
-          ],
-        ),
-      );
-    });
+    return LayoutBuilder(
+      builder: (context, constrains) {
+        return SingleChildScrollView(
+          child: Column(
+            children: [
+              // Şimdilik Single Child... data yapısı kurunca Pageview.builder sistemi olacak
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: _animatedContainer(context, constrains),
+                ),
+              ),
+              Column(
+                children: [
+                  Container(
+                    height: 300,
+                    decoration: const BoxDecoration(
+                      color: Colors.blue,
+                    ),
+                  ),
+                  Container(
+                    height: 400,
+                    decoration: const BoxDecoration(
+                      color: Colors.pink,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   AnimatedContainer _animatedContainer(
@@ -40,7 +58,7 @@ class HomeViewPage extends StatelessWidget {
       duration: context.durationM,
       curve: Curves.fastOutSlowIn,
       height: sizeWithMinSize(constrains.maxHeight * 0.35, minSize: 200),
-      width: infinityWithMaxSize(500),
+      width: infinityWithMaxSize(400),
       padding: EdgeInsets.all(constrains.maxHeight * 0.03),
       decoration: BoxDecoration(
         boxShadow: const [
@@ -51,7 +69,7 @@ class HomeViewPage extends StatelessWidget {
           ),
         ],
         borderRadius: BorderRadius.circular(constrains.maxHeight * 0.05),
-        gradient: constants.randomGradient(),
+        gradient: constants.gradiantList.randomListData,
       ),
       child: _containerChild(),
     );

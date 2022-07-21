@@ -36,6 +36,10 @@ class RegisterButtons extends StatelessWidget {
                       print('Not Valid Your Password');
                     } else {
                       print('İts Okey');
+                      // User Data Cloud Reference
+                      var userRef = viewModel.cloudFirestoreManager
+                          .reference(collectionName: 'user');
+                      // Kullanıcı oluşturma ve sayfa geçiş
                       await viewModel.authManager
                           .createUserWithEmailAndPassword(
                         email: viewModel.emailText,
@@ -43,14 +47,15 @@ class RegisterButtons extends StatelessWidget {
                         context: context,
                         pushName: AppRoutes.home,
                       );
+                      // Kullanıcıyı sistemde ayrıdan kayıt oluşturma.
                       RegisterModel model = RegisterModel(
                         email: viewModel.emailText,
                         password: viewModel.passText,
                         uuid: viewModel.authManager.credential.user!.uid,
                         isOnline: true,
                       );
-                      var userRef = viewModel.cloudFirestoreManager
-                          .reference(collectionName: 'user');
+
+                      // modeli dataya gönderme
                       await viewModel.cloudFirestoreManager
                           .addCollectionData(userRef, model.toJson());
                       print('add Data $model.');

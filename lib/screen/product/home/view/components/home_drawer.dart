@@ -4,9 +4,10 @@ import 'package:hucel_core/hucel_core.dart';
 import '../../viewmodel/home_view_model.dart';
 
 class HomeDrawerLayout extends StatelessWidget {
-  const HomeDrawerLayout({Key? key, required this.viewModel}) : super(key: key);
+  HomeDrawerLayout({Key? key}) : super(key: key);
 
-  final HomeScreenViewModel viewModel;
+  final HomeScreenViewModel viewModel = HomeScreenViewModel();
+
   @override
   Widget build(BuildContext context) {
     return Drawer(

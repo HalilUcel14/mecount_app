@@ -13,8 +13,8 @@ class HomeViewDesktopWeb extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: HomeViewAppBar(viewModel: viewModel),
-      drawer: HomeDrawerLayout(viewModel: viewModel),
-      body: HomeViewPage(viewModel: viewModel),
+      drawer: HomeDrawerLayout(),
+      body: HomeViewPage(),
     );
   }
 }

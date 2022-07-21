@@ -1,5 +1,6 @@
-import 'package:account_app/screen/authentication/register/view_model/register_viewmodel.dart';
 import 'package:flutter/material.dart';
+
+import '../../view_model/register_viewmodel.dart';
 
 class RegisterLogoAndTitle extends StatelessWidget {
   const RegisterLogoAndTitle({Key? key, required this.viewModel})

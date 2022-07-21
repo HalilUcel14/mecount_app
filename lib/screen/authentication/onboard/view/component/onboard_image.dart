@@ -51,8 +51,8 @@ class OnboardImageCard extends StatelessWidget {
         ),
         onPressed: () async {
           // Onboard ekran Görünme Ortamını True yapar ve uygulama boyunca 1 defa görünür.
-          await context.sharedManager
-              .setBoolValue(SharedConstants.instance.onboardFirstShowed, true);
+          var firstTime = SharedConstants.instance.onboardFirstShowed;
+          await context.sharedManager.setBoolValue(firstTime, true);
           // Geri Dönülmeyen bir yapı ile navigate yapar.
           context.navigateToReset(AppRoutes.login);
         },
