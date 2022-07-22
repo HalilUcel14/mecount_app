@@ -9,11 +9,12 @@ import '../viewmodel/home_view_model.dart';
 import 'platform/home_mobile.dart';
 import 'platform/home_web.dart';
 
+// ignore: must_be_immutable
 class HomeScreen extends BaseStateless {
   HomeScreen({Key? key}) : super(key: key);
   //
   late HomeScreenViewModel _viewModel;
-  late BuildContext _context;
+  //late BuildContext _context;
   //
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class HomeScreen extends BaseStateless {
       },
       onPageBuilder: (BuildContext context, HomeScreenViewModel viewModel) {
         _viewModel = viewModel;
-        _context = context;
+        //_context = context;
         //
         return _scaffold();
       },
@@ -64,22 +65,24 @@ class HomeScreen extends BaseStateless {
   /// bu ekrana yönlendirilir. Kullanıcı olmaksızın işlem yapması önleme amacı ile
   ///
   Widget _notAuthBuilder(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text(
-            "Your Login Account is Closed!\nPlease return login page",
-          ),
-          ElevatedButtonWithStadiumBorder(
-            child: const Text('Log In Page'),
-            onPressed: () {
-              Navigator.pushNamedAndRemoveUntil(
-                  context, AppRoutes.login, (route) => false);
-            },
-          ),
-        ],
+    return Scaffold(
+      body: SizedBox(
+        width: double.infinity,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              "Your Login Account is Closed!\nPlease return login page",
+            ),
+            ElevatedButtonWithStadiumBorder(
+              child: const Text('Log In Page'),
+              onPressed: () {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, AppRoutes.login, (route) => false);
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

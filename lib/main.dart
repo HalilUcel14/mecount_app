@@ -1,5 +1,3 @@
-import 'package:account_app/core/theme/theme_dark.dart';
-import 'package:account_app/core/theme/theme_light.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -8,10 +6,10 @@ import 'package:hucel_core/hucel_core.dart';
 import 'package:provider/provider.dart';
 
 import 'core/constants/app_string.dart';
-
 import 'core/firebase/i_firebase_auth_manager.dart';
 import 'core/routes/app_routes.dart';
-
+import 'core/theme/theme_dark.dart';
+import 'core/theme/theme_light.dart';
 import 'firebase_options.dart';
 
 late SharedManager sharedManager;

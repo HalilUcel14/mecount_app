@@ -9,7 +9,7 @@ class OnBoardScreen extends BaseStateless {
   OnBoardScreen({Key? key}) : super(key: key);
   //
   late final OnBoardScreenViewModel _viewModel;
-  late final BuildContext _context;
+  // late final BuildContext _context;
   @override
   Widget build(BuildContext context) {
     return BaseView<OnBoardScreenViewModel>(
@@ -20,7 +20,7 @@ class OnBoardScreen extends BaseStateless {
       },
       onPageBuilder: (BuildContext context, OnBoardScreenViewModel viewModel) {
         _viewModel = viewModel;
-        _context = context;
+        // _context = context;
         return _scaffold();
       },
     );

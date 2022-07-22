@@ -39,13 +39,35 @@ class CompanyModel extends BaseModel {
 
   @override
   fromJson(Map<String, dynamic> json) {
-    // TODO: implement fromJson
     throw UnimplementedError();
   }
 
   @override
   Map<String, dynamic> toJson() {
-    // TODO: implement toJson
     throw UnimplementedError();
   }
 }
+
+List<CompanyModel> defaultCompanyModelList = [
+  CompanyModel.starter(
+    name: 'Vakıfbank SK',
+    address: 'Selami Ali Mah. Vakıf Sok. No:8',
+    fullName: 'Vakıfbank Spor Kulübü Derneği',
+    mailAddress: 'muhasebe@vakifbanksk.com',
+    ownerUuid: 'aaa',
+    phoneNumber: '0216 341 80 13',
+    uuid: 'bbb',
+    vdNo: '434 005 71 01',
+  ),
+  CompanyModel.starter(
+    name: 'Vakıfbank Sportif',
+    address: 'Selami Ali Mah. Vakıf Sok. No:8',
+    fullName:
+        'Vakıfbank Spor Kulübü Derneği Sportif Faaliyetler İktisadi İşletmesi',
+    mailAddress: 'info@vakifbanksk.com',
+    ownerUuid: 'aaa',
+    phoneNumber: '0216 341 80 13',
+    uuid: 'bbb',
+    vdNo: '883 044 75 94',
+  ),
+];

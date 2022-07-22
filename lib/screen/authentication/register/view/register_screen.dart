@@ -6,6 +6,7 @@ import 'components/register_button.dart';
 import 'components/register_form_field.dart';
 import 'components/register_logo_title.dart';
 
+// ignore: must_be_immutable
 class RegisterScreen extends BaseStateless {
   RegisterScreen({Key? key}) : super(key: key);
   late RegisterScreenViewModel _viewModel;

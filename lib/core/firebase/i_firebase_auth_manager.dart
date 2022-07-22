@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -82,6 +84,7 @@ class FirebaseAuthManager implements IFirebaseAuthManager {
     try {
       UserCredential userCredential =
           await auth.signInWithEmailAndPassword(email: email!, password: pass!);
+      credential = userCredential;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');

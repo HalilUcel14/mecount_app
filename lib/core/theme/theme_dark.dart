@@ -16,6 +16,7 @@ class ThemeDark extends IApplicationTheme {
         appBarTheme: const AppBarTheme(
           centerTitle: true,
         ),
+        visualDensity: VisualDensity.adaptivePlatformDensity,
         textTheme: const TextTheme(),
       );
 }

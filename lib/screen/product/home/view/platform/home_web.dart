@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../viewmodel/home_view_model.dart';
 import '../components/home_appbar.dart';
 import '../components/home_drawer.dart';
-import '../components/home_page.dart';
+import '../home_page/home_page.dart';
 
 class HomeViewDesktopWeb extends StatelessWidget {
   const HomeViewDesktopWeb({Key? key, required this.viewModel})

@@ -10,6 +10,8 @@ class HomeConstants {
 
   HomeConstants._init();
 
+  String isActiveText(bool value) => value ? 'Active' : 'Deactive';
+
   List<LinearGradient> gradiantList = <LinearGradient>[
     LinearGradient(
       colors: ['d38312'.color, 'a83279'.color],
@@ -47,9 +49,4 @@ class HomeConstants {
       end: Alignment.bottomRight,
     ),
   ];
-
-  LinearGradient randomGradient() {
-    int rand = gradiantList.length.randomValue;
-    return gradiantList[rand];
-  }
 }

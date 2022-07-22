@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:account_app/screen/authentication/login/model/login_model.dart';
 import 'package:flutter/material.dart';
 import 'package:hucel_core/hucel_core.dart';

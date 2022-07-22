@@ -38,11 +38,6 @@ class SettingButton extends StatelessWidget {
       padding: const EdgeInsets.only(right: 4.0),
       child: IconButton(
         onPressed: () async {
-          // var manager = FirebaseCloudFirestoreManager.instance;
-          // //var ref = manager.reference(collectionName: 'currentuser');
-          // //var data = await manager.readOneTimeData(
-          //     reference: ref, docId: 'nyPv8YqMgIBcyF2XGWmv');
-          // print(data);
           showModalBottomSheet(
             context: context,
             builder: (_) => HomeBottomSettingsSheet(viewModel: viewModel),
@@ -56,37 +51,3 @@ class SettingButton extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-// class HomeViewAppBar extends StatelessWidget {
-//   const HomeViewAppBar({Key? key, }) : super(key: key);
-
-//   //final HomeScreenViewModel viewModel;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return AppBar(
-//       title: Text(viewModel.authManager.modelUser.displayName ?? ""),
-//       actions: [
-//         Padding(
-//           padding: const EdgeInsets.only(right: 4.0),
-//           child: IconButton(
-//             icon: const Icon(Icons.settings),
-//             onPressed: () {
-//               //viewModel.changeOpenBottomSheet();
-//               showModalBottomSheet(
-//                 context: context,
-//                 builder: (context) => HomeBottomSettingsSheet(
-//                   viewModel: viewModel,
-//                 ),
-//               );
-//             },
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-// }
