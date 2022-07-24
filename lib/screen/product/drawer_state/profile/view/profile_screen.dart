@@ -278,7 +278,7 @@ class ProfileScreen extends BaseStateless {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(200),
                   boxShadow: const [
-                    BoxShadow(color: Colors.grey, blurRadius: 10),
+                    BoxShadow(color: Colors.grey, blurRadius: 8),
                   ],
                 ),
                 child: CircleAvatar(
