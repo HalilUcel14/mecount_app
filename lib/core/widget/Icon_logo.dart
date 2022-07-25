@@ -5,11 +5,16 @@ import 'package:flutter_svg/svg.dart';
 import 'package:hucel_core/hucel_core.dart';
 
 class IconsLogo extends StatelessWidget {
-  const IconsLogo({Key? key, required this.size, required this.logoIconName})
-      : super(key: key);
+  const IconsLogo({
+    Key? key,
+    required this.size,
+    required this.logoIconName,
+    this.color = Colors.blue,
+  }) : super(key: key);
 
   final double size;
   final String logoIconName;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +23,7 @@ class IconsLogo extends StatelessWidget {
       width: size,
       child: Padding(
         padding: EdgeInsets.all(size * 0.30),
-        child: SvgPicture.asset(logoIconName.getSvgIcon, color: Colors.blue),
+        child: SvgPicture.asset(logoIconName.getSvgIcon, color: color),
       ),
       decoration: BoxDecoration(
         shape: BoxShape.circle,

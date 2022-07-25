@@ -4,12 +4,13 @@ import 'package:hucel_core/hucel_core.dart';
 import '../../../../../product/model/company_model.dart';
 import '../home_constants.dart';
 
-class HomeCompanyList extends StatelessWidget {
+class HomeCompanyList extends BaseStateless {
   HomeCompanyList({Key? key, required this.model}) : super(key: key);
   //
   final HomeConstants constants = HomeConstants.instance;
   final CompanyModel model;
   //
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -112,7 +113,6 @@ class HomeCompanyList extends StatelessWidget {
           child: Text(
             '$label : $text',
             overflow: TextOverflow.ellipsis,
-            maxLines: 1,
             style: TextStyle(
                 color: Colors.white, fontSize: constraints.maxHeight * 0.07),
           ),

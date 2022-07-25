@@ -19,7 +19,10 @@ class LoginFormField extends StatelessWidget {
           return Column(
             children: [
               const Spacer(),
+              // Email Form Field
               SpecialTextFormField(
+                labelText: _loginConstant.emailLabel,
+                hintText: _loginConstant.emailHint,
                 keyboardType: TextInputType.emailAddress,
                 logoIconName: _loginConstant.mailIcon,
                 defaultHeight: constraints.maxHeight / 2.3,
@@ -29,7 +32,11 @@ class LoginFormField extends StatelessWidget {
                 controller: viewModel.emailController,
               ),
               const Spacer(),
+              // Password Form Field
               SpecialTextFormField(
+                obscureText: true,
+                labelText: _loginConstant.passLabel,
+                hintText: _loginConstant.passHint,
                 controller: viewModel.passController,
                 logoIconName: _loginConstant.passIcon,
                 defaultHeight: constraints.maxHeight / 2.3,

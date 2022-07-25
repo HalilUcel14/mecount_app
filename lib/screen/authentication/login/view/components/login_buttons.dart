@@ -1,7 +1,8 @@
-import 'package:account_app/core/routes/app_routes.dart';
 import 'package:flutter/material.dart';
+import 'package:hucel_core/hucel_core.dart';
 import 'package:hucel_widget/hucel_widget.dart';
 
+import '../../../../../core/routes/app_routes.dart';
 import '../../../../../core/widget/Icon_logo.dart';
 import '../../viewmodel/login_view_model.dart';
 import '../login_constant.dart';
@@ -44,13 +45,12 @@ class LoginFormButtons extends StatelessWidget {
           style: TextStyle(fontSize: constraints.maxHeight * 0.05),
         ),
         TextButton(
-            onPressed: () {
-              Navigator.pushNamedAndRemoveUntil(
-                  context, AppRoutes.register, (route) => false);
+            onPressed: () async {
+              await context.pushNameAndRemoveUntil(AppRoutes.register);
             },
             child: Text(
               _loginConstant.signUp,
-              style: TextStyle(fontSize: constraints.maxHeight * 0.05),
+              style: TextStyle(fontSize: constraints.maxHeight * 0.055),
             ))
       ],
     );

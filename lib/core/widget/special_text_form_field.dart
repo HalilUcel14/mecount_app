@@ -18,11 +18,13 @@ class SpecialTextFormField extends StatefulWidget {
     required this.logoIconName,
     required this.controller,
     this.keyboardType,
+    this.obscureText = false,
   }) : super(key: key);
 
   final EdgeInsetsGeometry? contentPadding;
   final double defaultHeight;
   final String labelText;
+  final bool obscureText;
   final TextStyle? labelStyle;
   final TextStyle? hintStyle;
   final String? hintText;
@@ -38,7 +40,13 @@ class SpecialTextFormField extends StatefulWidget {
 }
 
 class _SpecialTextFormFieldState extends State<SpecialTextFormField> {
-  bool obscureTexted = false;
+  late bool obscureTexted;
+
+  @override
+  void initState() {
+    obscureTexted = widget.obscureText;
+    super.initState();
+  }
 
   void changeObscure() {
     obscureTexted = !obscureTexted;
@@ -103,10 +111,12 @@ class _SpecialTextFormFieldState extends State<SpecialTextFormField> {
         ///
         /// Logo
         ///
+
         InkWell(
           onTap: () => changeObscure(),
           child: IconsLogo(
             size: widget.defaultHeight * 0.85,
+            color: obscureTexted ? Colors.red : Colors.blue,
             logoIconName: widget.logoIconName,
           ),
         ),

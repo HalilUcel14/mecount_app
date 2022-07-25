@@ -119,7 +119,6 @@ class _TestPersonState extends State<TestPerson> {
   void changeTab() {
     setState(() {
       isTab = true;
-      print(isTab);
     });
   }
 

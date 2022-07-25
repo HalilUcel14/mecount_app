@@ -19,6 +19,11 @@ class LoginConstant {
   String orSignWith = 'Or Sign in With';
   String signInButton = 'Sign In';
 
+  String emailLabel = 'Email Address';
+  String emailHint = 'Please Enter Your Email Address';
+  String passLabel = 'Password';
+  String passHint = 'Please Enter Your Password';
+
   // Validation
 
   String emailMustContain = '@vakifbanksk.com';

@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'package:account_app/core/extension/context_extension.dart';
 import 'package:account_app/screen/authentication/login/model/login_model.dart';
 import 'package:flutter/material.dart';
 import 'package:hucel_core/hucel_core.dart';
@@ -76,11 +77,7 @@ abstract class _LoginScreenViewModelBase with Store, BaseViewModel {
             ),
           );
           print(user.displayName);
-          Navigator.pushNamedAndRemoveUntil(
-            baseContext!,
-            AppRoutes.home,
-            (route) => false,
-          );
+          baseContext!.pushNameAndRemoveUntil(AppRoutes.home);
         }
       }
     }
@@ -90,6 +87,8 @@ abstract class _LoginScreenViewModelBase with Store, BaseViewModel {
 
   bool _emailValid() {
     if (!emailText!.contains(_loginConstant.emailMustContain)) {
+      baseContext!.snackbar(errorList: [_loginConstant.errorEmailContain]);
+
       print(_loginConstant.errorEmailContain);
       return false;
     } else if (!emailText!.isValidEmail) {
