@@ -20,7 +20,7 @@ abstract class _OnBoardScreenViewModelBase with Store, BaseViewModel {
   String onboardCollectionName = 'onboard';
   //
   @observable
-  PageController controller = PageController();
+  PageController controller = PageController(initialPage: 0);
 
   @observable
   List<OnBoardModel> onboardList = [

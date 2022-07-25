@@ -42,10 +42,10 @@ class HomeViewPage extends StatelessWidget {
     // Ana Alan İçin Container
     return Container(
       height: constraints.maxHeight * 0.75,
-      margin: const EdgeInsets.only(top: 12.0),
+      margin: EdgeInsets.only(top: constraints.maxHeight * 0.02),
       padding: EdgeInsets.symmetric(
-        vertical: constraints.maxHeight * 0.05,
-        horizontal: constraints.maxHeight * 0.03,
+        vertical: constraints.maxHeight * 0.03,
+        horizontal: constraints.maxHeight * 0.02,
       ),
       decoration: _defaultDecoration(constraints),
       // İçerisine Sütun Yapısı
@@ -53,13 +53,20 @@ class HomeViewPage extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Text(
+              const Spacer(flex: 3),
+              Text(
                 'Employee',
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: constraints.maxHeight * 0.04,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const Spacer(flex: 2),
+              ElevatedButtonWithStadiumBorder(
+                child: const Text('Ekle'),
+                onPressed: () {},
               ),
               const Spacer(),
-              ElevatedButtonWithStadiumBorder(
-                  child: const Text('Ekle'), onPressed: () {})
             ],
           ),
           const Divider(
@@ -136,7 +143,7 @@ class _TestPersonState extends State<TestPerson> {
           ),
         ),
         SizedBox(
-          height: isTab ? 60 : 0,
+          height: 60,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: const [
@@ -145,7 +152,7 @@ class _TestPersonState extends State<TestPerson> {
               Icon(Icons.message),
             ],
           ),
-        ),
+        ).toVisible(isTab),
       ],
     );
   }

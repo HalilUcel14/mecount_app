@@ -13,7 +13,7 @@ class HomeCompanyList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(18.0),
+      padding: context.padAllS,
       child: _companyView(context),
     );
   }

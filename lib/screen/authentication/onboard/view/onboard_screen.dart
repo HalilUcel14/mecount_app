@@ -1,9 +1,9 @@
-import 'component/onboard_detail.dart';
-import 'component/onboard_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hucel_core/hucel_core.dart';
 
 import '../viewmodel/onboard_viewmodel.dart';
+import 'component/onboard_detail.dart';
+import 'component/onboard_image.dart';
 
 class OnBoardScreen extends BaseStateless {
   OnBoardScreen({Key? key}) : super(key: key);
@@ -45,21 +45,19 @@ class OnBoardScreen extends BaseStateless {
       controller: _viewModel.controller,
       itemCount: _viewModel.onboardList.length,
       itemBuilder: (_context, index) {
+        var currentModel = _viewModel.onboardList[index];
         return Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
-              child: OnboardImageCard(
-                model: _viewModel.onboardList[index],
-              ),
+              child: OnboardImageCard(model: currentModel),
             ),
             Expanded(
               child: OnboardDetailCard(
-                viewModel: _viewModel,
-                model: _viewModel.onboardList[index],
-                length: _viewModel.onboardList.length,
+                model: currentModel,
                 currentIndex: index,
+                viewModel: _viewModel,
               ),
             ),
           ],

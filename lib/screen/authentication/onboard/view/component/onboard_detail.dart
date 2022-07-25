@@ -1,80 +1,90 @@
-import '../../model/onboard_model.dart';
-import '../../viewmodel/onboard_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:hucel_core/hucel_core.dart';
 import 'package:hucel_widget/hucel_widget.dart';
 
-import '../../../../../core/function/size_with_max.dart';
 import '../../../../../core/widget/selected_indicator.dart';
+import '../../model/onboard_model.dart';
+import '../../viewmodel/onboard_viewmodel.dart';
 import '../onboard_constants.dart';
 
 class OnboardDetailCard extends StatelessWidget {
   const OnboardDetailCard({
     Key? key,
     required this.model,
-    required this.length,
     required this.currentIndex,
     required this.viewModel,
   }) : super(key: key);
 
   final OnBoardModel model;
-  final int length;
   final int currentIndex;
   final OnBoardScreenViewModel viewModel;
   //
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: context.padAllS,
-      margin: context.padAllS,
-      width: double.infinity,
-      child: _childColumn(context),
-      decoration: OnBoardConstants.instance.detailCard(context),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Container(
+          padding: context.padAllS,
+          margin: context.padAllS,
+          child: _childColumn(context, constraints),
+          decoration: OnBoardConstants.instance.detailCard(constraints),
+        );
+      },
     );
   }
 
-  Widget _childColumn(BuildContext context) {
+  Widget _childColumn(BuildContext context, BoxConstraints constraints) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        _titleAndSubTitle(context),
-        _selectedIndicator(context),
-        _nextPreviousButton(context)
+        _titleAndSubTitle(context, constraints),
+        _selectedIndicator(context, constraints),
+        _nextPreviousButton(context, constraints),
       ],
     );
   }
 
-  MySelectedIndicator _selectedIndicator(BuildContext context) {
+  MySelectedIndicator _selectedIndicator(
+    BuildContext context,
+    BoxConstraints constraints,
+  ) {
     return MySelectedIndicator(
-      length: length,
+      length: viewModel.onboardList.length,
       currentIndex: currentIndex,
-      selectedSize: shortSizeWithMax(context, value: 0.1, max: 16),
-      unSelectedSize: shortSizeWithMax(context, value: 0.1, max: 10),
+      selectedSize: constraints.maxHeight * 0.05,
+      unSelectedSize: constraints.maxHeight * 0.025,
       unSelectedColor: Colors.grey,
     );
   }
 
-  Row _nextPreviousButton(BuildContext context) {
+  Row _nextPreviousButton(
+    BuildContext context,
+    BoxConstraints constraints,
+  ) {
     return Row(
       children: [
         const Spacer(),
         _onboardElevationButton(
           context,
+          constraints,
           text: OnBoardConstants.instance.previous,
           onPressed: () {
             viewModel.controller.previousPage(
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeInCirc);
+              duration: context.durationS,
+              curve: Curves.easeInCirc,
+            );
           },
         ),
         const Spacer(),
         _onboardElevationButton(
           context,
+          constraints,
           text: OnBoardConstants.instance.next,
           onPressed: () {
             viewModel.controller.nextPage(
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.fastOutSlowIn);
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.fastOutSlowIn,
+            );
           },
         ),
         const Spacer(),
@@ -83,40 +93,46 @@ class OnboardDetailCard extends StatelessWidget {
   }
 
   ElevatedButtonWithStadiumBorder _onboardElevationButton(
-    BuildContext context, {
+    BuildContext context,
+    BoxConstraints constraints, {
     required String text,
     required void Function()? onPressed,
   }) {
     return ElevatedButtonWithStadiumBorder(
       child: Text(
         text,
-        style: OnBoardConstants.instance.previousTextStyle(context),
+        style: TextStyle(fontSize: constraints.maxHeight * 0.05),
       ),
       onPressed: onPressed,
       styleBackgroundColor: Colors.red,
       fixedSize: Size(
-        shortSizeWithMax(context, value: 0.3, max: 150),
-        shortSizeWithMax(context, value: 0.1, max: 60),
+        constraints.maxWidth * 0.3,
+        constraints.maxHeight * 0.12,
       ),
     );
   }
 
-  Wrap _titleAndSubTitle(BuildContext context) {
+  Wrap _titleAndSubTitle(BuildContext context, BoxConstraints constraints) {
     return Wrap(
       children: [
         Center(
           child: Text(
             model.title!,
             textAlign: TextAlign.center,
-            style: OnBoardConstants.instance.titleStyle(context),
+            style: TextStyle(
+              fontSize: constraints.maxHeight * 0.1,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
-        SizedBox(height: shortSizeWithMax(context, value: 0.2, max: 50)),
+        SizedBox(height: constraints.maxHeight * 0.15),
         Center(
           child: Text(
             model.subTitle!,
             textAlign: TextAlign.center,
-            style: OnBoardConstants.instance.subTitleStyle(context),
+            style: TextStyle(
+              fontSize: constraints.maxHeight * 0.05,
+            ),
           ),
         ),
       ],

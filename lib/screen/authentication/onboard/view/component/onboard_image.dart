@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hucel_core/hucel_core.dart';
 import 'package:hucel_widget/hucel_widget.dart';
 
-import '../../../../../core/function/size_with_max.dart';
 import '../../../../../core/routes/app_routes.dart';
 import '../../model/onboard_model.dart';
 import '../onboard_constants.dart';
@@ -14,44 +13,43 @@ class OnboardImageCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Padding(
-          padding: context.padAllS,
-          child: Container(
-            margin: context.padAllN,
-            decoration: BoxDecoration(
-              color: Colors.transparent,
-              image: DecorationImage(
-                image: AssetImage(model.imgUrl!),
-              ),
+    return LayoutBuilder(builder: (context, constraints) {
+      return Stack(
+        children: [
+          Container(
+            padding: EdgeInsets.only(
+              top: constraints.maxHeight * 0.2,
+              left: constraints.maxWidth * 0.1,
+              right: constraints.maxWidth * 0.1,
             ),
+            child: Image.asset(model.imgUrl!),
           ),
-        ),
-        _skipButton(context)
-      ],
-    );
+          _skipButton(context, constraints)
+        ],
+      );
+    });
   }
 
-  Positioned _skipButton(BuildContext context) {
+  Positioned _skipButton(BuildContext context, BoxConstraints constraints) {
     return Positioned(
-      right: shortSizeWithMax(context, value: 0.1, max: 12),
-      top: shortSizeWithMax(context, value: 0.1, max: 12),
+      right: constraints.maxWidth * 0.05,
+      top: constraints.maxHeight * 0.05,
       child: ElevatedButtonWithStadiumBorder(
-        styleBackgroundColor: Colors.transparent,
+        styleBackgroundColor: Colors.red,
         child: Text(
           OnBoardConstants.instance.skip,
-          style: OnBoardConstants.instance.skipStyle(context),
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: constraints.maxWidth * 0.04),
         ),
         fixedSize: Size(
-          shortSizeWithMax(context, value: 0.3, max: 90),
-          shortSizeWithMax(context, value: 0.1, max: 30),
+          constraints.maxWidth * 0.25,
+          constraints.maxHeight * 0.1,
         ),
         onPressed: () async {
           // Onboard ekran Görünme Ortamını True yapar ve uygulama boyunca 1 defa görünür.
           await context.setOnboardFirstTimeShowed;
           // Geri Dönülmeyen bir yapı ile navigate yapar.
-          context.pushNameAndRemoveUntil(AppRoutes.login);
+          await context.pushNameAndRemoveUntil(AppRoutes.login);
         },
       ),
     );
