@@ -80,8 +80,8 @@ class FirebaseCloudFirestoreManager extends IFirebaseCloudFirestoreManager {
     required String collectionPath,
     required FirebaseUserModel model,
   }) {
-    final collection = firestore.collection(collectionPath).doc();
-    model.documentId = collection.id;
+    final collection = firestore.collection(collectionPath).doc(model.uuid);
+    //model.documentId = collection.id;
     collection.set(model.toJson());
   }
 

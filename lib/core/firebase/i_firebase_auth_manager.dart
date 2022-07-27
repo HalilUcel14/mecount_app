@@ -8,7 +8,7 @@ import 'package:twitter_login/twitter_login.dart';
 
 abstract class IFirebaseAuthManager {
   late FirebaseAuth auth;
-  late UserCredential? credential;
+  UserCredential? credential;
   User? get currentUser;
   late String? loginText;
   late FirebaseUserModel userModel;
@@ -50,7 +50,7 @@ class FirebaseAuthManager implements IFirebaseAuthManager {
   @override
 
   /// crendetial için işlem yapmak isterseniz.
-  late UserCredential? credential;
+  UserCredential? credential;
   @override
 
   /// auth için durum değişmeleri yakalanır.
@@ -195,7 +195,7 @@ class FirebaseAuthManager implements IFirebaseAuthManager {
   }
 
   bool get getAuthStateChange {
-    late bool isUser;
+    bool isUser = false;
     auth.authStateChanges().listen((User? user) {
       if (user == null) {
         isUser = false;

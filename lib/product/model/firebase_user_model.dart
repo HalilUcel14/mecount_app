@@ -10,7 +10,7 @@ class FirebaseUserModel extends FireBaseModel {
   final String? phoneNumber;
   final String? photoUrl;
   final String? refreshToken;
-  String? documentId;
+
   bool? isAnonymous;
   bool? emailVerified;
 
@@ -23,7 +23,6 @@ class FirebaseUserModel extends FireBaseModel {
     this.photoUrl,
     this.refreshToken,
     this.uuid,
-    this.documentId,
     this.emailVerified,
     this.isAnonymous,
   });
@@ -35,7 +34,6 @@ class FirebaseUserModel extends FireBaseModel {
     this.displayName,
     this.hashCod,
     this.phoneNumber,
-    this.documentId,
     this.photoUrl,
     this.refreshToken,
   });
@@ -49,7 +47,6 @@ class FirebaseUserModel extends FireBaseModel {
       hashCod: json['hashCod'],
       isAnonymous: json['isAnonymous'],
       password: json['password'],
-      documentId: json['documentId'],
       phoneNumber: json['phoneNumber'],
       photoUrl: json['photoUrl'],
       refreshToken: json['refreshToken'],
@@ -65,7 +62,6 @@ class FirebaseUserModel extends FireBaseModel {
       'uuid': uuid,
       'displayName': displayName,
       'hashCod': hashCod,
-      'documentId': documentId,
       'phoneNumber': phoneNumber,
       'photoUrl': photoUrl,
       'refreshToken': refreshToken,
