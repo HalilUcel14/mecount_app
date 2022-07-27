@@ -15,12 +15,14 @@ abstract class _RegisterScreenViewModelBase with Store, BaseViewModel {
   @override
   void setContext(BuildContext context) => baseContext = context;
   @override
-  void init() {}
+  void init() {
+    authManager = FirebaseAuthManager.instance;
+  }
 
   final RegisterConstant constant = RegisterConstant.instance;
   final formKey = GlobalKey<FormState>();
 
-  FirebaseAuthManager authManager = FirebaseAuthManager.instance;
+  late FirebaseAuthManager authManager;
   FirebaseCloudFirestoreManager cloudFirestoreManager =
       FirebaseCloudFirestoreManager.instance;
 

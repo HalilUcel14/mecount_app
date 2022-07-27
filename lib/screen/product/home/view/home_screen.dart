@@ -14,8 +14,7 @@ class HomeScreen extends BaseStateless {
   HomeScreen({Key? key}) : super(key: key);
   //
   late HomeScreenViewModel _viewModel;
-  //late BuildContext _context;
-  //
+
   @override
   Widget build(BuildContext context) {
     return BaseView<HomeScreenViewModel>(
@@ -26,8 +25,6 @@ class HomeScreen extends BaseStateless {
       },
       onPageBuilder: (BuildContext context, HomeScreenViewModel viewModel) {
         _viewModel = viewModel;
-        //_context = context;
-        //
         return _scaffold();
       },
     );
@@ -36,12 +33,11 @@ class HomeScreen extends BaseStateless {
   Widget _scaffold() {
     return StreamBuilder<User?>(
       // Kullanıcı Hesaptan Çıkarsa Home Ekranı Kapatma Amaçlıdır.
-      stream: _viewModel.authManager.auth.authStateChanges(),
+      stream: _viewModel.authManager.authStateChanges,
       builder: (context, snapshot) {
         // Kullanıcı Var İse
         if (snapshot.data != null) {
-          _viewModel.authManager
-              .changeModelFromFirebaseUser(model: snapshot.data);
+          _viewModel.authManager.changeModelSnapshotUser(user: snapshot.data);
           return _homePageBuilder();
         }
         // Kullanıcı Yok İse

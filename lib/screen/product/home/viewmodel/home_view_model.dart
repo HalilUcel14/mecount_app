@@ -4,7 +4,6 @@ import 'package:mobx/mobx.dart';
 
 import '../../../../core/firebase/i_firebase_auth_manager.dart';
 import '../../../../core/firebase/i_firebase_cloud_firestore_manager.dart';
-
 import '../../../../product/model/company_model.dart';
 
 part 'home_view_model.g.dart';
@@ -17,9 +16,9 @@ abstract class _HomeScreenViewModelBase with Store, BaseViewModel {
   @override
   void init() {}
 
-  FirebaseCloudFirestoreManager cloudFirestoreManager =
+  late FirebaseCloudFirestoreManager cloudFirestoreManager =
       FirebaseCloudFirestoreManager.instance;
-  FirebaseAuthManager authManager = FirebaseAuthManager.instance;
+  late FirebaseAuthManager authManager = FirebaseAuthManager.instance;
   ThemeManager themeManager = ThemeManager.instance;
 
   @observable

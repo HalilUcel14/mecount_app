@@ -42,7 +42,7 @@ class HomeDrawerLayout extends StatelessWidget {
           ),
           SizedBox(height: sizeHeight * 0.1),
           Text(
-            viewModel.authManager.modelUser.displayName ?? '',
+            viewModel.authManager.userModel.displayName ?? '',
             style: TextStyle(
               fontSize: sizeHeight * 0.2,
               color: Colors.white,

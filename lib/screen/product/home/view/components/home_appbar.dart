@@ -24,7 +24,7 @@ class _AppBarTitle extends StatelessWidget {
   final HomeScreenViewModel viewModel;
   @override
   Widget build(BuildContext context) {
-    return Text(viewModel.authManager.modelUser.displayName ?? '');
+    return Text(viewModel.authManager.userModel.displayName ?? '');
   }
 }
 

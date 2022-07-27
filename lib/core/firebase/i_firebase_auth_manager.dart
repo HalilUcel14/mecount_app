@@ -1,107 +1,211 @@
 // ignore_for_file: avoid_print
 
+import 'package:account_app/product/model/firebase_user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:twitter_login/twitter_login.dart';
 
-import '../../screen/authentication/login/model/login_model.dart';
-
 abstract class IFirebaseAuthManager {
   late FirebaseAuth auth;
-  late LoginModel modelUser;
+  late UserCredential? credential;
+  User? get currentUser;
+  late String? loginText;
+  late FirebaseUserModel userModel;
+  Stream<User?> get authStateChanges;
 
   createUserWithEmailAndPassword({String? email, String? pass});
   signInWithEmailAndPassword({String? email, String? pass});
-  changeModelUser({LoginModel? model});
+  changeModelUser({FirebaseUserModel? model});
 }
 
 class FirebaseAuthManager implements IFirebaseAuthManager {
   static FirebaseAuthManager? _instance;
+  //
   static FirebaseAuthManager get instance {
     _instance ??= FirebaseAuthManager._init();
     return _instance!;
   }
 
   FirebaseAuthManager._init();
-  //
-  late UserCredential credential;
 
-  @override
-  LoginModel modelUser = LoginModel.empty();
+  ///
+  // -------------------------> Override <-------------------------
+  ///
 
+  /// For Firebase auth İnstanse
   @override
   FirebaseAuth auth = FirebaseAuth.instance;
 
-  //
   @override
-  changeModelUser({LoginModel? model}) {
-    modelUser = model ?? LoginModel.empty();
-  }
 
-  changeModelFromFirebaseUser({User? model}) {
-    modelUser = LoginModel(
-      email: model!.email,
+  /// Firebase auth sonrası oluşan credential içindeki değerleri
+  /// kullanmak değiştirmek kontrol etmek amaçlıdır.
+  FirebaseUserModel userModel = FirebaseUserModel.empty();
+  @override
+
+  /// Auth için herhangi hata oluşması sonucu
+  /// buraya düşen değeri okutabilirsiniz.
+  late String? loginText;
+  @override
+
+  /// crendetial için işlem yapmak isterseniz.
+  late UserCredential? credential;
+  @override
+
+  /// auth için durum değişmeleri yakalanır.
+  Stream<User?> get authStateChanges => auth.authStateChanges();
+  @override
+
+  /// user için doğrudan erişim
+  /// user modelden erişmek daha doğrusu olacaktır.
+  User? get currentUser => auth.currentUser;
+
+  ///
+  // -------------------------> Function <-------------------------
+  ///
+
+  /// User Change
+  @override
+  changeModelUser({FirebaseUserModel? model}) => userModel = model!;
+
+  changeModelSnapshotUser({required User? user}) {
+    var dataModel = FirebaseUserModel(
+      email: user!.email!,
       password: '',
-      displayName: model.displayName,
-      emailVerified: model.emailVerified,
-      hashCod: model.hashCode,
-      isAnonymous: model.isAnonymous,
-      phoneNumber: model.phoneNumber,
-      photoUrl: model.photoURL,
-      refreshToken: model.refreshToken,
-      uuid: model.uid,
+      displayName: user.displayName,
+      emailVerified: user.emailVerified,
+      hashCod: user.hashCode,
+      isAnonymous: user.isAnonymous,
+      phoneNumber: user.phoneNumber,
+      photoUrl: user.photoURL,
+      refreshToken: user.refreshToken,
+      uuid: user.uid,
     );
+    userModel = dataModel;
   }
 
+  ///
+  // -------------------------> Sign In-Out <-------------------------
+  ///
   @override
-  createUserWithEmailAndPassword(
-      {BuildContext? context,
-      String? email,
-      String? pass,
-      String? pushName}) async {
+  createUserWithEmailAndPassword({
+    String? email,
+    String? pass,
+  }) async {
     try {
-      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+      credential = await auth.createUserWithEmailAndPassword(
         email: email!,
         password: pass!,
       );
-      credential = userCredential;
-      Navigator.pushNamedAndRemoveUntil(context!, pushName!, (route) => false);
+      loginText = 'User Create is Successfully';
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
+        loginText = 'The password provided is too weak.';
         print('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
+        loginText = 'The account already exists for that email.';
         print('The account already exists for that email.');
       }
     } catch (e) {
-      print(e);
+      loginText = e.toString();
+      print(e.toString());
     }
   }
 
   @override
-  signInWithEmailAndPassword({String? email, String? pass}) async {
+  signInWithEmailAndPassword({
+    String? email,
+    String? pass,
+  }) async {
     try {
-      UserCredential userCredential =
-          await auth.signInWithEmailAndPassword(email: email!, password: pass!);
-      credential = userCredential;
+      credential = await auth.signInWithEmailAndPassword(
+        email: email!,
+        password: pass!,
+      );
+      loginText = 'Is Login Successfull';
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
+        loginText = 'No user found for that email.';
         print('No user found for that email.');
       } else if (e.code == 'wrong-password') {
+        loginText = 'Wrong password provided for that user.';
         print('Wrong password provided for that user.');
       }
     }
   }
 
-  getAuthStateChange() {
+  //Future<UserCredential>
+  signInWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+
+    // Create a new credential
+    final googleCredential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    // Once signed in, return the UserCredential
+    credential = await auth.signInWithCredential(googleCredential);
+  }
+
+  signInWithFacebook() async {
+    // Trigger the sign-in flow
+    final LoginResult loginResult = await FacebookAuth.instance.login();
+
+    // Create a credential from the access token
+    final OAuthCredential facebookAuthCredential =
+        FacebookAuthProvider.credential(loginResult.accessToken!.token);
+
+    // Once signed in, return the UserCredential
+    credential = await auth.signInWithCredential(facebookAuthCredential);
+  }
+
+  signInWithTwitter() async {
+    // Create a TwitterLogin instance
+    final twitterLogin = TwitterLogin(
+        apiKey: '<your consumer key>',
+        apiSecretKey: ' <your consumer secret>',
+        redirectURI: '<your_scheme>://');
+
+    // Trigger the sign-in flow
+    final authResult = await twitterLogin.login();
+
+    // Create a credential from the access token
+    final twitterAuthCredential = TwitterAuthProvider.credential(
+      accessToken: authResult.authToken!,
+      secret: authResult.authTokenSecret!,
+    );
+
+    // Once signed in, return the UserCredential
+    credential = await auth.signInWithCredential(twitterAuthCredential);
+  }
+
+  getAnonymousCredential() async {
+    credential = await auth.signInAnonymously();
+  }
+
+  signOuth() async {
+    await auth.signOut();
+  }
+
+  bool get getAuthStateChange {
+    late bool isUser;
     auth.authStateChanges().listen((User? user) {
       if (user == null) {
+        isUser = false;
         print('User is currently signed out!');
       } else {
+        isUser = true;
         print('User is signed in!');
       }
     });
+    return isUser;
   }
 
   idTokenChanges() {
@@ -124,10 +228,6 @@ class FirebaseAuthManager implements IFirebaseAuthManager {
     return isUser;
   }
 
-  Future<UserCredential> getAnonymousCredential() {
-    return auth.signInAnonymously();
-  }
-
   verifyUserEmail() async {
     if (auth.currentUser != null && !auth.currentUser!.emailVerified) {
       await auth.currentUser!.sendEmailVerification();
@@ -148,10 +248,6 @@ class FirebaseAuthManager implements IFirebaseAuthManager {
 
       await auth.currentUser!.sendEmailVerification(actionCodeSettings);
     }
-  }
-
-  signOuth() async {
-    await auth.signOut();
   }
 
   sendSignInLinkToEmail({required String email}) async {
@@ -204,55 +300,5 @@ class FirebaseAuthManager implements IFirebaseAuthManager {
     AuthCredential credential =
         EmailAuthProvider.credential(email: email, password: pass);
     await auth.currentUser!.reauthenticateWithCredential(credential);
-  }
-
-  Future<UserCredential> signInWithGoogle() async {
-    // Trigger the authentication flow
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-    // Obtain the auth details from the request
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
-
-    // Create a new credential
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
-
-    // Once signed in, return the UserCredential
-    return await auth.signInWithCredential(credential);
-  }
-
-  Future<UserCredential> signInWithFacebook() async {
-    // Trigger the sign-in flow
-    final LoginResult loginResult = await FacebookAuth.instance.login();
-
-    // Create a credential from the access token
-    final OAuthCredential facebookAuthCredential =
-        FacebookAuthProvider.credential(loginResult.accessToken!.token);
-
-    // Once signed in, return the UserCredential
-    return await auth.signInWithCredential(facebookAuthCredential);
-  }
-
-  Future<UserCredential> signInWithTwitter() async {
-    // Create a TwitterLogin instance
-    final twitterLogin = TwitterLogin(
-        apiKey: '<your consumer key>',
-        apiSecretKey: ' <your consumer secret>',
-        redirectURI: '<your_scheme>://');
-
-    // Trigger the sign-in flow
-    final authResult = await twitterLogin.login();
-
-    // Create a credential from the access token
-    final twitterAuthCredential = TwitterAuthProvider.credential(
-      accessToken: authResult.authToken!,
-      secret: authResult.authTokenSecret!,
-    );
-
-    // Once signed in, return the UserCredential
-    return await auth.signInWithCredential(twitterAuthCredential);
   }
 }

@@ -1,13 +1,19 @@
 // ignore_for_file: avoid_print
 
+import 'package:account_app/product/model/firebase_user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 abstract class IFirebaseCloudFirestoreManager {
-  late FirebaseFirestore cloudFirestore;
-  CollectionReference reference({required String collectionName});
-  addCollectionData(CollectionReference reference, Object? data);
+  FirebaseFirestore get firestore;
+
   Future<Map<String, dynamic>> readOneTimeData(
       {required CollectionReference reference, required String docId});
+}
+
+enum DataEnum {
+  exists,
+  notExists,
+  error,
 }
 
 class FirebaseCloudFirestoreManager extends IFirebaseCloudFirestoreManager {
@@ -20,25 +26,77 @@ class FirebaseCloudFirestoreManager extends IFirebaseCloudFirestoreManager {
   FirebaseCloudFirestoreManager._init();
 
   @override
-  addCollectionData(CollectionReference<Object?> reference, Object? data) {
-    return reference
-        .add(data)
-        .then((value) => print('add $value'))
-        .catchError((error) => print('failure add $error'));
+  FirebaseFirestore get firestore => FirebaseFirestore.instance;
+
+  /// read data
+  Future<DocumentSnapshot> oneTimeReadData(
+      {required String collection, required String documentId}) {
+    CollectionReference users = firestore.collection(collection);
+
+    return users.doc(documentId).get().then((value) => value);
   }
 
-  @override
-  CollectionReference<Object?> reference({
-    required String collectionName,
+  Future<DataEnum> getDataIsExists(
+      {required String collection, required String documentId}) {
+    CollectionReference collectionReference = firestore.collection(collection);
+    return collectionReference
+        .doc(documentId)
+        .get()
+        .then<DataEnum>((DocumentSnapshot snapshot) {
+          if (snapshot.exists) {
+            return DataEnum.exists;
+          } else {
+            return DataEnum.notExists;
+          }
+        })
+        .onError((error, stackTrace) => DataEnum.error)
+        .catchError((error) => DataEnum.error);
+  }
+
+  realTimeReadCollectionData({required String collection}) {
+    CollectionReference users = firestore.collection(collection);
+    return users.snapshots();
+  }
+
+  realTimeReatDocumentData(
+      {required String collection, required String documentId}) {
+    CollectionReference users = firestore.collection(collection);
+    users.doc(documentId).snapshots();
+  }
+
+  addCollectionData(reference, Object? data) {
+    return firestore.runTransaction(
+      (transaction) async {
+        return reference
+            .add(data)
+            .then((value) => print('add Data'))
+            .catchError((error) => print('failure add $error'));
+      },
+    );
+  }
+
+  /// Kayıtlı User için data oluşturma.
+  createFirebaseUserData({
+    required String collectionPath,
+    required FirebaseUserModel model,
   }) {
-    return cloudFirestore.collection(collectionName);
+    final collection = firestore.collection(collectionPath).doc();
+    model.documentId = collection.id;
+    collection.set(model.toJson());
+  }
+
+  @override
+  getReference({
+    required String collectionName,
+    String? documentId,
+  }) {
+    return documentId == null
+        ? firestore.collection(collectionName)
+        : firestore.collection(collectionName).doc(documentId);
   }
 
   ///
   ///
-
-  @override
-  FirebaseFirestore get cloudFirestore => FirebaseFirestore.instance;
 
   @override
   Future<Map<String, dynamic>> readOneTimeData({

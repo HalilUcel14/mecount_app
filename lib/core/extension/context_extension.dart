@@ -15,6 +15,9 @@ import 'package:hucel_core/hucel_core.dart';
 
 extension SnackbarContextExtension on BuildContext {
   ScaffoldFeatureController snackbar({required List<String> errorList}) =>
-      ScaffoldMessenger.of(this)
-          .showSnackBar(ErrorSnackbar(errorList: errorList));
+      ScaffoldMessenger.of(this).showSnackBar(
+        ErrorSnackbar(
+          errorList: errorList,
+        ),
+      );
 }

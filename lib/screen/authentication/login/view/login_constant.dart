@@ -20,7 +20,7 @@ class LoginConstant {
   String signInButton = 'Sign In';
 
   String emailLabel = 'Email Address';
-  String emailHint = 'Please Enter Your Email Address';
+  String emailHint = 'Please Enter Your Email';
   String passLabel = 'Password';
   String passHint = 'Please Enter Your Password';
 

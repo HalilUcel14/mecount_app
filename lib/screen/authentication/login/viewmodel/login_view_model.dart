@@ -1,13 +1,14 @@
 // ignore_for_file: avoid_print
 
 import 'package:account_app/core/extension/context_extension.dart';
-import 'package:account_app/screen/authentication/login/model/login_model.dart';
 import 'package:flutter/material.dart';
 import 'package:hucel_core/hucel_core.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../core/firebase/i_firebase_auth_manager.dart';
+import '../../../../core/firebase/i_firebase_cloud_firestore_manager.dart';
 import '../../../../core/routes/app_routes.dart';
+import '../../../../product/model/firebase_user_model.dart';
 import '../view/login_constant.dart';
 
 part 'login_view_model.g.dart';
@@ -21,12 +22,13 @@ abstract class _LoginScreenViewModelBase with Store, BaseViewModel {
   @override
   void setContext(BuildContext meContext) => baseContext = meContext;
   @override
-  void init() {
-    authManager = FirebaseAuthManager.instance;
-  }
+  void init() {}
 
   //
-  late FirebaseAuthManager authManager;
+  final LoginConstant _loginConstant = LoginConstant.instance;
+  final FirebaseAuthManager authManager = FirebaseAuthManager.instance;
+  FirebaseCloudFirestoreManager cloudFirestoreManager =
+      FirebaseCloudFirestoreManager.instance;
   final formKey = GlobalKey<FormState>();
 
   @observable
@@ -49,50 +51,59 @@ abstract class _LoginScreenViewModelBase with Store, BaseViewModel {
     passText = value;
   }
 
+  //
+
   void buttonPressed() async {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
     }
     if (emailText!.isNotEmpty && passText!.isNotEmpty) {
       if (_emailValid() && _passValid()) {
+        // Firebase için Giriş Sağlar
         await authManager.signInWithEmailAndPassword(
           email: emailText,
           pass: passText,
         );
-        var user = authManager.auth.currentUser;
-        if (user != null) {
-          //
-          authManager.changeModelUser(
-            model: LoginModel(
-              email: emailText,
-              password: passText,
-              displayName: user.displayName,
-              emailVerified: user.emailVerified,
-              hashCod: user.hashCode,
-              isAnonymous: user.isAnonymous,
-              phoneNumber: user.phoneNumber,
-              photoUrl: user.photoURL,
-              refreshToken: user.refreshToken,
-              uuid: user.uid,
-            ),
+        // Hata Mesajı Gösterir
+        baseContext!.snackbar(errorList: [authManager.loginText ?? '']);
+      }
+      // credential oluşturulmuş ise - Giriş Başarılı ise
+      if (authManager.credential != null) {
+        var result = await cloudFirestoreManager.getDataIsExists(
+          collection: 'userdata',
+          documentId: authManager.credential!.user!.uid,
+        );
+        if (result == DataEnum.notExists) {
+          var user = authManager.credential!.user!;
+          var model = FirebaseUserModel(
+            email: emailText!,
+            password: passText,
+            displayName: user.displayName,
+            emailVerified: user.emailVerified,
+            hashCod: user.hashCode,
+            isAnonymous: user.isAnonymous,
+            phoneNumber: user.phoneNumber,
+            photoUrl: user.photoURL,
+            refreshToken: user.refreshToken,
+            uuid: user.uid,
           );
-          print(user.displayName);
+          //
+          await cloudFirestoreManager.createFirebaseUserData(
+            collectionPath: 'userdata',
+            model: model,
+          );
+        }
+
+        if (authManager.getAuthStateChange) {
           baseContext!.pushNameAndRemoveUntil(AppRoutes.home);
         }
       }
     }
   }
 
-  final LoginConstant _loginConstant = LoginConstant.instance;
-
   bool _emailValid() {
-    if (!emailText!.contains(_loginConstant.emailMustContain)) {
-      baseContext!.snackbar(errorList: [_loginConstant.errorEmailContain]);
-
-      print(_loginConstant.errorEmailContain);
-      return false;
-    } else if (!emailText!.isValidEmail) {
-      print(_loginConstant.errorEmailNotValid);
+    if (!emailText!.isValidEmail) {
+      baseContext!.snackbar(errorList: [_loginConstant.errorEmailNotValid]);
       return false;
     }
     return true;
@@ -100,10 +111,10 @@ abstract class _LoginScreenViewModelBase with Store, BaseViewModel {
 
   bool _passValid() {
     if (passText!.length < 8) {
-      print(_loginConstant.errorPassShort);
+      baseContext!.snackbar(errorList: [_loginConstant.errorPassShort]);
       return false;
     } else if (!passText!.isValidLowPassword) {
-      print(_loginConstant.errorPassNotValid);
+      baseContext!.snackbar(errorList: [_loginConstant.errorPassNotValid]);
       return false;
     }
     return true;

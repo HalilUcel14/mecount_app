@@ -40,20 +40,18 @@ class RegisterButtons extends StatelessWidget {
                       print('İts Okey');
                       // User Data Cloud Reference
                       var userRef = viewModel.cloudFirestoreManager
-                          .reference(collectionName: 'user');
+                          .getReference(collectionName: 'user');
                       // Kullanıcı oluşturma ve sayfa geçiş
                       await viewModel.authManager
                           .createUserWithEmailAndPassword(
                         email: viewModel.emailText,
                         pass: viewModel.passText,
-                        context: context,
-                        pushName: AppRoutes.home,
                       );
                       // Kullanıcıyı sistemde ayrıdan kayıt oluşturma.
                       RegisterModel model = RegisterModel(
                         email: viewModel.emailText,
                         password: viewModel.passText,
-                        uuid: viewModel.authManager.credential.user!.uid,
+                        uuid: viewModel.authManager.credential!.user!.uid,
                         isOnline: true,
                       );
 
