@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "856473879388",
+    "project_id": "mecounting",
+    "storage_bucket": "mecounting.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:856473879388:android:1bb3949683bd8676517799",
+        "android_client_info": {
+          "package_name": "com.example.account_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "856473879388-2adsb5okju53sionn31oq15opkfddscm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlqwMk9qKZXicflGwvpZFiQKMDzSD0-5A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "856473879388-2adsb5okju53sionn31oq15opkfddscm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
