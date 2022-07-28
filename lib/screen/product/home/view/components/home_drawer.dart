@@ -1,3 +1,4 @@
+import 'package:account_app/core/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:hucel_core/hucel_core.dart';
 
@@ -64,6 +65,14 @@ class HomeDrawerLayout extends StatelessWidget {
             leading: const Icon(Icons.home_outlined),
             title: const Text('Home'),
             onTap: () {},
+          ),
+          ListTile(
+            leading: const Icon(Icons.person),
+            title: const Text('Profile'),
+            onTap: () {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, AppRoutes.profile, (route) => false);
+            },
           ),
           ListTile(
             leading: const Icon(Icons.favorite_border),

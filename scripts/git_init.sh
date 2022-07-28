@@ -1,4 +1,8 @@
-git init
+echo 'cummit için başlık girin'
+read name
 git add .
-git commit -m "init"
-git remote add origin https://github.com/HalilUcel14/mecount_app.git
+git cummit -m "$name"
+echo 'yayınlamak için branch girin'
+read branch
+git branch "$branch"
+git push -u origin "$branch"

@@ -1,3 +1,4 @@
+import 'package:account_app/screen/product/drawer_state/profile/view/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../screen/authentication/login/view/login_screen.dart';
@@ -19,6 +20,7 @@ class AppRoutes {
   static const String login = '/login';
   static const String register = '/register';
   static const String home = '/home';
+  static const String profile = '/profile';
 
   Map<String, Widget Function(BuildContext)> routes = <String, WidgetBuilder>{
     initRoute: (context) => const Scaffold(),
@@ -26,5 +28,6 @@ class AppRoutes {
     login: (context) => LoginScreen(),
     home: (context) => HomeScreen(),
     register: (context) => RegisterScreen(),
+    profile: (context) => ProfileScreen(),
   };
 }
