@@ -88,21 +88,15 @@ abstract class _LoginScreenViewModelBase with Store, BaseViewModel {
             uuid: user.uid,
           );
           //
-          var result = await cloudFirestoreManager.getDataIsExists(
-            collection: 'userdata',
-            documentId: authManager.credential!.user!.uid,
+          await cloudFirestoreManager.createFirebaseUserData(
+            collectionPath: 'userdata',
+            model: model,
           );
-          if (result == DataEnum.notExists) {
-            await cloudFirestoreManager.createFirebaseUserData(
-              collectionPath: 'userdata',
-              model: model,
-            );
-          }
         }
+      }
 
-        if (authManager.credential!.user != null) {
-          baseContext!.pushNameAndRemoveUntil(AppRoutes.home);
-        }
+      if (authManager.credential!.user != null) {
+        baseContext!.pushNameAndRemoveUntil(AppRoutes.home);
       }
     }
   }
