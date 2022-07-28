@@ -1,6 +1,5 @@
 // ignore_for_file: avoid_print
 
-import 'package:account_app/core/extension/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:hucel_core/hucel_core.dart';
 import 'package:mobx/mobx.dart';
@@ -9,7 +8,7 @@ import '../../../../core/firebase/i_firebase_auth_manager.dart';
 import '../../../../core/firebase/i_firebase_cloud_firestore_manager.dart';
 import '../../../../core/routes/app_routes.dart';
 import '../../../../product/model/firebase_user_model.dart';
-import '../view/login_constant.dart';
+import '../../auth/authentication_constants.dart';
 
 part 'login_view_model.g.dart';
 
@@ -25,11 +24,13 @@ abstract class _LoginScreenViewModelBase with Store, BaseViewModel {
   void init() {}
 
   //
-  final LoginConstant _loginConstant = LoginConstant.instance;
   final FirebaseAuthManager authManager = FirebaseAuthManager.instance;
   FirebaseCloudFirestoreManager cloudFirestoreManager =
       FirebaseCloudFirestoreManager.instance;
   final formKey = GlobalKey<FormState>();
+  final AuthencticationConstants constants = AuthencticationConstants.instance;
+  final FocusNode emailFocus = FocusNode();
+  final FocusNode passFocus = FocusNode();
 
   @observable
   TextEditingController emailController = TextEditingController();
@@ -56,9 +57,11 @@ abstract class _LoginScreenViewModelBase with Store, BaseViewModel {
   void buttonPressed() async {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
+      emailFocus.unfocus();
+      passFocus.unfocus();
     }
     if (emailText!.isNotEmpty && passText!.isNotEmpty) {
-      if (_emailValid() && _passValid()) {
+      if (emailValid(email: emailText!) && passValid(password: passText!)) {
         // Firebase için Giriş Sağlar
         await authManager.signInWithEmailAndPassword(
           email: emailText,
@@ -73,7 +76,7 @@ abstract class _LoginScreenViewModelBase with Store, BaseViewModel {
           collection: 'userdata',
           documentId: authManager.credential!.user!.uid,
         );
-        if (result == DataEnum.notExists) {
+        if (result == UserDataEnum.notExists) {
           var user = authManager.credential!.user!;
           var model = FirebaseUserModel(
             email: emailText!,
@@ -95,28 +98,38 @@ abstract class _LoginScreenViewModelBase with Store, BaseViewModel {
         }
       }
 
-      if (authManager.credential!.user != null) {
+      if (authManager.credential?.user != null) {
         baseContext!.pushNameAndRemoveUntil(AppRoutes.home);
       }
+    } else {
+      baseContext!.snackbar(errorList: [constants.formFieldIsEmpty]);
     }
   }
 
-  bool _emailValid() {
-    if (!emailText!.isValidEmail) {
-      baseContext!.snackbar(errorList: [_loginConstant.errorEmailNotValid]);
+  bool emailValid({required String email}) {
+    if (!email.isValidEmail) {
+      baseContext!.snackbar(errorList: [constants.errorEmailNotValid]);
       return false;
+    } else if (email.length > 100) {
+      baseContext!.snackbar(errorList: [constants.errorEmailLong]);
+      return false;
+    } else {
+      return true;
     }
-    return true;
   }
 
-  bool _passValid() {
-    if (passText!.length < 8) {
-      baseContext!.snackbar(errorList: [_loginConstant.errorPassShort]);
+  bool passValid({required String password}) {
+    if (password.length < 8) {
+      baseContext!.snackbar(errorList: [constants.errorPassShort]);
       return false;
-    } else if (!passText!.isValidLowPassword) {
-      baseContext!.snackbar(errorList: [_loginConstant.errorPassNotValid]);
+    } else if (password.length > 100) {
+      baseContext!.snackbar(errorList: [constants.errorPassLong]);
       return false;
+    } else if (password.isValidLowPassword) {
+      baseContext!.snackbar(errorList: [constants.errorPassNotValid]);
+      return false;
+    } else {
+      return true;
     }
-    return true;
   }
 }

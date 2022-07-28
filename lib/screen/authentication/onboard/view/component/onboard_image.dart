@@ -4,12 +4,15 @@ import 'package:hucel_widget/hucel_widget.dart';
 
 import '../../../../../core/routes/app_routes.dart';
 import '../../model/onboard_model.dart';
-import '../onboard_constants.dart';
+import '../../viewmodel/onboard_viewmodel.dart';
 
 class OnboardImageCard extends StatelessWidget {
-  const OnboardImageCard({Key? key, required this.model}) : super(key: key);
+  const OnboardImageCard(
+      {Key? key, required this.model, required this.viewModel})
+      : super(key: key);
 
   final OnBoardModel model;
+  final OnBoardScreenViewModel viewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +40,7 @@ class OnboardImageCard extends StatelessWidget {
       child: ElevatedButtonWithStadiumBorder(
         styleBackgroundColor: Colors.red,
         child: Text(
-          OnBoardConstants.instance.skip,
+          viewModel.constants.skip,
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: constraints.maxWidth * 0.04),
         ),

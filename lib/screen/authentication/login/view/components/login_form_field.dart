@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../../../../../core/widget/special_text_form_field.dart';
 import '../../viewmodel/login_view_model.dart';
-import '../login_constant.dart';
 
 class LoginFormField extends StatelessWidget {
-  LoginFormField({Key? key, required this.viewModel}) : super(key: key);
+  const LoginFormField({Key? key, required this.viewModel}) : super(key: key);
   //
   final LoginScreenViewModel viewModel;
-  final LoginConstant _loginConstant = LoginConstant.instance;
+
   //
   @override
   Widget build(BuildContext context) {
@@ -21,10 +20,11 @@ class LoginFormField extends StatelessWidget {
               const Spacer(),
               // Email Form Field
               SpecialTextFormField(
-                labelText: _loginConstant.emailLabel,
-                hintText: _loginConstant.emailHint,
+                focusNode: viewModel.emailFocus,
+                labelText: viewModel.constants.emailLabelText,
+                hintText: viewModel.constants.emailHintText,
                 keyboardType: TextInputType.emailAddress,
-                logoIconName: _loginConstant.mailIcon,
+                logoIconName: viewModel.constants.mailIcon,
                 defaultHeight: constraints.maxHeight / 2.3,
                 onSaved: (value) {
                   viewModel.changeEmailText(value);
@@ -34,11 +34,12 @@ class LoginFormField extends StatelessWidget {
               const Spacer(),
               // Password Form Field
               SpecialTextFormField(
+                focusNode: viewModel.passFocus,
                 obscureText: true,
-                labelText: _loginConstant.passLabel,
-                hintText: _loginConstant.passHint,
+                labelText: viewModel.constants.passLabelText,
+                hintText: viewModel.constants.passHintText,
                 controller: viewModel.passController,
-                logoIconName: _loginConstant.passIcon,
+                logoIconName: viewModel.constants.lockIcon,
                 defaultHeight: constraints.maxHeight / 2.3,
                 onSaved: (value) {
                   viewModel.changePassText(value);

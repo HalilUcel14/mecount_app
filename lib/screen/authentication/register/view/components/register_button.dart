@@ -21,7 +21,7 @@ class RegisterButtons extends StatelessWidget {
           children: [
             ElevatedButtonWithStadiumBorder(
               child: Text(
-                viewModel.constant.registerButton,
+                viewModel.constants.signUp,
                 style: TextStyle(fontSize: height * 0.075),
               ),
               fixedSize: Size(width * 0.3, height * 0.16),
@@ -41,7 +41,7 @@ class RegisterButtons extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          viewModel.constant.haveAccount,
+          viewModel.constants.haveAccount,
           style: TextStyle(fontSize: constraints.maxHeight * 0.075),
         ),
         TextButton(
@@ -50,13 +50,11 @@ class RegisterButtons extends StatelessWidget {
                 context, AppRoutes.login, (route) => false);
           },
           child: Text(
-            viewModel.constant.logInTextButton,
+            viewModel.constants.signIn,
             style: TextStyle(fontSize: constraints.maxHeight * 0.08),
           ),
         )
       ],
     );
   }
-
-  void registerPressed() async {}
 }

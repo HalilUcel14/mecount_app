@@ -5,13 +5,12 @@ import 'package:hucel_widget/hucel_widget.dart';
 import '../../../../../core/routes/app_routes.dart';
 import '../../../../../core/widget/Icon_logo.dart';
 import '../../viewmodel/login_view_model.dart';
-import '../login_constant.dart';
 
 class LoginFormButtons extends StatelessWidget {
-  LoginFormButtons({Key? key, required this.viewModel}) : super(key: key);
+  const LoginFormButtons({Key? key, required this.viewModel}) : super(key: key);
   //
   final LoginScreenViewModel viewModel;
-  final LoginConstant _loginConstant = LoginConstant.instance;
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -41,7 +40,7 @@ class LoginFormButtons extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          _loginConstant.dontHaveAccount,
+          viewModel.constants.dontHaveAccount,
           style: TextStyle(fontSize: constraints.maxHeight * 0.05),
         ),
         TextButton(
@@ -49,7 +48,7 @@ class LoginFormButtons extends StatelessWidget {
               await context.pushNameAndRemoveUntil(AppRoutes.register);
             },
             child: Text(
-              _loginConstant.signUp,
+              viewModel.constants.signUp,
               style: TextStyle(fontSize: constraints.maxHeight * 0.055),
             ))
       ],
@@ -64,16 +63,16 @@ class LoginFormButtons extends StatelessWidget {
           onTap: () {},
           child: IconsLogo(
             size: constraints.maxHeight * 0.16,
-            logoIconName: _loginConstant.facebookIcon,
+            logoIconName: viewModel.constants.facebookIcon,
           ),
         ),
         IconsLogo(
           size: constraints.maxHeight * 0.16,
-          logoIconName: _loginConstant.googleIcon,
+          logoIconName: viewModel.constants.googleIcon,
         ),
         IconsLogo(
           size: constraints.maxHeight * 0.16,
-          logoIconName: _loginConstant.twitterIcon,
+          logoIconName: viewModel.constants.twitterIcon,
         ),
       ],
     );
@@ -84,7 +83,7 @@ class LoginFormButtons extends StatelessWidget {
       children: [
         _divider(),
         Text(
-          _loginConstant.orSignWith,
+          viewModel.constants.dividerText,
           style: TextStyle(
             fontSize: constraints.maxHeight * 0.05,
           ),
@@ -98,7 +97,7 @@ class LoginFormButtons extends StatelessWidget {
       BoxConstraints constraints, BuildContext context) {
     return ElevatedButtonWithStadiumBorder(
       child: Text(
-        _loginConstant.signInButton,
+        viewModel.constants.signIn,
         style: TextStyle(
           fontSize: constraints.maxHeight * 0.05,
         ),
@@ -113,12 +112,13 @@ class LoginFormButtons extends StatelessWidget {
 
   Expanded _divider() {
     return Expanded(
-        child: Container(
-      margin: const EdgeInsets.symmetric(horizontal: 15),
-      child: const Divider(
-        color: Colors.black,
-        thickness: 1,
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 15),
+        child: const Divider(
+          color: Colors.black,
+          thickness: 1,
+        ),
       ),
-    ));
+    );
   }
 }

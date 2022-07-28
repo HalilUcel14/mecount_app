@@ -10,9 +10,10 @@ abstract class IFirebaseCloudFirestoreManager {
       {required CollectionReference reference, required String docId});
 }
 
-enum DataEnum {
+enum UserDataEnum {
   exists,
   notExists,
+  create,
   error,
 }
 
@@ -36,21 +37,21 @@ class FirebaseCloudFirestoreManager extends IFirebaseCloudFirestoreManager {
     return users.doc(documentId).get().then((value) => value);
   }
 
-  Future<DataEnum> getDataIsExists(
+  Future<UserDataEnum> getDataIsExists(
       {required String collection, required String documentId}) {
     CollectionReference collectionReference = firestore.collection(collection);
     return collectionReference
         .doc(documentId)
         .get()
-        .then<DataEnum>((DocumentSnapshot snapshot) {
+        .then<UserDataEnum>((DocumentSnapshot snapshot) {
           if (snapshot.exists) {
-            return DataEnum.exists;
+            return UserDataEnum.exists;
           } else {
-            return DataEnum.notExists;
+            return UserDataEnum.notExists;
           }
         })
-        .onError((error, stackTrace) => DataEnum.error)
-        .catchError((error) => DataEnum.error);
+        .onError((error, stackTrace) => UserDataEnum.error)
+        .catchError((error) => UserDataEnum.error);
   }
 
   realTimeReadCollectionData({required String collection}) {

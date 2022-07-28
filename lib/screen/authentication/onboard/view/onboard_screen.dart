@@ -54,7 +54,10 @@ class OnBoardScreen extends BaseStateless {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
-              child: OnboardImageCard(model: currentModel),
+              child: OnboardImageCard(
+                model: currentModel,
+                viewModel: _viewModel,
+              ),
             ),
             Expanded(
               child: OnboardDetailCard(

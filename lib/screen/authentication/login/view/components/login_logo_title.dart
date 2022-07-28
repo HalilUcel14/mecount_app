@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
-import '../login_constant.dart';
+import '../../viewmodel/login_view_model.dart';
 
 class LoginLogoAndTitle extends StatelessWidget {
-  LoginLogoAndTitle({Key? key}) : super(key: key);
+  const LoginLogoAndTitle({Key? key, required this.viewModel})
+      : super(key: key);
 
-  final LoginConstant _loginConstant = LoginConstant.instance;
+  final LoginScreenViewModel viewModel;
+
   //
   @override
   Widget build(BuildContext context) {
@@ -28,14 +30,14 @@ class LoginLogoAndTitle extends StatelessWidget {
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
-        text: '${_loginConstant.welcome}\n',
+        text: '${viewModel.constants.loginTitle}\n',
         style: TextStyle(
           fontSize: height * 0.42,
           color: Colors.black87,
         ),
         children: [
           TextSpan(
-            text: _loginConstant.loginText,
+            text: viewModel.constants.loginSubTitle,
             style: TextStyle(
               fontSize: height * 0.24,
             ),

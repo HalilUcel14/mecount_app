@@ -19,6 +19,7 @@ class SpecialTextFormField extends StatefulWidget {
     required this.controller,
     this.keyboardType,
     this.obscureText = false,
+    this.focusNode,
   }) : super(key: key);
 
   final EdgeInsetsGeometry? contentPadding;
@@ -34,6 +35,7 @@ class SpecialTextFormField extends StatefulWidget {
   final String? Function(String?)? validator;
   final String logoIconName;
   final TextEditingController controller;
+  final FocusNode? focusNode;
 
   @override
   State<SpecialTextFormField> createState() => _SpecialTextFormFieldState();
@@ -63,6 +65,7 @@ class _SpecialTextFormFieldState extends State<SpecialTextFormField> {
           width: double.infinity > 500 ? 500 : double.infinity,
           alignment: Alignment.centerLeft,
           child: TextFormField(
+            focusNode: widget.focusNode,
             keyboardType: widget.keyboardType,
             controller: widget.controller,
             onSaved: widget.onSaved,

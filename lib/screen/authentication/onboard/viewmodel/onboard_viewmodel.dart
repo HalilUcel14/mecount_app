@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hucel_core/hucel_core.dart';
 import 'package:mobx/mobx.dart';
 
+import '../../auth/authentication_constants.dart';
 import '../model/onboard_model.dart';
 
 part 'onboard_viewmodel.g.dart';
@@ -15,9 +16,7 @@ abstract class _OnBoardScreenViewModelBase with Store, BaseViewModel {
   @override
   void init() {}
 
-  //
-
-  String onboardCollectionName = 'onboard';
+  final AuthencticationConstants constants = AuthencticationConstants.instance;
   //
   @observable
   PageController controller = PageController(initialPage: 0);

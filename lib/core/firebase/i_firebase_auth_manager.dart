@@ -19,6 +19,14 @@ abstract class IFirebaseAuthManager {
   changeModelUser({FirebaseUserModel? model});
 }
 
+enum AuthDataEnum {
+  create,
+  signin,
+  signout,
+  error,
+  empty,
+}
+
 class FirebaseAuthManager implements IFirebaseAuthManager {
   static FirebaseAuthManager? _instance;
   //
@@ -89,7 +97,7 @@ class FirebaseAuthManager implements IFirebaseAuthManager {
   // -------------------------> Sign In-Out <-------------------------
   ///
   @override
-  createUserWithEmailAndPassword({
+  Future<AuthDataEnum> createUserWithEmailAndPassword({
     String? email,
     String? pass,
   }) async {
@@ -99,18 +107,23 @@ class FirebaseAuthManager implements IFirebaseAuthManager {
         password: pass!,
       );
       loginText = 'User Create is Successfully';
+      return AuthDataEnum.create;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         loginText = 'The password provided is too weak.';
         print('The password provided is too weak.');
+        return AuthDataEnum.error;
       } else if (e.code == 'email-already-in-use') {
         loginText = 'The account already exists for that email.';
         print('The account already exists for that email.');
+        return AuthDataEnum.error;
       }
     } catch (e) {
       loginText = e.toString();
       print(e.toString());
+      return AuthDataEnum.error;
     }
+    return AuthDataEnum.empty;
   }
 
   @override

@@ -10,9 +10,6 @@ class RegisterFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //
-
-    //
     return Form(
       key: viewModel.formKey,
       child: LayoutBuilder(
@@ -24,19 +21,19 @@ class RegisterFormField extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               SpecialTextFormField(
-                logoIconName: viewModel.constant.mailIcon,
+                logoIconName: viewModel.constants.mailIcon,
                 controller: viewModel.emailController,
                 defaultHeight: formHeight,
                 onSaved: (value) => viewModel.changeEmailText(value!),
               ),
               SpecialTextFormField(
-                logoIconName: viewModel.constant.passIcon,
+                logoIconName: viewModel.constants.lockIcon,
                 controller: viewModel.passController,
                 defaultHeight: formHeight,
                 onSaved: (value) => viewModel.changePassText(value!),
               ),
               SpecialTextFormField(
-                logoIconName: viewModel.constant.passIcon,
+                logoIconName: viewModel.constants.lockIcon,
                 controller: viewModel.confirmController,
                 defaultHeight: formHeight,
                 onSaved: (value) => viewModel.changeConfirmText(value!),

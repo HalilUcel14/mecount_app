@@ -1,4 +1,3 @@
-import 'package:account_app/core/extension/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:hucel_core/hucel_core.dart';
 import 'package:mobx/mobx.dart';
@@ -7,7 +6,7 @@ import '../../../../core/firebase/i_firebase_auth_manager.dart';
 import '../../../../core/firebase/i_firebase_cloud_firestore_manager.dart';
 import '../../../../core/routes/app_routes.dart';
 import '../../../../product/model/firebase_user_model.dart';
-import '../view/register_constant.dart';
+import '../../auth/authentication_constants.dart';
 
 part 'register_viewmodel.g.dart';
 
@@ -18,14 +17,12 @@ abstract class _RegisterScreenViewModelBase with Store, BaseViewModel {
   @override
   void setContext(BuildContext context) => baseContext = context;
   @override
-  void init() {
-    authManager = FirebaseAuthManager.instance;
-  }
+  void init() {}
 
-  final RegisterConstant constant = RegisterConstant.instance;
+  final AuthencticationConstants constants = AuthencticationConstants.instance;
   final formKey = GlobalKey<FormState>();
 
-  late FirebaseAuthManager authManager;
+  FirebaseAuthManager authManager = FirebaseAuthManager.instance;
   FirebaseCloudFirestoreManager cloudFirestoreManager =
       FirebaseCloudFirestoreManager.instance;
 
@@ -63,29 +60,23 @@ abstract class _RegisterScreenViewModelBase with Store, BaseViewModel {
 
   void registerPressed() async {
     formKey.currentState!.save();
-
+    // bölümler boş mu
     if (isNotEmpty) {
+      // password eşleşiyor mu
       if (isMatchPass) {
-        if (!emailText.isValidEmail) {
-          baseContext!.snackbar(errorList: [constant.errorEmailNotValid]);
-        } else if (!passText.isValidLowPassword || passText.length < 8) {
-          baseContext!.snackbar(errorList: [
-            constant.errorPassNotValid,
-            constant.errorPassShort,
-          ]);
-        } else {
-          // Kullanıcı oluşturma ve sayfa geçiş
-          await authManager.createUserWithEmailAndPassword(
-            email: emailText,
-            pass: passText,
-          );
-          if (authManager.loginText == 'User Create is Successfully') {
-            if (authManager.credential != null) {
-              var result = await cloudFirestoreManager.getDataIsExists(
-                collection: 'userdata',
-                documentId: authManager.credential!.user!.uid,
-              );
-              if (result == DataEnum.notExists) {
+        // email valid var mı
+        if (emailValid(email: emailText)) {
+          // password valid mi
+          if (passValid(password: passText)) {
+            // user Create
+            var data = await authManager.createUserWithEmailAndPassword(
+              email: emailText,
+              pass: passText,
+            );
+            // eğer işlem başarı olduysa
+            if (data == AuthDataEnum.create) {
+              // credential kontrol edilir.
+              if (authManager.credential != null) {
                 var user = authManager.credential!.user!;
                 var model = FirebaseUserModel(
                   email: emailText,
@@ -99,25 +90,47 @@ abstract class _RegisterScreenViewModelBase with Store, BaseViewModel {
                   refreshToken: user.refreshToken,
                   uuid: user.uid,
                 );
-
+                // firestore için kullanıcı datası oluşur
                 await cloudFirestoreManager.createFirebaseUserData(
                   collectionPath: 'userdata',
                   model: model,
                 );
               }
-              if (authManager.currentUser != null) {
-                baseContext!.pushNameAndRemoveUntil(AppRoutes.home);
-              }
             }
-          } else {
-            baseContext!.snackbar(errorList: [authManager.loginText!]);
+            // eğer user görünüyor ise home ekranına geçiş yapar.
+            if (authManager.credential?.user != null) {
+              baseContext!.pushNameAndRemoveUntil(AppRoutes.home);
+            }
           }
         }
-      } else {
-        baseContext!.snackbar(errorList: [constant.errorMatchPass]);
       }
+    }
+  }
+
+  bool emailValid({required String email}) {
+    if (!email.isValidEmail) {
+      baseContext!.snackbar(errorList: [constants.errorEmailNotValid]);
+      return false;
+    } else if (email.length > 100) {
+      baseContext!.snackbar(errorList: [constants.errorEmailLong]);
+      return false;
     } else {
-      baseContext!.snackbar(errorList: [constant.errorEmptyField]);
+      return true;
+    }
+  }
+
+  bool passValid({required String password}) {
+    if (password.length < 8) {
+      baseContext!.snackbar(errorList: [constants.errorPassShort]);
+      return false;
+    } else if (password.length > 100) {
+      baseContext!.snackbar(errorList: [constants.errorPassLong]);
+      return false;
+    } else if (password.isValidLowPassword) {
+      baseContext!.snackbar(errorList: [constants.errorPassNotValid]);
+      return false;
+    } else {
+      return true;
     }
   }
 }

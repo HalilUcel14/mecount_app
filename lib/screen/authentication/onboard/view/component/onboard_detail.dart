@@ -5,7 +5,6 @@ import 'package:hucel_widget/hucel_widget.dart';
 import '../../../../../core/widget/selected_indicator.dart';
 import '../../model/onboard_model.dart';
 import '../../viewmodel/onboard_viewmodel.dart';
-import '../onboard_constants.dart';
 
 class OnboardDetailCard extends StatelessWidget {
   const OnboardDetailCard({
@@ -27,11 +26,25 @@ class OnboardDetailCard extends StatelessWidget {
           padding: context.padAllS,
           margin: context.padAllS,
           child: _childColumn(context, constraints),
-          decoration: OnBoardConstants.instance.detailCard(constraints),
+          decoration: detailCard(constraints),
         );
       },
     );
   }
+
+  BoxDecoration detailCard(BoxConstraints constraints) => BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(
+          Radius.circular(constraints.maxHeight * 0.1),
+        ),
+        boxShadow: [
+          BoxShadow(
+            blurRadius: constraints.maxHeight * 0.05,
+            color: Colors.grey,
+            blurStyle: BlurStyle.solid,
+          ),
+        ],
+      );
 
   Widget _childColumn(BuildContext context, BoxConstraints constraints) {
     return Column(
@@ -67,7 +80,7 @@ class OnboardDetailCard extends StatelessWidget {
         _onboardElevationButton(
           context,
           constraints,
-          text: OnBoardConstants.instance.previous,
+          text: viewModel.constants.previous,
           onPressed: () {
             viewModel.controller.previousPage(
               duration: context.durationS,
@@ -79,7 +92,7 @@ class OnboardDetailCard extends StatelessWidget {
         _onboardElevationButton(
           context,
           constraints,
-          text: OnBoardConstants.instance.next,
+          text: viewModel.constants.next,
           onPressed: () {
             viewModel.controller.nextPage(
               duration: const Duration(milliseconds: 300),

@@ -7,5 +7,5 @@ class AppString {
 
   AppString._init();
 
-  String appTitle = 'MeCount';
+  String appTitle = 'Me Count';
 }

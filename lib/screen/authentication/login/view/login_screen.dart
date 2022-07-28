@@ -27,6 +27,9 @@ class LoginScreen extends BaseStateless {
       onDispose: () {
         _viewModel.passController.dispose();
         _viewModel.emailController.dispose();
+        _viewModel.formKey.currentState?.dispose();
+        _viewModel.emailFocus.dispose();
+        _viewModel.passFocus.dispose();
       },
     );
   }
@@ -43,11 +46,18 @@ class LoginScreen extends BaseStateless {
               ),
               child: Column(
                 children: [
-                  Expanded(child: LoginLogoAndTitle(), flex: 2),
                   Expanded(
-                      child: LoginFormField(viewModel: _viewModel), flex: 2),
+                    child: LoginLogoAndTitle(viewModel: _viewModel),
+                    flex: 2,
+                  ),
                   Expanded(
-                      child: LoginFormButtons(viewModel: _viewModel), flex: 3),
+                    child: LoginFormField(viewModel: _viewModel),
+                    flex: 2,
+                  ),
+                  Expanded(
+                    child: LoginFormButtons(viewModel: _viewModel),
+                    flex: 3,
+                  ),
                 ],
               ),
             ),

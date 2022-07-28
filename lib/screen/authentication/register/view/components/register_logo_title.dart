@@ -29,14 +29,14 @@ class RegisterLogoAndTitle extends StatelessWidget {
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
-        text: '${viewModel.constant.registerTitle}\n',
+        text: '${viewModel.constants.registerTitle}\n',
         style: TextStyle(
           fontSize: height * 0.42,
           color: Colors.black87,
         ),
         children: [
           TextSpan(
-            text: viewModel.constant.registerSubTitle,
+            text: viewModel.constants.registerSubTitle,
             style: TextStyle(
               fontSize: height * 0.24,
             ),
