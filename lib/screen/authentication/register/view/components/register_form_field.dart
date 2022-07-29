@@ -20,19 +20,34 @@ class RegisterFormField extends StatelessWidget {
           return Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+              // Email Form Field
               SpecialTextFormField(
+                focusNode: viewModel.emailFocus,
+                labelText: viewModel.constants.emailLabelText,
+                hintText: viewModel.constants.emailHintText,
                 logoIconName: viewModel.constants.mailIcon,
                 controller: viewModel.emailController,
+                keyboardType: TextInputType.emailAddress,
                 defaultHeight: formHeight,
                 onSaved: (value) => viewModel.changeEmailText(value!),
               ),
+              // Password Form Field
               SpecialTextFormField(
+                focusNode: viewModel.passFocus,
+                obscureText: true,
+                labelText: viewModel.constants.passLabelText,
+                hintText: viewModel.constants.passHintText,
                 logoIconName: viewModel.constants.lockIcon,
                 controller: viewModel.passController,
                 defaultHeight: formHeight,
                 onSaved: (value) => viewModel.changePassText(value!),
               ),
+              // Confirm Form Field
               SpecialTextFormField(
+                focusNode: viewModel.confirmFocus,
+                obscureText: true,
+                labelText: viewModel.constants.passLabelText,
+                hintText: viewModel.constants.passHintText,
                 logoIconName: viewModel.constants.lockIcon,
                 controller: viewModel.confirmController,
                 defaultHeight: formHeight,

@@ -4,7 +4,7 @@ import 'package:hucel_widget/hucel_widget.dart';
 
 import '../../../../../product/model/company_model.dart';
 import '../../viewmodel/home_view_model.dart';
-import '../home_constants.dart';
+import '../../../constants/home_constants.dart';
 import 'home_company_list.dart';
 
 class HomeViewPage extends StatelessWidget {

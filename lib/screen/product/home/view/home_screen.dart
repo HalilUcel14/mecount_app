@@ -4,7 +4,7 @@ import 'package:hucel_core/hucel_core.dart';
 import 'package:hucel_widget/hucel_widget.dart';
 
 import '../../../../core/routes/app_routes.dart';
-import '../../../../core/widget/platform_widget.dart';
+
 import '../viewmodel/home_view_model.dart';
 import 'platform/home_mobile.dart';
 import 'platform/home_web.dart';
@@ -52,8 +52,8 @@ class HomeScreen extends BaseStateless {
   /// Mevcut Platformun hangisi olduğuna göre ayar yapar.
   Widget _homePageBuilder() {
     return PlatformWidget(
-      mobile: HomeViewMobile(viewModel: _viewModel),
-      desktopWeb: HomeViewDesktopWeb(viewModel: _viewModel),
+      onMobile: HomeViewMobile(viewModel: _viewModel),
+      onDesktopWeb: HomeViewDesktopWeb(viewModel: _viewModel),
     );
   }
 

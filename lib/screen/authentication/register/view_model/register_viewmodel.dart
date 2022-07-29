@@ -20,6 +20,7 @@ abstract class _RegisterScreenViewModelBase with Store, BaseViewModel {
   void init() {}
 
   final AuthencticationConstants constants = AuthencticationConstants.instance;
+
   final formKey = GlobalKey<FormState>();
 
   FirebaseAuthManager authManager = FirebaseAuthManager.instance;
@@ -32,6 +33,10 @@ abstract class _RegisterScreenViewModelBase with Store, BaseViewModel {
   TextEditingController passController = TextEditingController();
   @observable
   TextEditingController confirmController = TextEditingController();
+
+  FocusNode emailFocus = FocusNode();
+  FocusNode passFocus = FocusNode();
+  FocusNode confirmFocus = FocusNode();
 
   @observable
   String emailText = '';
@@ -60,6 +65,10 @@ abstract class _RegisterScreenViewModelBase with Store, BaseViewModel {
 
   void registerPressed() async {
     formKey.currentState!.save();
+    // Klavye Focus Kapatma.
+    emailFocus.unfocus();
+    passFocus.unfocus();
+    confirmFocus.unfocus();
     // bölümler boş mu
     if (isNotEmpty) {
       // password eşleşiyor mu

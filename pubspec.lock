@@ -496,14 +496,14 @@ packages:
       name: hucel_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.7"
+    version: "0.1.8"
   hucel_widget:
     dependency: "direct main"
     description:
       name: hucel_widget
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.8"
+    version: "0.0.9"
   intl:
     dependency: transitive
     description:
