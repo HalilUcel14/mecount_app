@@ -29,15 +29,6 @@ class LoginFormButtons extends StatelessWidget {
             const Spacer(flex: 6),
             // Dont Have Account
             _dontHaveAccount(constraints, context),
-            const Spacer(flex: 6),
-            TextButton(
-              onPressed: () => Navigator.pushNamedAndRemoveUntil(
-                context,
-                AppRoutes.forgot,
-                (route) => false,
-              ),
-              child: Text("Forgot your password ?"),
-            ),
           ],
         );
       },
@@ -50,7 +41,9 @@ class LoginFormButtons extends StatelessWidget {
       children: [
         Text(
           viewModel.constants.dontHaveAccount,
-          style: TextStyle(fontSize: constraints.maxHeight * 0.05),
+          style: context.textTheme.subtitle1?.copyWith(
+            fontSize: constraints.maxHeight * 0.050,
+          ),
         ),
         TextButton(
           onPressed: () async {
@@ -58,7 +51,9 @@ class LoginFormButtons extends StatelessWidget {
           },
           child: Text(
             viewModel.constants.signUp,
-            style: TextStyle(fontSize: constraints.maxHeight * 0.055),
+            style: context.textTheme.subtitle2?.copyWith(
+              fontSize: constraints.maxHeight * 0.055,
+            ),
           ),
         ),
       ],

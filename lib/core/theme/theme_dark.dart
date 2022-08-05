@@ -12,13 +12,17 @@ class ThemeDark extends IApplicationTheme {
 
   ThemeDark._init();
 
-  final Color kPrimary = Colors.red;
+  final Color kScaffoldBackground = Colors.black87;
+  final Color kPrimary = 'D74701'.color;
+  final Color kPrimaryLight = 'FF854B'.color;
+  final Color kPrimaryDark = 'A93700'.color;
+  final Color kSecondary = 'FF6820'.color;
   final Color kOnPrimary = Colors.black;
-  final Color kSecondary = Colors.black;
-  final Color kOnSecondary = Colors.red;
+  final Color kOnSecondary = Colors.white;
+
   final Color kError = Colors.redAccent;
   final Color kOnError = Colors.white;
-  final Color kBackground = Colors.black;
+
   final Color kOnBackground = Colors.yellow;
   final Color kSurface = Colors.white;
   final Color kOnSurface = Colors.red;
@@ -41,12 +45,12 @@ class ThemeDark extends IApplicationTheme {
           onSecondary: kOnSecondary,
           error: kError,
           onError: kOnError,
-          background: kBackground,
+          background: kScaffoldBackground,
           onBackground: kOnBackground,
           surface: kSurface,
           onSurface: kOnSurface,
         ),
-        scaffoldBackgroundColor: kBackground,
+        scaffoldBackgroundColor: kScaffoldBackground,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         textTheme: customThemeData.textTheme(
           fontFamily: fontFamily,
@@ -54,7 +58,3 @@ class ThemeDark extends IApplicationTheme {
         ),
       );
 }
-/*textTheme: customThemeData.textTheme(
-          fontFamily: defaultFontFamily,
-          color: kOnBackground,
-        ), */

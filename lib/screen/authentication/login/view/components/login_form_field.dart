@@ -18,50 +18,55 @@ class LoginFormField extends StatelessWidget {
           return Column(
             children: [
               const Spacer(),
-              // Email Form Field
-              SpecialTextFormField(
-                focusNode: viewModel.emailFocus,
-                labelText: viewModel.constants.emailLabelText,
-                hintText: viewModel.constants.emailHintText,
-                keyboardType: TextInputType.emailAddress,
-                logoIconName: viewModel.constants.mailIcon,
-                defaultHeight: constraints.maxHeight / 2.3,
-                onSaved: (value) {
-                  viewModel.changeEmailText(value);
-                },
-                controller: viewModel.emailController,
-              ),
+              _emailFormField(constraints),
               const Spacer(),
-              // Password Form Field
-              SpecialTextFormField(
-                rightWidget: Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      'Forgot',
-                      style: TextStyle(
-                        fontSize: constraints.maxHeight * 0.08,
-                      ),
-                    ),
-                  ),
-                ),
-                focusNode: viewModel.passFocus,
-                obscureText: true,
-                labelText: viewModel.constants.passLabelText,
-                hintText: viewModel.constants.passHintText,
-                controller: viewModel.passController,
-                logoIconName: viewModel.constants.lockIcon,
-                defaultHeight: constraints.maxHeight / 2.3,
-                onSaved: (value) {
-                  viewModel.changePassText(value);
-                },
-              ),
-              //const Spacer(),
+              _passwordFormField(constraints),
             ],
           );
         },
       ),
+    );
+  }
+
+  SpecialTextFormField _passwordFormField(BoxConstraints constraints) {
+    return SpecialTextFormField(
+      rightWidget: Padding(
+        padding: const EdgeInsets.only(right: 8.0),
+        child: TextButton(
+          onPressed: () {},
+          child: Text(
+            'Forgot',
+            style: TextStyle(
+              fontSize: constraints.maxHeight * 0.08,
+            ),
+          ),
+        ),
+      ),
+      focusNode: viewModel.passFocus,
+      obscureText: true,
+      labelText: viewModel.constants.passLabelText,
+      hintText: viewModel.constants.passHintText,
+      controller: viewModel.passController,
+      logoIconName: viewModel.constants.lockIcon,
+      defaultHeight: constraints.maxHeight / 2.3,
+      onSaved: (value) {
+        viewModel.changePassText(value);
+      },
+    );
+  }
+
+  SpecialTextFormField _emailFormField(BoxConstraints constraints) {
+    return SpecialTextFormField(
+      focusNode: viewModel.emailFocus,
+      labelText: viewModel.constants.emailLabelText,
+      hintText: viewModel.constants.emailHintText,
+      keyboardType: TextInputType.emailAddress,
+      logoIconName: viewModel.constants.mailIcon,
+      defaultHeight: constraints.maxHeight / 2.3,
+      onSaved: (value) {
+        viewModel.changeEmailText(value);
+      },
+      controller: viewModel.emailController,
     );
   }
 }
