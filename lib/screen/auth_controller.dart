@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../core/firebase/i_firebase_auth_manager.dart';
+import '../core/firebase/authentication/i_firebase_auth_manager.dart';
 import 'authentication/login/view/login_screen.dart';
 import 'product/home/view/home_screen.dart';
 
@@ -16,8 +16,9 @@ class AuthControllerWidget extends StatelessWidget {
       builder: (context, AsyncSnapshot<User?> snapshot) {
         if (snapshot.data != null) {
           return HomeScreen();
+        } else {
+          return LoginScreen();
         }
-        return LoginScreen();
       },
     );
   }

@@ -1,3 +1,4 @@
+import 'package:account_app/core/widget/auth/title_subtitle_text.dart';
 import 'package:flutter/material.dart';
 
 import '../../view_model/register_viewmodel.dart';
@@ -25,24 +26,11 @@ class RegisterLogoAndTitle extends StatelessWidget {
     );
   }
 
-  RichText _titleSubtitleText(BuildContext context, double height) {
-    return RichText(
-      textAlign: TextAlign.center,
-      text: TextSpan(
-        text: '${viewModel.constants.registerTitle}\n',
-        style: TextStyle(
-          fontSize: height * 0.42,
-          color: Colors.black87,
-        ),
-        children: [
-          TextSpan(
-            text: viewModel.constants.registerSubTitle,
-            style: TextStyle(
-              fontSize: height * 0.24,
-            ),
-          ),
-        ],
-      ),
+  Widget _titleSubtitleText(BuildContext context, double height) {
+    return AuthHeadTitle(
+      title: viewModel.constants.registerTitle,
+      subTitle: viewModel.constants.registerSubTitle,
+      fontSize: height * 0.5,
     );
   }
 }

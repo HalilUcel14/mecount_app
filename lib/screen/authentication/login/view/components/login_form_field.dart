@@ -1,4 +1,6 @@
+import 'package:account_app/core/routes/app_routes.dart';
 import 'package:flutter/material.dart';
+import 'package:hucel_core/hucel_core.dart';
 
 import '../../../../../core/widget/special_text_form_field.dart';
 import '../../viewmodel/login_view_model.dart';
@@ -20,7 +22,7 @@ class LoginFormField extends StatelessWidget {
               const Spacer(),
               _emailFormField(constraints),
               const Spacer(),
-              _passwordFormField(constraints),
+              _passwordFormField(constraints, context),
             ],
           );
         },
@@ -28,20 +30,10 @@ class LoginFormField extends StatelessWidget {
     );
   }
 
-  SpecialTextFormField _passwordFormField(BoxConstraints constraints) {
+  SpecialTextFormField _passwordFormField(
+      BoxConstraints constraints, BuildContext context) {
     return SpecialTextFormField(
-      rightWidget: Padding(
-        padding: const EdgeInsets.only(right: 8.0),
-        child: TextButton(
-          onPressed: () {},
-          child: Text(
-            'Forgot',
-            style: TextStyle(
-              fontSize: constraints.maxHeight * 0.08,
-            ),
-          ),
-        ),
-      ),
+      rightWidget: _forgotButton(constraints, context),
       focusNode: viewModel.passFocus,
       obscureText: true,
       labelText: viewModel.constants.passLabelText,
@@ -52,6 +44,24 @@ class LoginFormField extends StatelessWidget {
       onSaved: (value) {
         viewModel.changePassText(value);
       },
+    );
+  }
+
+  Padding _forgotButton(BoxConstraints constraints, BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 8.0),
+      child: TextButton(
+        onPressed: () async {
+          await context.pushNamed(AppRoutes.forgot);
+        },
+        child: Text(
+          viewModel.constants.forgot,
+          style: context.textTheme.subtitle2?.copyWith(
+            fontSize: constraints.maxHeight * 0.08,
+            color: context.theme.primaryColor,
+          ),
+        ),
+      ),
     );
   }
 

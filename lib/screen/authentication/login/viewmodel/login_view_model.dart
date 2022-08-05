@@ -1,12 +1,15 @@
 // ignore_for_file: avoid_print
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:hucel_core/hucel_core.dart';
 import 'package:mobx/mobx.dart';
 
-import '../../../../core/firebase/i_firebase_auth_manager.dart';
-import '../../../../core/firebase/i_firebase_cloud_firestore_manager.dart';
-import '../../../../product/model/firebase_user_model.dart';
+import '../../../../core/firebase/authentication/i_firebase_auth_manager.dart';
+import '../../../../core/firebase/cloud_firestore/firestore_constants.dart';
+import '../../../../core/firebase/cloud_firestore/i_firebase_cloud_firestore_manager.dart';
+import '../../../../core/firebase/authentication/firebase_user_model.dart';
 import '../../auth/authentication_constants.dart';
 
 part 'login_view_model.g.dart';
@@ -74,14 +77,15 @@ abstract class _LoginScreenViewModelBase with Store, BaseViewModel {
       // credential oluşturulmuş ise - Giriş Başarılı ise
       if (authManager.currentUser != null) {
         var result = await cloudFirestoreManager.getDataIsExists(
-          collection: 'userdata',
+          collection: CloudFirestoreConstants.instance.userData,
           documentId: authManager.currentUser!.uid,
         );
         if (result == UserDataEnum.notExists) {
           var user = authManager.currentUser!;
+          bool isMobile = Platform.isAndroid;
+          bool isMobileTo = Platform.isIOS;
           var model = FirebaseUserModel(
             email: emailText!,
-            password: passText,
             displayName: user.displayName,
             emailVerified: user.emailVerified,
             hashCod: user.hashCode,
@@ -90,18 +94,17 @@ abstract class _LoginScreenViewModelBase with Store, BaseViewModel {
             photoUrl: user.photoURL,
             refreshToken: user.refreshToken,
             uuid: user.uid,
+            isMobileOnline: isMobile ? true : null,
+            isWebOnline: isMobile ? null : true,
           );
           //
+
           await cloudFirestoreManager.createFirebaseUserData(
-            collectionPath: 'userdata',
+            collectionPath: CloudFirestoreConstants.instance.userData,
             model: model,
           );
         }
       }
-
-      // if (authManager.currentUser != null) {
-      //   baseContext!.pushNameAndRemoveUntil(AppRoutes.home);
-      // }
     } else {
       baseContext!.snackbar(errorList: [constants.formFieldIsEmpty]);
     }

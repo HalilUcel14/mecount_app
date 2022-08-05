@@ -1,11 +1,14 @@
+import 'package:account_app/core/firebase/cloud_firestore/firestore_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:hucel_core/hucel_core.dart';
 import 'package:mobx/mobx.dart';
 
-import '../../../../core/firebase/i_firebase_auth_manager.dart';
-import '../../../../core/firebase/i_firebase_cloud_firestore_manager.dart';
+import 'dart:io';
+
+import '../../../../core/firebase/authentication/i_firebase_auth_manager.dart';
+import '../../../../core/firebase/cloud_firestore/i_firebase_cloud_firestore_manager.dart';
 import '../../../../core/routes/app_routes.dart';
-import '../../../../product/model/firebase_user_model.dart';
+import '../../../../core/firebase/authentication/firebase_user_model.dart';
 import '../../auth/authentication_constants.dart';
 
 part 'register_viewmodel.g.dart';
@@ -87,9 +90,9 @@ abstract class _RegisterScreenViewModelBase with Store, BaseViewModel {
             // credential kontrol edilir.
             if (authManager.currentUser != null) {
               var user = authManager.currentUser!;
+              bool isMobile = Platform.isIOS || Platform.isAndroid;
               var model = FirebaseUserModel(
                 email: emailText,
-                password: passText,
                 displayName: user.displayName,
                 emailVerified: user.emailVerified,
                 hashCod: user.hashCode,
@@ -98,10 +101,12 @@ abstract class _RegisterScreenViewModelBase with Store, BaseViewModel {
                 photoUrl: user.photoURL,
                 refreshToken: user.refreshToken,
                 uuid: user.uid,
+                isMobileOnline: isMobile ? true : null,
+                isWebOnline: isMobile ? null : true,
               );
               // firestore için kullanıcı datası oluşur
               await cloudFirestoreManager.createFirebaseUserData(
-                collectionPath: 'userdata',
+                collectionPath: CloudFirestoreConstants.instance.userData,
                 model: model,
               );
             }
@@ -132,7 +137,7 @@ abstract class _RegisterScreenViewModelBase with Store, BaseViewModel {
     if (password.length < 8) {
       baseContext!.snackbar(errorList: [constants.errorPassShort]);
       return false;
-    } else if (password.length > 100) {
+    } else if (password.length > 24) {
       baseContext!.snackbar(errorList: [constants.errorPassLong]);
       return false;
     } else if (!password.isValidLowPassword) {

@@ -1,6 +1,6 @@
+import 'package:account_app/core/widget/auth/title_subtitle_text.dart';
 import 'package:flutter/material.dart';
 import '../../viewmodel/login_view_model.dart';
-import 'package:hucel_core/hucel_core.dart';
 
 class LoginLogoAndTitle extends StatelessWidget {
   const LoginLogoAndTitle({Key? key, required this.viewModel})
@@ -26,23 +26,11 @@ class LoginLogoAndTitle extends StatelessWidget {
     );
   }
 
-  RichText _titleSubtitleText(BuildContext context, double height) {
-    return RichText(
-      textAlign: TextAlign.center,
-      text: TextSpan(
-        text: '${viewModel.constants.loginTitle}\n',
-        style: context.theme.textTheme.titleMedium!.copyWith(
-          fontSize: height * 0.42,
-        ),
-        children: [
-          TextSpan(
-            text: viewModel.constants.loginSubTitle,
-            style: context.theme.textTheme.titleSmall!.copyWith(
-              fontSize: height * 0.24,
-            ),
-          ),
-        ],
-      ),
+  Widget _titleSubtitleText(BuildContext context, double height) {
+    return AuthHeadTitle(
+      title: viewModel.constants.loginTitle,
+      subTitle: viewModel.constants.loginSubTitle,
+      fontSize: height * 0.42,
     );
   }
 }

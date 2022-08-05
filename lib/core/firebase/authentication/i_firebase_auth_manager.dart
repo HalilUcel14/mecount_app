@@ -152,6 +152,10 @@ class FirebaseAuthManager implements IFirebaseAuthManager {
     await auth.signOut();
   }
 
+  sendPasswordResetEmail(String email) async {
+    await auth.sendPasswordResetEmail(email: email);
+  }
+
   verifyUserEmail() async {
     if (auth.currentUser != null && !auth.currentUser!.emailVerified) {
       await auth.currentUser!.sendEmailVerification();

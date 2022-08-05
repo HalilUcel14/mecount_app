@@ -1,9 +1,12 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
-import 'package:hucel_widget/hucel_widget.dart';
 
 import '../../../../../core/routes/app_routes.dart';
+import '../../../../../core/widget/auth/divider_text.dart';
+import '../../../../../core/widget/auth/if_have_an_account.dart';
+import '../../../../../core/widget/auth/sign_elevated_button.dart';
+import '../../../../../core/widget/auth/social_sign_buttons.dart';
 import '../../view_model/register_viewmodel.dart';
 
 class RegisterButtons extends StatelessWidget {
@@ -15,46 +18,50 @@ class RegisterButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        double height = constraints.maxHeight;
-        double width = constraints.maxWidth;
         return Column(
           children: [
-            ElevatedButtonWithStadiumBorder(
-              child: Text(
-                viewModel.constants.signUp,
-                style: TextStyle(fontSize: height * 0.075),
-              ),
-              fixedSize: Size(width * 0.3, height * 0.16),
-              onPressed: viewModel.registerPressed,
-            ),
-            const Spacer(flex: 5),
-            _alreadyHaveAccount(constraints, context),
+            _signButton(constraints, context),
+            const Spacer(flex: 3),
+            _dividerOrSign(constraints, context),
             const Spacer(),
+            _socialButton(constraints, context),
+            const Spacer(flex: 3),
+            _alreadyHaveAccount(constraints, context),
           ],
         );
       },
     );
   }
 
-  Row _alreadyHaveAccount(BoxConstraints constraints, BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          viewModel.constants.haveAccount,
-          style: TextStyle(fontSize: constraints.maxHeight * 0.075),
-        ),
-        TextButton(
-          onPressed: () {
-            Navigator.pushNamedAndRemoveUntil(
-                context, AppRoutes.login, (route) => false);
-          },
-          child: Text(
-            viewModel.constants.signIn,
-            style: TextStyle(fontSize: constraints.maxHeight * 0.08),
-          ),
-        )
-      ],
+  Widget _signButton(BoxConstraints constraints, BuildContext context) {
+    return SignElevatedButton(
+      buttonText: viewModel.constants.signUp,
+      fontSize: constraints.maxHeight * 0.075,
+      size: Size(constraints.maxWidth * 0.32, constraints.maxHeight * 0.16),
+      button: viewModel.registerPressed,
+    );
+  }
+
+  Widget _socialButton(BoxConstraints constraints, BuildContext context) {
+    return SocialSignButtons(
+      viewModel: viewModel,
+      size: constraints.maxHeight * 0.16,
+    );
+  }
+
+  Widget _dividerOrSign(BoxConstraints constraints, BuildContext context) {
+    return DividerWithText(
+      dividerText: viewModel.constants.dividerText,
+      fontSize: constraints.maxHeight * 0.07,
+    );
+  }
+
+  Widget _alreadyHaveAccount(BoxConstraints constraints, BuildContext context) {
+    return IfHaveAnAccountButton(
+      accountText: viewModel.constants.haveAccount,
+      fontSize: constraints.maxHeight * 0.07,
+      nextPageButtonText: viewModel.constants.signIn,
+      pathToPage: AppRoutes.login,
     );
   }
 }

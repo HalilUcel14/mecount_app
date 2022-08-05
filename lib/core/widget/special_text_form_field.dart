@@ -126,7 +126,7 @@ class _SpecialTextFormFieldState extends State<SpecialTextFormField> {
 
         InkWell(
           onTap: () => changeObscure(),
-          child: IconsLogo(
+          child: IconsLogo.sgv(
             size: widget.defaultHeight * 0.85,
             color: obscureTexted ? Colors.red : Colors.blue,
             logoIconName: widget.logoIconName,

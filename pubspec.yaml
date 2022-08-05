@@ -59,6 +59,7 @@ dependencies:
   ##
   ## Asset Manager Svg Picture
   flutter_svg: ^1.0.3
+  lottie: ^1.4.1
   ##
   ##
   

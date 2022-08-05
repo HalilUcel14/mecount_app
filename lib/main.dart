@@ -6,7 +6,7 @@ import 'package:hucel_core/hucel_core.dart';
 import 'package:provider/provider.dart';
 
 import 'core/constants/app_string.dart';
-import 'core/firebase/i_firebase_auth_manager.dart';
+import 'core/firebase/authentication/i_firebase_auth_manager.dart';
 import 'core/routes/app_routes.dart';
 import 'core/theme/theme_dark.dart';
 import 'core/theme/theme_light.dart';

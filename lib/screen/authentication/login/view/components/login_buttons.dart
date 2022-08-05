@@ -1,10 +1,11 @@
+import 'package:account_app/core/widget/auth/divider_text.dart';
+import 'package:account_app/core/widget/auth/sign_elevated_button.dart';
+import 'package:account_app/core/widget/auth/social_sign_buttons.dart';
 import 'package:flutter/material.dart';
-import 'package:hucel_core/hucel_core.dart';
-import 'package:hucel_widget/hucel_widget.dart';
 
 import '../../../../../core/routes/app_routes.dart';
-import '../../../../../core/widget/Icon_logo.dart';
 
+import '../../../../../core/widget/auth/if_have_an_account.dart';
 import '../../viewmodel/login_view_model.dart';
 
 class LoginFormButtons extends StatelessWidget {
@@ -22,10 +23,10 @@ class LoginFormButtons extends StatelessWidget {
             _signinButton(constraints, context),
             // ------ Or ----- Bölümü
             const Spacer(flex: 5),
-            _dividerOrSign(constraints),
+            _dividerOrSign(constraints, context),
             // Social Button Login
             const Spacer(flex: 1),
-            _socialButton(constraints),
+            _socialButton(constraints, context),
             const Spacer(flex: 6),
             // Dont Have Account
             _dontHaveAccount(constraints, context),
@@ -35,97 +36,38 @@ class LoginFormButtons extends StatelessWidget {
     );
   }
 
-  Row _dontHaveAccount(BoxConstraints constraints, BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          viewModel.constants.dontHaveAccount,
-          style: context.textTheme.subtitle1?.copyWith(
-            fontSize: constraints.maxHeight * 0.050,
-          ),
-        ),
-        TextButton(
-          onPressed: () async {
-            await context.pushNameAndRemoveUntil(AppRoutes.register);
-          },
-          child: Text(
-            viewModel.constants.signUp,
-            style: context.textTheme.subtitle2?.copyWith(
-              fontSize: constraints.maxHeight * 0.055,
-            ),
-          ),
-        ),
-      ],
+  Widget _dontHaveAccount(BoxConstraints constraints, BuildContext context) {
+    return IfHaveAnAccountButton(
+      accountText: viewModel.constants.dontHaveAccount,
+      fontSize: constraints.maxHeight * 0.050,
+      nextPageButtonText: viewModel.constants.signUp,
+      pathToPage: AppRoutes.register,
     );
   }
 
-  Row _socialButton(BoxConstraints constraints) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        InkWell(
-          onTap: () {
-            viewModel.themeManager.changeTheme(ThemeEnum.DARK);
-          },
-          child: IconsLogo(
-            size: constraints.maxHeight * 0.16,
-            logoIconName: viewModel.constants.facebookIcon,
-          ),
-        ),
-        IconsLogo(
-          size: constraints.maxHeight * 0.16,
-          logoIconName: viewModel.constants.googleIcon,
-        ),
-        IconsLogo(
-          size: constraints.maxHeight * 0.16,
-          logoIconName: viewModel.constants.twitterIcon,
-        ),
-      ],
+  Widget _socialButton(BoxConstraints constraints, BuildContext context) {
+    return SocialSignButtons(
+      viewModel: viewModel,
+      size: constraints.maxHeight * 0.16,
     );
   }
 
-  Row _dividerOrSign(BoxConstraints constraints) {
-    return Row(
-      children: [
-        _divider(),
-        Text(
-          viewModel.constants.dividerText,
-          style: TextStyle(
-            fontSize: constraints.maxHeight * 0.05,
-          ),
-        ),
-        _divider(),
-      ],
+  Widget _dividerOrSign(BoxConstraints constraints, BuildContext context) {
+    return DividerWithText(
+      dividerText: viewModel.constants.dividerText,
+      fontSize: constraints.maxHeight * 0.05,
     );
   }
 
-  ElevatedButtonWithStadiumBorder _signinButton(
-      BoxConstraints constraints, BuildContext context) {
-    return ElevatedButtonWithStadiumBorder(
-      child: Text(
-        viewModel.constants.signIn,
-        style: TextStyle(
-          fontSize: constraints.maxHeight * 0.05,
-        ),
-      ),
-      onPressed: viewModel.buttonPressed,
-      fixedSize: Size(
+  Widget _signinButton(BoxConstraints constraints, BuildContext context) {
+    return SignElevatedButton(
+      buttonText: viewModel.constants.signIn,
+      fontSize: constraints.maxHeight * 0.05,
+      size: Size(
         constraints.maxWidth * 0.3,
         constraints.maxHeight * 0.13,
       ),
-    );
-  }
-
-  Expanded _divider() {
-    return Expanded(
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 15),
-        child: const Divider(
-          color: Colors.black,
-          thickness: 1,
-        ),
-      ),
+      button: viewModel.buttonPressed,
     );
   }
 }

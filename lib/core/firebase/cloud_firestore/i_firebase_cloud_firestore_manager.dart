@@ -2,7 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../product/model/firebase_user_model.dart';
+import '../authentication/firebase_user_model.dart';
 
 abstract class IFirebaseCloudFirestoreManager {
   FirebaseFirestore get firestore;

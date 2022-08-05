@@ -49,8 +49,14 @@ class ThemeLight extends IApplicationTheme {
           surface: kSurface,
           onSurface: kOnSurface,
         ),
+        //
+        primaryColor: kPrimary,
+        primaryColorLight: kPrimaryLight,
+        primaryColorDark: kPrimaryDark,
+        //
         scaffoldBackgroundColor: kScaffoldBackground,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        //
         textButtonTheme: TextButtonThemeData(
           style: ButtonStyle(
             animationDuration: const Duration(milliseconds: 300),

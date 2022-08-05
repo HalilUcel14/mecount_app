@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hucel_core/hucel_core.dart';
 import 'package:mobx/mobx.dart';
 
-import '../../../../core/firebase/i_firebase_auth_manager.dart';
-import '../../../../core/firebase/i_firebase_cloud_firestore_manager.dart';
+import '../../../../core/firebase/authentication/i_firebase_auth_manager.dart';
+import '../../../../core/firebase/cloud_firestore/i_firebase_cloud_firestore_manager.dart';
 import '../../../../product/model/company_model.dart';
 
 part 'home_view_model.g.dart';

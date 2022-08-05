@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hucel_widget/hucel_widget.dart';
 
-import '../../../core/firebase/i_firebase_auth_manager.dart';
+import '../../../core/firebase/authentication/i_firebase_auth_manager.dart';
 
 class DetailScreen extends StatelessWidget {
   const DetailScreen({Key? key}) : super(key: key);

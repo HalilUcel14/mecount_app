@@ -1,7 +1,6 @@
-import 'package:account_app/core/firebase/i_firebase_auth_manager.dart';
-import 'package:account_app/core/firebase/i_firebase_cloud_firestore_manager.dart';
+import 'package:account_app/core/firebase/authentication/i_firebase_auth_manager.dart';
+import 'package:account_app/core/firebase/cloud_firestore/i_firebase_cloud_firestore_manager.dart';
 import 'package:account_app/screen/authentication/auth/authentication_constants.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hucel_core/hucel_core.dart';
 import 'package:mobx/mobx.dart';
@@ -19,7 +18,6 @@ abstract class _ForgotScreenViewModelBase with Store, BaseViewModel {
   @override
   void init() {}
 
-  final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseAuthManager authManager = FirebaseAuthManager.instance;
   final FirebaseCloudFirestoreManager cloudFirestoreManager =
       FirebaseCloudFirestoreManager.instance;
@@ -51,8 +49,7 @@ abstract class _ForgotScreenViewModelBase with Store, BaseViewModel {
       formkey.currentState!.save();
       emailFocus.unfocus();
     }
-
-    await auth.sendPasswordResetEmail(email: emailcontroller.text.trim());
+    authManager.sendPasswordResetEmail(emailText!.trim());
   }
 
   bool emailValid({required String email}) {

@@ -20,6 +20,7 @@ class AuthencticationConstants {
   String dontHaveAccount = 'Dont have an Account ?';
   String signUp = 'Sign Up';
   String signIn = 'Sign In';
+  String forgot = 'Forgot';
   String dividerText = 'Or Sign in With';
 
   String formFieldIsEmpty = 'Email Or Password field is empty';

@@ -1,3 +1,4 @@
+import 'package:account_app/core/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:hucel_core/hucel_core.dart';
 
@@ -95,7 +96,10 @@ class HomeDrawerLayout extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.exit_to_app_sharp),
             title: const Text('Sign Out'),
-            onTap: () => viewModel.authManager.signOut(),
+            onTap: () async {
+              await context.pushNameAndRemoveUntil(AppRoutes.login);
+              viewModel.authManager.signOut();
+            },
           ),
         ],
       ),
