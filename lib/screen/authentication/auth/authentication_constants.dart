@@ -43,6 +43,7 @@ class AuthencticationConstants {
   String previous = 'Previous'.easyLocale;
   String next = 'Next'.easyLocale;
   String skip = 'Skip'.easyLocale;
+  String errorEmailVerified = 'Your Email is not Verified';
 
   /// Validation
   /// icon

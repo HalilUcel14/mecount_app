@@ -1,9 +1,10 @@
-import 'package:account_app/core/firebase/authentication/i_firebase_auth_manager.dart';
-import 'package:account_app/core/firebase/cloud_firestore/i_firebase_cloud_firestore_manager.dart';
-import 'package:account_app/screen/authentication/auth/authentication_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:hucel_core/hucel_core.dart';
 import 'package:mobx/mobx.dart';
+
+import '../../../../core/firebase/authentication/i_firebase_auth_manager.dart';
+import '../../../../core/firebase/cloud_firestore/i_firebase_cloud_firestore_manager.dart';
+import '../../auth/authentication_constants.dart';
 
 part 'forgot_viewmodel.g.dart';
 
@@ -22,7 +23,7 @@ abstract class _ForgotScreenViewModelBase with Store, BaseViewModel {
   final FirebaseCloudFirestoreManager cloudFirestoreManager =
       FirebaseCloudFirestoreManager.instance;
 
-  final GlobalKey formkey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
   final AuthencticationConstants constants = AuthencticationConstants.instance;
   final FocusNode emailFocus = FocusNode();
 
@@ -30,22 +31,26 @@ abstract class _ForgotScreenViewModelBase with Store, BaseViewModel {
   TextEditingController emailController = TextEditingController();
 
   @observable
-  String? emailText = '';
-  @observable
-  String? passText = '';
+  String emailText = '';
+
   //
   @action
-  void changeEmailText(String? value) {
+  void changeEmailText(String value) {
     emailText = value;
   }
 
-  @action
-  void changePassText(String? value) {
-    passText = value;
-  }
-
   void pressButton() async {
-    authManager.sendPasswordResetEmail(emailText!.trim());
+    if (formKey.currentState!.validate()) {
+      formKey.currentState!.save();
+      emailFocus.unfocus();
+    }
+    if (emailValid(email: emailText)) {
+      if (authManager.currentUser!.emailVerified) {
+        await authManager.sendPasswordResetEmail(emailText.trim());
+      } else {
+        baseContext!.snackbar(errorList: [constants.errorEmailVerified]);
+      }
+    }
   }
 
   bool emailValid({required String email}) {

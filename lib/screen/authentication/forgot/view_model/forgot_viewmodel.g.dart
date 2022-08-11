@@ -29,31 +29,15 @@ mixin _$ForgotScreenViewModel on _ForgotScreenViewModelBase, Store {
       Atom(name: '_ForgotScreenViewModelBase.emailText', context: context);
 
   @override
-  String? get emailText {
+  String get emailText {
     _$emailTextAtom.reportRead();
     return super.emailText;
   }
 
   @override
-  set emailText(String? value) {
+  set emailText(String value) {
     _$emailTextAtom.reportWrite(value, super.emailText, () {
       super.emailText = value;
-    });
-  }
-
-  late final _$passTextAtom =
-      Atom(name: '_ForgotScreenViewModelBase.passText', context: context);
-
-  @override
-  String? get passText {
-    _$passTextAtom.reportRead();
-    return super.passText;
-  }
-
-  @override
-  set passText(String? value) {
-    _$passTextAtom.reportWrite(value, super.passText, () {
-      super.passText = value;
     });
   }
 
@@ -61,7 +45,7 @@ mixin _$ForgotScreenViewModel on _ForgotScreenViewModelBase, Store {
       ActionController(name: '_ForgotScreenViewModelBase', context: context);
 
   @override
-  void changeEmailText(String? value) {
+  void changeEmailText(String value) {
     final _$actionInfo = _$_ForgotScreenViewModelBaseActionController
         .startAction(name: '_ForgotScreenViewModelBase.changeEmailText');
     try {
@@ -72,22 +56,10 @@ mixin _$ForgotScreenViewModel on _ForgotScreenViewModelBase, Store {
   }
 
   @override
-  void changePassText(String? value) {
-    final _$actionInfo = _$_ForgotScreenViewModelBaseActionController
-        .startAction(name: '_ForgotScreenViewModelBase.changePassText');
-    try {
-      return super.changePassText(value);
-    } finally {
-      _$_ForgotScreenViewModelBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
 emailController: ${emailController},
-emailText: ${emailText},
-passText: ${passText}
+emailText: ${emailText}
     ''';
   }
 }

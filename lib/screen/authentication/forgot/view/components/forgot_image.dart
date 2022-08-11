@@ -19,13 +19,13 @@ class _ForgotLottieImageState extends State<ForgotLottieImage>
     lottieController = AnimationController(
       vsync: this,
       duration: const Duration(
-        seconds: 3,
+        seconds: 4,
       ),
     );
 
     lottieController.addStatusListener((status) async {
       if (status == AnimationStatus.completed) {
-        Navigator.pop(context);
+        // Navigator.pop(context); // Animasyon Tamamlanınca Sayfayı Kapatır.
         lottieController.reset();
       } else {}
     });
@@ -42,14 +42,13 @@ class _ForgotLottieImageState extends State<ForgotLottieImage>
   Widget build(BuildContext context) {
     return Center(
       child: Lottie.asset(
-        'support'.getLottie,
-
+        'forgot_password'.getLottie,
+        fit: BoxFit.cover,
         // default olarak true gelir animasyon durdurma oynatma,
         animate: true,
-
         onLoaded: (composition) {
           lottieController.duration = composition.duration;
-          //lottieController.forward();
+          lottieController.forward();
         },
       ),
     );

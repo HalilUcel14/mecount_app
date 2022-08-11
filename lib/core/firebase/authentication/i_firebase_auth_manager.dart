@@ -174,7 +174,21 @@ class FirebaseAuthManager implements IFirebaseAuthManager {
   }
 
   sendPasswordResetEmail(String email) async {
-    await auth.sendPasswordResetEmail(email: email);
+    try {
+      await auth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case 'auth/invalid-email':
+          loginCatchError = 'Email Address is not Valid';
+          break;
+        case 'auth/missing-android-pkg-name':
+          loginCatchError = 'Android app is required to be installed.';
+          break;
+        case 'auth/user-not-found':
+          loginCatchError = 'User Email is Not Found';
+          break;
+      }
+    }
   }
 
   verifyUserEmail() async {

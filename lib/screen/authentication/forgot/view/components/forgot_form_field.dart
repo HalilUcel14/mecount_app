@@ -1,7 +1,7 @@
-import 'package:account_app/screen/authentication/forgot/view_model/forgot_viewmodel.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../core/widget/special_text_form_field.dart';
+import '../../view_model/forgot_viewmodel.dart';
 
 class ForgotFormField extends StatelessWidget {
   const ForgotFormField({Key? key, required this.viewModel}) : super(key: key);
@@ -11,11 +11,12 @@ class ForgotFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: viewModel.formkey,
+      key: viewModel.formKey,
       child: SpecialTextFormField(
         defaultHeight: 80,
         logoIconName: viewModel.constants.mailIcon,
         controller: viewModel.emailController,
+        onSaved: (value) => viewModel.changeEmailText(value ?? ''),
       ),
     );
   }
