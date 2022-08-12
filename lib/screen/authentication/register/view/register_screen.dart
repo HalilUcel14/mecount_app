@@ -1,3 +1,4 @@
+import 'package:account_app/core/widget/default_container_screen_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:hucel_core/hucel_core.dart';
 
@@ -31,30 +32,16 @@ class RegisterScreen extends BaseStateless {
         resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: Center(
-            child: Container(
-              padding: _context.padAllN,
-              constraints: BoxConstraints(
-                maxWidth:
-                    ResponsivityConstants.instance.mediumScreenSize.toDouble(),
-              ),
+            child: DefaultContainerCreateScreen(
               child: Column(
                 children: [
                   Expanded(
-                    flex: 2,
-                    child: RegisterLogoAndTitle(
-                      viewModel: _viewModel,
-                    ),
-                  ),
+                      flex: 2,
+                      child: RegisterLogoAndTitle(viewModel: _viewModel)),
                   Expanded(
-                    flex: 4,
-                    child: RegisterFormField(
-                      viewModel: _viewModel,
-                    ),
-                  ),
+                      flex: 4, child: RegisterFormField(viewModel: _viewModel)),
                   Expanded(
-                    flex: 3,
-                    child: RegisterButtons(viewModel: _viewModel),
-                  ),
+                      flex: 3, child: RegisterButtons(viewModel: _viewModel)),
                 ],
               ),
             ),

@@ -1,3 +1,4 @@
+import 'package:account_app/core/widget/default_container_screen_widget.dart';
 import 'package:hucel_core/hucel_core.dart';
 import 'package:flutter/material.dart';
 
@@ -34,19 +35,9 @@ class ForgotScreen extends BaseStateless {
   }
 
   Widget _scaffold() {
-    return Container(
+    return DefaultContainerCreateScreen(
       height: _context.height * 0.8,
-      padding: _context.padAllN,
-      constraints: BoxConstraints(
-        maxWidth: ResponsivityConstants.instance.mediumScreenSize.toDouble(),
-      ),
-      decoration: BoxDecoration(
-        color: _context.theme.scaffoldBackgroundColor,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(_context.height * 0.05),
-          topRight: Radius.circular(_context.height * 0.05),
-        ),
-      ),
+      decoration: _forgotContainerDecoration(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -56,6 +47,16 @@ class ForgotScreen extends BaseStateless {
           Expanded(child: _forgotTitleAndForm()),
           Expanded(child: ForgotButton(viewModel: _viewModel)),
         ],
+      ),
+    );
+  }
+
+  BoxDecoration _forgotContainerDecoration() {
+    return BoxDecoration(
+      color: _context.theme.scaffoldBackgroundColor,
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(_context.height * 0.05),
+        topRight: Radius.circular(_context.height * 0.05),
       ),
     );
   }

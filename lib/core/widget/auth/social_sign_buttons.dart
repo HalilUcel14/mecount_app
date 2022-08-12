@@ -1,3 +1,4 @@
+import 'package:account_app/core/enum/asset_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:hucel_core/hucel_core.dart';
 
@@ -22,7 +23,7 @@ class SocialSignButtons extends StatelessWidget {
           onTap: () {},
           child: IconsLogo.sgv(
             size: size,
-            logoIconName: viewModel.constants.facebookIcon,
+            logoIconName: AssetIcon.socialGoogle.pathSvg,
             color: context.theme.primaryColor,
           ),
         ),
@@ -30,7 +31,7 @@ class SocialSignButtons extends StatelessWidget {
           onTap: () {},
           child: IconsLogo.sgv(
             size: size,
-            logoIconName: viewModel.constants.googleIcon,
+            logoIconName: AssetIcon.socialGoogle.pathSvg,
             color: context.theme.primaryColor,
           ),
         ),
@@ -38,7 +39,7 @@ class SocialSignButtons extends StatelessWidget {
           onTap: () {},
           child: IconsLogo.sgv(
             size: size,
-            logoIconName: viewModel.constants.twitterIcon,
+            logoIconName: AssetIcon.socialGoogle.pathSvg,
             color: context.theme.primaryColor,
           ),
         ),

@@ -1,3 +1,4 @@
+import 'package:account_app/core/widget/default_container_screen_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:hucel_core/hucel_core.dart';
 
@@ -39,30 +40,22 @@ class LoginScreen extends BaseStateless {
   Scaffold _scaffold() => Scaffold(
         resizeToAvoidBottomInset: false,
         body: SafeArea(
-          child: Center(
-            child: Container(
-              padding: _context.padAllN,
-              constraints: BoxConstraints(
-                maxWidth:
-                    ResponsivityConstants.instance.mediumScreenSize.toDouble() *
-                        0.8,
-              ),
-              child: Column(
-                children: [
-                  Expanded(
-                    child: LoginLogoAndTitle(viewModel: _viewModel),
-                    flex: 2,
-                  ),
-                  Expanded(
-                    child: LoginFormField(viewModel: _viewModel),
-                    flex: 2,
-                  ),
-                  Expanded(
-                    child: LoginFormButtons(viewModel: _viewModel),
-                    flex: 3,
-                  ),
-                ],
-              ),
+          child: DefaultContainerCreateScreen(
+            child: Column(
+              children: [
+                Expanded(
+                  child: LoginLogoAndTitle(viewModel: _viewModel),
+                  flex: 2,
+                ),
+                Expanded(
+                  child: LoginFormField(viewModel: _viewModel),
+                  flex: 2,
+                ),
+                Expanded(
+                  child: LoginFormButtons(viewModel: _viewModel),
+                  flex: 3,
+                ),
+              ],
             ),
           ),
         ),

@@ -32,7 +32,7 @@ class IconsLogo extends StatelessWidget {
       child: icon ??
           Padding(
             padding: EdgeInsets.all(size * 0.30),
-            child: SvgPicture.asset(logoIconName!.getSvgIcon, color: color),
+            child: SvgPicture.asset(logoIconName!, color: color),
           ),
       decoration: BoxDecoration(
         shape: BoxShape.circle,

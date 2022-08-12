@@ -1,3 +1,4 @@
+import 'package:account_app/core/widget/default_container_screen_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:hucel_core/hucel_core.dart';
 
@@ -32,11 +33,7 @@ class OnBoardScreen extends BaseStateless {
   Scaffold _scaffold() => Scaffold(
         body: SafeArea(
           child: Center(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                maxWidth:
-                    ResponsivityConstants.instance.mediumScreenSize.toDouble(),
-              ),
+            child: DefaultContainerCreateScreen(
               child: _pageViewBuilder(),
             ),
           ),
