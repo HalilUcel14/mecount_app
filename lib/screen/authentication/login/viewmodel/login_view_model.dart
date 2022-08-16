@@ -101,4 +101,12 @@ abstract class _LoginScreenViewModelBase with Store, BaseViewModel {
       return true;
     }
   }
+
+  ///
+  ///
+  void googleSign() {
+    try {
+      authManager.signInWithGoogle();
+    } catch (e) {}
+  }
 }

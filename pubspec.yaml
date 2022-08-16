@@ -51,9 +51,10 @@ dependencies:
   firebase_auth: ^3.4.1
   cloud_firestore: ^3.2.1
   firebase_storage: ^10.3.1
+  ##
   ## Social Auth
-  google_sign_in: ^5.4.0
-  flutter_facebook_auth: ^4.4.0+1
+  google_sign_in: ^5.4.1
+  flutter_facebook_auth: ^4.4.1
   twitter_login: ^4.2.3
 
   ##

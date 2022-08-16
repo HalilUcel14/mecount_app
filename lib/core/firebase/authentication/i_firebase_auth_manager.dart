@@ -105,31 +105,36 @@ class FirebaseAuthManager implements IFirebaseAuthManager {
     } catch (e) {
       loginCatchError = e.toString();
     }
-    //notifyListeners();
   }
 
   //Future<UserCredential>
   signInWithGoogle() async {
-    // Trigger the authentication flow
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-    // Obtain the auth details from the request
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
-
-    // Create a new credential
-    final googleCredential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
-
-    // Once signed in, return the UserCredential
-
-    await auth.signInWithCredential(googleCredential);
-    //notifyListeners();
+    try {
+      // Trigger the authentication flow
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      // Obtain the auth details from the request
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+      // Create a new credential
+      final googleCredential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+      // Once signed in, return the UserCredential
+      await auth.signInWithCredential(googleCredential);
+      loginCatchError = 'Is Login Successfull';
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'account-exists-with-different-credential') {
+        loginCatchError = 'The Account Exists With Different Credential';
+      } else if (e.code == 'invalid-credential') {
+        loginCatchError = 'Invalid Credential';
+      }
+    } catch (e) {
+      loginCatchError = 'Google Credential is Error Please Try Again';
+    }
   }
 
-  signInWithFacebook() async {
+  Future<void> signInWithFacebook() async {
     // Trigger the sign-in flow
     final LoginResult loginResult = await FacebookAuth.instance.login();
 
@@ -139,7 +144,6 @@ class FirebaseAuthManager implements IFirebaseAuthManager {
 
     // Once signed in, return the UserCredential
     await auth.signInWithCredential(facebookAuthCredential);
-    //notifyListeners();
   }
 
   signInWithTwitter() async {
@@ -160,17 +164,14 @@ class FirebaseAuthManager implements IFirebaseAuthManager {
 
     // Once signed in, return the UserCredential
     await auth.signInWithCredential(twitterAuthCredential);
-    //notifyListeners();
   }
 
   getAnonymousCredential() async {
     await auth.signInAnonymously();
-    //notifyListeners();
   }
 
   signOut() async {
     await auth.signOut();
-    //notifyListeners();
   }
 
   sendPasswordResetEmail(String email) async {

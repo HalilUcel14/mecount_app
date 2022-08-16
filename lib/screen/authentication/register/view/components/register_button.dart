@@ -44,8 +44,10 @@ class RegisterButtons extends StatelessWidget {
 
   Widget _socialButton(BoxConstraints constraints, BuildContext context) {
     return SocialSignButtons(
-      viewModel: viewModel,
       size: constraints.maxHeight * 0.16,
+      facebook: viewModel.authManager.signInWithFacebook(),
+      google: viewModel.authManager.signInWithGoogle(),
+      twitter: viewModel.authManager.signInWithTwitter(),
     );
   }
 
