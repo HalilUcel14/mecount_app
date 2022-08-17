@@ -96,7 +96,9 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return Stack(
           children: [
+            // bu Ana Widget
             child ?? const SizedBox(),
+            // İnternet Kesildiğinde Ekranda Çıkacak Görsel
             const ConnectivityWidget(),
           ],
         );

@@ -1,11 +1,12 @@
 // ignore_for_file: avoid_print
 
-import 'package:account_app/core/firebase/authentication/firebase_user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:twitter_login/twitter_login.dart';
+
+import 'firebase_user_model.dart';
 
 abstract class IFirebaseAuthManager {
   late FirebaseAuth auth;
@@ -124,9 +125,7 @@ class FirebaseAuthManager implements IFirebaseAuthManager {
     );
 
     // Once signed in, return the UserCredential
-
     await auth.signInWithCredential(googleCredential);
-    //notifyListeners();
   }
 
   signInWithFacebook() async {
@@ -139,7 +138,6 @@ class FirebaseAuthManager implements IFirebaseAuthManager {
 
     // Once signed in, return the UserCredential
     await auth.signInWithCredential(facebookAuthCredential);
-    //notifyListeners();
   }
 
   signInWithTwitter() async {
@@ -160,17 +158,14 @@ class FirebaseAuthManager implements IFirebaseAuthManager {
 
     // Once signed in, return the UserCredential
     await auth.signInWithCredential(twitterAuthCredential);
-    //notifyListeners();
   }
 
   getAnonymousCredential() async {
     await auth.signInAnonymously();
-    //notifyListeners();
   }
 
   signOut() async {
     await auth.signOut();
-    //notifyListeners();
   }
 
   sendPasswordResetEmail(String email) async {

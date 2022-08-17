@@ -7,12 +7,16 @@ import '../Icon_logo.dart';
 class SocialSignButtons extends StatelessWidget {
   const SocialSignButtons({
     Key? key,
-    required this.viewModel,
     required this.size,
+    required this.facebook,
+    required this.google,
+    required this.twitter,
   }) : super(key: key);
 
-  final dynamic viewModel;
   final double size;
+  final VoidCallback facebook;
+  final VoidCallback google;
+  final VoidCallback twitter;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +24,15 @@ class SocialSignButtons extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         InkWell(
-          onTap: () {},
+          onTap: facebook,
+          child: IconsLogo.sgv(
+            size: size,
+            logoIconName: AssetIcon.socialFacebook.string,
+            color: context.theme.primaryColor,
+          ),
+        ),
+        InkWell(
+          onTap: google,
           child: IconsLogo.sgv(
             size: size,
             logoIconName: AssetIcon.socialGoogle.string,
@@ -28,18 +40,10 @@ class SocialSignButtons extends StatelessWidget {
           ),
         ),
         InkWell(
-          onTap: () {},
+          onTap: twitter,
           child: IconsLogo.sgv(
             size: size,
-            logoIconName: AssetIcon.socialGoogle.string,
-            color: context.theme.primaryColor,
-          ),
-        ),
-        InkWell(
-          onTap: () {},
-          child: IconsLogo.sgv(
-            size: size,
-            logoIconName: AssetIcon.socialGoogle.string,
+            logoIconName: AssetIcon.socialTwitter.string,
             color: context.theme.primaryColor,
           ),
         ),

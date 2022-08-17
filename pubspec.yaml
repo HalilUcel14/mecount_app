@@ -43,7 +43,7 @@ dependencies:
   flutter_mobx: ^2.0.6+1
   ##
   ## Halil Ücel Packages
-  hucel_core: ^0.2.0
+  hucel_core: ^0.2.2
   hucel_widget: ^0.0.9
   ##
   ## Firebase Packages
@@ -53,8 +53,8 @@ dependencies:
   firebase_storage: ^10.3.1
   ## Social Auth
   google_sign_in: ^5.4.0
-  flutter_facebook_auth: ^4.4.0+1
-  twitter_login: ^4.2.3
+  flutter_facebook_auth: ^3.5.0
+  twitter_login: ^4.0.1
 
   ##
   ## Asset Manager Svg Picture
