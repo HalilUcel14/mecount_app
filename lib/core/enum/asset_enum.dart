@@ -59,6 +59,7 @@ enum AssetLottieEnum {
   dayNight,
   errorPage,
   forgotPass,
+  succesfull,
 
   // Function Başlatma Yeri
   ;

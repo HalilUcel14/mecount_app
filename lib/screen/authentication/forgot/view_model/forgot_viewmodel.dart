@@ -4,6 +4,7 @@ import 'package:mobx/mobx.dart';
 
 import '../../../../core/firebase/authentication/i_firebase_auth_manager.dart';
 import '../../../../core/firebase/cloud_firestore/i_firebase_cloud_firestore_manager.dart';
+import '../../auth/auth_function.dart';
 import '../../auth/authentication_constants.dart';
 
 part 'forgot_viewmodel.g.dart';
@@ -33,6 +34,14 @@ abstract class _ForgotScreenViewModelBase with Store, BaseViewModel {
   @observable
   String emailText = '';
 
+  @observable
+  bool isSuccess = false;
+
+  @action
+  void changeSuccess() {
+    isSuccess = !isSuccess;
+  }
+
   //
   @action
   void changeEmailText(String value) {
@@ -44,24 +53,12 @@ abstract class _ForgotScreenViewModelBase with Store, BaseViewModel {
       formKey.currentState!.save();
       emailFocus.unfocus();
     }
-    if (emailValid(email: emailText)) {
-      if (authManager.currentUser!.emailVerified) {
-        await authManager.sendPasswordResetEmail(emailText.trim());
-      } else {
-        baseContext!.snackbar(errorList: [constants.errorEmailVerified]);
-      }
-    }
-  }
-
-  bool emailValid({required String email}) {
-    if (!email.isValidEmail) {
-      baseContext!.snackbar(errorList: [constants.errorEmailNotValid]);
-      return false;
-    } else if (email.length > 100) {
-      baseContext!.snackbar(errorList: [constants.errorEmailLong]);
-      return false;
-    } else {
-      return true;
+    if (AuthenticationFunction.emailValid(
+      email: emailText,
+      context: baseContext!,
+    )) {
+      await authManager.sendPasswordResetEmail(emailText.trim());
+      changeSuccess();
     }
   }
 }

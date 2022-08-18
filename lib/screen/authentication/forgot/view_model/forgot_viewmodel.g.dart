@@ -41,8 +41,35 @@ mixin _$ForgotScreenViewModel on _ForgotScreenViewModelBase, Store {
     });
   }
 
+  late final _$isSuccessAtom =
+      Atom(name: '_ForgotScreenViewModelBase.isSuccess', context: context);
+
+  @override
+  bool get isSuccess {
+    _$isSuccessAtom.reportRead();
+    return super.isSuccess;
+  }
+
+  @override
+  set isSuccess(bool value) {
+    _$isSuccessAtom.reportWrite(value, super.isSuccess, () {
+      super.isSuccess = value;
+    });
+  }
+
   late final _$_ForgotScreenViewModelBaseActionController =
       ActionController(name: '_ForgotScreenViewModelBase', context: context);
+
+  @override
+  void changeSuccess() {
+    final _$actionInfo = _$_ForgotScreenViewModelBaseActionController
+        .startAction(name: '_ForgotScreenViewModelBase.changeSuccess');
+    try {
+      return super.changeSuccess();
+    } finally {
+      _$_ForgotScreenViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void changeEmailText(String value) {
@@ -59,7 +86,8 @@ mixin _$ForgotScreenViewModel on _ForgotScreenViewModelBase, Store {
   String toString() {
     return '''
 emailController: ${emailController},
-emailText: ${emailText}
+emailText: ${emailText},
+isSuccess: ${isSuccess}
     ''';
   }
 }

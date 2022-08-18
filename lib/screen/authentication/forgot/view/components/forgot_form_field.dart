@@ -16,6 +16,7 @@ class ForgotFormField extends StatelessWidget {
       key: viewModel.formKey,
       child: SpecialTextFormField(
         defaultHeight: context.height * 0.1,
+        keyboardType: TextInputType.emailAddress,
         labelText: viewModel.constants.emailLabelText,
         labelStyle: context.textTheme.bodyText1?.copyWith(
           color: context.theme.primaryColorDark,

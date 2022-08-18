@@ -1,7 +1,10 @@
-import 'package:account_app/core/widget/default_container_screen_widget.dart';
-import 'package:hucel_core/hucel_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:hucel_core/hucel_core.dart';
 
+import '../../../../core/enum/asset_enum.dart';
+import '../../../../core/widget/animate_lottie_builder.dart';
+import '../../../../core/widget/default_container_screen_widget.dart';
 import '../view_model/forgot_viewmodel.dart';
 import 'components/forgot_button.dart';
 import 'components/forgot_form_field.dart';
@@ -36,19 +39,27 @@ class ForgotScreen extends BaseStateless {
   }
 
   Widget _scaffold() {
-    return DefaultContainerCreateScreen(
-      height: _context.height * 0.8,
-      decoration: _forgotContainerDecoration(),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          _context.isKeyboardOpen
-              ? const SizedBox()
-              : const Expanded(child: ForgotLottieImage()),
-          Expanded(child: _forgotTitleAndForm()),
-          Expanded(child: ForgotButton(viewModel: _viewModel)),
-        ],
-      ),
+    return Observer(builder: (context) {
+      return DefaultContainerCreateScreen(
+        height: _context.height * 0.8,
+        decoration: _forgotContainerDecoration(),
+        child: _viewModel.isSuccess
+            ? AnimatedLottieBuilder(iconPath: AssetLottieEnum.succesfull.path)
+            : _column(),
+      );
+    });
+  }
+
+  Column _column() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        _context.isKeyboardOpen
+            ? const SizedBox()
+            : const Expanded(child: ForgotLottieImage()),
+        Expanded(child: _forgotTitleAndForm()),
+        Expanded(child: ForgotButton(viewModel: _viewModel)),
+      ],
     );
   }
 
