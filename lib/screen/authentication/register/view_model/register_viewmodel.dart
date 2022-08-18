@@ -9,6 +9,7 @@ import '../../../../core/firebase/authentication/i_firebase_auth_manager.dart';
 import '../../../../core/firebase/cloud_firestore/firestore_constants.dart';
 import '../../../../core/firebase/cloud_firestore/i_firebase_cloud_firestore_manager.dart';
 import '../../../../core/routes/app_routes.dart';
+import '../../auth/auth_function.dart';
 import '../../auth/authentication_constants.dart';
 
 part 'register_viewmodel.g.dart';
@@ -77,9 +78,11 @@ abstract class _RegisterScreenViewModelBase with Store, BaseViewModel {
       // password eşleşiyor mu
       if (isMatchPass) {
         // email valid var mı
-        if (emailValid(email: emailText)) {
+        if (AuthenticationFunction.emailValid(
+            context: baseContext!, email: emailText)) {
           // password valid mi
-          if (passValid(password: passText)) {
+          if (AuthenticationFunction.passValid(
+              password: passText, baseContext: baseContext)) {
             // user Create
             await authManager.createUserWithEmailAndPassword(
               email: emailText,
@@ -125,33 +128,6 @@ abstract class _RegisterScreenViewModelBase with Store, BaseViewModel {
       }
     } else {
       baseContext!.snackbar(errorList: [constants.formFieldIsEmpty]);
-    }
-  }
-
-  bool emailValid({required String email}) {
-    if (!email.isValidEmail) {
-      baseContext!.snackbar(errorList: [constants.errorEmailNotValid]);
-      return false;
-    } else if (email.length > 100) {
-      baseContext!.snackbar(errorList: [constants.errorEmailLong]);
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  bool passValid({required String password}) {
-    if (password.length < 8) {
-      baseContext!.snackbar(errorList: [constants.errorPassShort]);
-      return false;
-    } else if (password.length > 24) {
-      baseContext!.snackbar(errorList: [constants.errorPassLong]);
-      return false;
-    } else if (!password.isValidLowPassword) {
-      baseContext!.snackbar(errorList: [constants.errorPassNotValid]);
-      return false;
-    } else {
-      return true;
     }
   }
 }

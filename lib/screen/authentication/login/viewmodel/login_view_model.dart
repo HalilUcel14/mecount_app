@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'package:account_app/screen/authentication/auth/auth_function.dart';
 import 'package:flutter/material.dart';
 import 'package:hucel_core/hucel_core.dart';
 import 'package:mobx/mobx.dart';
@@ -61,44 +62,20 @@ abstract class _LoginScreenViewModelBase with Store, BaseViewModel {
       passFocus.unfocus();
     }
     if (emailText!.isNotEmpty && passText!.isNotEmpty) {
-      if (emailValid(email: emailText!) && passValid(password: passText!)) {
-        // Firebase için Giriş Sağlar
+      //if (emailValid(email: emailText!) && passValid(password: passText!)) {
+      if (AuthenticationFunction.emailValid(
+              email: emailText!, context: baseContext!) &&
+          AuthenticationFunction.passValid(
+              password: passText!, baseContext: baseContext)) {
         await authManager.signInWithEmailAndPassword(
           email: emailText,
           password: passText,
         );
-        // Hata Mesajı Gösterir
-        baseContext!.snackbar(errorList: [authManager.loginCatchError]);
       }
+      // Hata Mesajı Gösterir
+      baseContext!.snackbar(errorList: [authManager.loginCatchError]);
     } else {
       baseContext!.snackbar(errorList: [constants.formFieldIsEmpty]);
-    }
-  }
-
-  bool emailValid({required String email}) {
-    if (!email.isValidEmail) {
-      baseContext!.snackbar(errorList: [constants.errorEmailNotValid]);
-      return false;
-    } else if (email.length > 100) {
-      baseContext!.snackbar(errorList: [constants.errorEmailLong]);
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  bool passValid({required String password}) {
-    if (password.length < 8) {
-      baseContext!.snackbar(errorList: [constants.errorPassShort]);
-      return false;
-    } else if (password.length > 100) {
-      baseContext!.snackbar(errorList: [constants.errorPassLong]);
-      return false;
-    } else if (!password.isValidLowPassword) {
-      baseContext!.snackbar(errorList: [constants.errorPassNotValid]);
-      return false;
-    } else {
-      return true;
     }
   }
 }

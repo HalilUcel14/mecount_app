@@ -21,4 +21,20 @@ class AuthenticationFunction {
       return true;
     }
   }
+
+  static bool passValid(
+      {required String password, required BuildContext? baseContext}) {
+    if (password.length < 8) {
+      baseContext!.snackbar(errorList: [constants.errorPassShort]);
+      return false;
+    } else if (password.length > 100) {
+      baseContext!.snackbar(errorList: [constants.errorPassLong]);
+      return false;
+    } else if (!password.isValidLowPassword) {
+      baseContext!.snackbar(errorList: [constants.errorPassNotValid]);
+      return false;
+    } else {
+      return true;
+    }
+  }
 }
