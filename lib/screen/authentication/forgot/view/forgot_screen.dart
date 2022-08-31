@@ -13,10 +13,11 @@ import 'components/forgot_title.dart';
 
 // ignore: must_be_immutable
 class ForgotScreen extends BaseStateless {
-  ForgotScreen({Key? key}) : super(key: key);
+  ForgotScreen({Key? key, this.baseEmailAddress}) : super(key: key);
   //
   late ForgotScreenViewModel _viewModel;
   late BuildContext _context;
+  final String? baseEmailAddress;
   //
   @override
   Widget build(BuildContext context) {

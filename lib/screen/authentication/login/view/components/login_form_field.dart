@@ -59,6 +59,8 @@ class LoginFormField extends StatelessWidget {
       padding: const EdgeInsets.only(right: 8.0),
       child: TextButton(
         onPressed: () async {
+          viewModel.formKey.currentState!.save;
+          print(viewModel.emailText);
           //await context.pushNamed(AppRoutes.forgot);
           showModalBottomSheet(
             isScrollControlled: true,
@@ -69,7 +71,7 @@ class LoginFormField extends StatelessWidget {
                 topRight: Radius.circular(context.height * 0.05),
               ),
             ),
-            builder: (_) => ForgotScreen(),
+            builder: (_) => ForgotScreen(baseEmailAddress: viewModel.emailText),
           );
         },
         child: Text(

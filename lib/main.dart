@@ -69,9 +69,11 @@ MultiProvider _multiProvider() {
   return MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => ThemeManager.instance),
-      StreamProvider<User?>(
-        initialData: null,
+      StreamProvider(
         create: (_) => FirebaseAuth.instance.authStateChanges(),
+        initialData: null,
+        catchError: (_, error) =>
+            error.toString().exceptionMode('Stream Provider Error'),
       ),
     ],
     child: const MyApp(),

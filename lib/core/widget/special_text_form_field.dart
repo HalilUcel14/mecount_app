@@ -21,6 +21,7 @@ class SpecialTextFormField extends StatefulWidget {
     this.obscureText = false,
     this.focusNode,
     this.rightWidget,
+    this.initialValue,
   }) : super(key: key);
 
   final EdgeInsetsGeometry? contentPadding;
@@ -38,6 +39,7 @@ class SpecialTextFormField extends StatefulWidget {
   final String logoIconName;
   final TextEditingController controller;
   final FocusNode? focusNode;
+  final String? initialValue;
 
   @override
   State<SpecialTextFormField> createState() => _SpecialTextFormFieldState();
@@ -70,6 +72,7 @@ class _SpecialTextFormFieldState extends State<SpecialTextFormField> {
             children: [
               Expanded(
                 child: TextFormField(
+                  initialValue: widget.initialValue,
                   focusNode: widget.focusNode,
                   keyboardType: widget.keyboardType,
                   controller: widget.controller,

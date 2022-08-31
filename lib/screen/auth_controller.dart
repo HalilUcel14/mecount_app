@@ -1,6 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:account_app/core/widget/consumer_firebase_user_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'authentication/login/view/login_screen.dart';
 import 'product/home/view/home_screen.dart';
@@ -12,11 +11,16 @@ class AuthControllerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final User? user = context.watch<User?>();
-    if (user != null) {
-      return HomeScreen();
-    } else {
-      return LoginScreen();
-    }
+    return ConsumerFirebaseUserProvider(
+      childWidget: HomeScreen(),
+      nullWidget: LoginScreen(),
+    );
+
+    // final User? user = context.watch<User?>();
+    // if (user != null) {
+    //   return HomeScreen();
+    // } else {
+    //   return LoginScreen();
+    // }
   }
 }

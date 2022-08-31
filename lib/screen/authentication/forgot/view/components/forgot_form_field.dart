@@ -6,15 +6,19 @@ import '../../../../../core/widget/special_text_form_field.dart';
 import '../../view_model/forgot_viewmodel.dart';
 
 class ForgotFormField extends StatelessWidget {
-  const ForgotFormField({Key? key, required this.viewModel}) : super(key: key);
+  const ForgotFormField(
+      {Key? key, required this.viewModel, this.baseEmailAddress})
+      : super(key: key);
 
   final ForgotScreenViewModel viewModel;
+  final String? baseEmailAddress;
 
   @override
   Widget build(BuildContext context) {
     return Form(
       key: viewModel.formKey,
       child: SpecialTextFormField(
+        initialValue: baseEmailAddress,
         defaultHeight: context.height * 0.1,
         keyboardType: TextInputType.emailAddress,
         labelText: viewModel.constants.emailLabelText,
