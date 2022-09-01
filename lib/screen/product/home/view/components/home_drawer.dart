@@ -1,3 +1,5 @@
+import 'package:account_app/core/extension/context_extension.dart';
+import 'package:account_app/core/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:hucel_core/hucel_core.dart';
 
@@ -98,6 +100,9 @@ class HomeDrawerLayout extends StatelessWidget {
             onTap: () async {
               //await context.pushNameAndRemoveUntil(AppRoutes.login);
               await viewModel.authManager.signOut();
+              context.isUserExist
+                  ? null
+                  : context.pushNameAndRemoveUntil(AppRoutes.login);
             },
           ),
         ],

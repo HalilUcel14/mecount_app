@@ -79,7 +79,10 @@ class ForgotScreen extends BaseStateless {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         ForgotTitleSubTitle(viewModel: _viewModel),
-        ForgotFormField(viewModel: _viewModel),
+        ForgotFormField(
+          viewModel: _viewModel,
+          baseEmailAddress: baseEmailAddress,
+        ),
       ],
     );
   }

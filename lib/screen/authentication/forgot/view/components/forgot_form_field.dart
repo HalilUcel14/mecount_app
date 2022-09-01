@@ -15,6 +15,7 @@ class ForgotFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    viewModel.emailController.text = baseEmailAddress ?? '';
     return Form(
       key: viewModel.formKey,
       child: SpecialTextFormField(

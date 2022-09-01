@@ -72,7 +72,6 @@ class _SpecialTextFormFieldState extends State<SpecialTextFormField> {
             children: [
               Expanded(
                 child: TextFormField(
-                  initialValue: widget.initialValue,
                   focusNode: widget.focusNode,
                   keyboardType: widget.keyboardType,
                   controller: widget.controller,

@@ -1,4 +1,5 @@
 import 'package:account_app/core/enum/asset_enum.dart';
+import 'package:account_app/core/widget/show_modal_bottom_sheet.dart';
 import 'package:account_app/screen/authentication/forgot/view/forgot_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:hucel_core/hucel_core.dart';
@@ -59,20 +60,24 @@ class LoginFormField extends StatelessWidget {
       padding: const EdgeInsets.only(right: 8.0),
       child: TextButton(
         onPressed: () async {
-          viewModel.formKey.currentState!.save;
-          print(viewModel.emailText);
+          viewModel.formKey.currentState!.save();
+
           //await context.pushNamed(AppRoutes.forgot);
-          showModalBottomSheet(
-            isScrollControlled: true,
-            context: context,
-            shape: OutlineInputBorder(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(context.height * 0.05),
-                topRight: Radius.circular(context.height * 0.05),
-              ),
-            ),
-            builder: (_) => ForgotScreen(baseEmailAddress: viewModel.emailText),
+          CustomShowModelBottomSheet().sheet(
+            context,
+            child: ForgotScreen(baseEmailAddress: viewModel.emailText),
           );
+          // showModalBottomSheet(
+          //   isScrollControlled: true,
+          //   context: context,
+          //   shape: OutlineInputBorder(
+          //     borderRadius: BorderRadius.only(
+          //       topLeft: Radius.circular(context.height * 0.05),
+          //       topRight: Radius.circular(context.height * 0.05),
+          //     ),
+          //   ),
+          //   builder: (_) => ForgotScreen(baseEmailAddress: viewModel.emailText),
+          // );
         },
         child: Text(
           viewModel.constants.forgot,

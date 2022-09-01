@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'package:account_app/core/routes/app_routes.dart';
 import 'package:account_app/screen/authentication/auth/auth_function.dart';
 import 'package:flutter/material.dart';
 import 'package:hucel_core/hucel_core.dart';
@@ -64,13 +65,20 @@ abstract class _LoginScreenViewModelBase with Store, BaseViewModel {
     if (emailText!.isNotEmpty && passText!.isNotEmpty) {
       //if (emailValid(email: emailText!) && passValid(password: passText!)) {
       if (AuthenticationFunction.emailValid(
-              email: emailText!, context: baseContext!) &&
+            email: emailText!,
+            context: baseContext!,
+          ) &&
           AuthenticationFunction.passValid(
-              password: passText!, baseContext: baseContext)) {
+            password: passText!,
+            baseContext: baseContext,
+          )) {
         await authManager.signInWithEmailAndPassword(
           email: emailText,
           password: passText,
         );
+        if (authManager.currentUser != null) {
+          await baseContext!.pushNameAndRemoveUntil(AppRoutes.home);
+        }
       }
       // Hata Mesajı Gösterir
       baseContext!.snackbar(errorList: [authManager.loginCatchError]);

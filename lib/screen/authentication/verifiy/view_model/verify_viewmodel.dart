@@ -4,7 +4,7 @@ import 'package:mobx/mobx.dart';
 part 'verify_viewmodel.g.dart';
 
 class VerifyScreenViewModel = _VerifyScreenViewModelBase
-    with _$VerifyViewMocdel;
+    with _$VerifyScreenViewModel;
 
 abstract class _VerifyScreenViewModelBase with Store, BaseViewModel {
   @override
