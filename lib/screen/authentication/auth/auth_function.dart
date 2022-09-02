@@ -9,13 +9,13 @@ class AuthenticationFunction {
   //
   static bool emailValid({
     required String email,
-    required BuildContext context,
+    required BuildContext? context,
   }) {
     if (!email.isValidEmail) {
-      context.snackbar(errorList: [constants.errorEmailNotValid]);
+      context!.snackbar(errorList: [constants.errorEmailNotValid]);
       return false;
     } else if (email.length > 100) {
-      context.snackbar(errorList: [constants.errorEmailLong]);
+      context!.snackbar(errorList: [constants.errorEmailLong]);
       return false;
     } else {
       return true;

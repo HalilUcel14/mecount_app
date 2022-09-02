@@ -1,4 +1,5 @@
 import 'package:account_app/screen/authentication/forgot/view/forgot_screen.dart';
+import 'package:account_app/screen/authentication/verifiy/view/verify_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../screen/auth_controller.dart';
@@ -22,6 +23,7 @@ class AppRoutes {
   static const String register = '/register';
   static const String home = '/home';
   static const String forgot = '/forgot';
+  static const String verify = '/verify';
   static const String authController = '/authController';
 
   Map<String, Widget Function(BuildContext)> routes = <String, WidgetBuilder>{
@@ -31,6 +33,7 @@ class AppRoutes {
     home: (context) => HomeScreen(),
     register: (context) => RegisterScreen(),
     forgot: (context) => ForgotScreen(),
+    verify: (context) => VerifyScreen(),
     authController: (context) => const AuthControllerWidget(),
   };
 }

@@ -38,27 +38,25 @@ abstract class _ForgotScreenViewModelBase with Store, BaseViewModel {
   bool isSuccess = false;
 
   @action
-  void changeSuccess() {
-    isSuccess = !isSuccess;
-  }
-
+  void changeSuccess() => isSuccess = !isSuccess;
   //
   @action
-  void changeEmailText(String value) {
-    emailText = value;
-  }
+  void changeEmailText(String value) => emailText = value;
 
   void pressButton() async {
-    if (formKey.currentState!.validate()) {
-      formKey.currentState!.save();
-      emailFocus.unfocus();
-    }
-    if (AuthenticationFunction.emailValid(
-      email: emailText,
+    if (!formKey.currentState!.validate()) return;
+    formKey.currentState!.save();
+    emailFocus.unfocus();
+    //
+    if (!AuthenticationFunction.emailValid(
+      email: emailText.trim(),
       context: baseContext!,
     )) {
-      await authManager.sendPasswordResetEmail(emailText.trim());
-      changeSuccess();
+      baseContext!.snackbar(errorList: [constants.errorEmailNotValid]);
+      return;
     }
+    //
+    await authManager.sendPasswordResetEmail(emailText.trim());
+    changeSuccess();
   }
 }

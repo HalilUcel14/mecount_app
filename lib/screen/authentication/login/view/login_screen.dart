@@ -1,7 +1,7 @@
-import 'package:account_app/core/widget/default_container_screen_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:hucel_core/hucel_core.dart';
 
+import '../../../../core/widget/default_container_screen_widget.dart';
 import '../viewmodel/login_view_model.dart';
 import 'components/login_buttons.dart';
 import 'components/login_form_field.dart';

@@ -30,6 +30,7 @@ class AuthencticationConstants {
   String errorPassLong = ' Your Password not short 100 character';
   String errorPassNotValid =
       'Not your Password is Validate\n Please One Upper Lower Character, Number, ';
+  String loginError = 'Some thing went wrong!..\nIs not Loggin System';
 
   /// Register
   String registerTitle = 'Welcome';
@@ -37,11 +38,17 @@ class AuthencticationConstants {
   String haveAccount = 'Already have an Account!';
   String errorConfirmPass = 'Not match Confirm and Password';
   String succesSign = 'Sign is Succesfully';
+  String registerError = 'Some thing went wrong!..\nIs not Signin System';
 
   /// Forgot
   String sendEmail = 'Send Email';
   String forgotTitle = 'Please enter your Email';
   String forgotSubTitle = 'and we send a mail for your reset password';
+
+  /// Verifiy
+  String verifyTitle = 'Verification';
+  String verifySubtitle =
+      'Please enter your email\nto receive a verification link';
 
   /// OnBoard
   String previous = 'Previous'.easyLocale;

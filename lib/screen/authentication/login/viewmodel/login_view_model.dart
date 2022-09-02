@@ -1,13 +1,13 @@
 // ignore_for_file: avoid_print
 
-import 'package:account_app/core/routes/app_routes.dart';
-import 'package:account_app/screen/authentication/auth/auth_function.dart';
 import 'package:flutter/material.dart';
 import 'package:hucel_core/hucel_core.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../core/firebase/authentication/i_firebase_auth_manager.dart';
 import '../../../../core/firebase/cloud_firestore/i_firebase_cloud_firestore_manager.dart';
+import '../../../../core/routes/app_routes.dart';
+import '../../auth/auth_function.dart';
 import '../../auth/authentication_constants.dart';
 
 part 'login_view_model.g.dart';
@@ -25,9 +25,9 @@ abstract class _LoginScreenViewModelBase with Store, BaseViewModel {
 
   //
   final FirebaseAuthManager authManager = FirebaseAuthManager.instance;
-  FirebaseCloudFirestoreManager cloudFirestoreManager =
+  final FirebaseCloudFirestoreManager cloudFirestoreManager =
       FirebaseCloudFirestoreManager.instance;
-  ThemeManager themeManager = ThemeManager.instance;
+  final ThemeManager themeManager = ThemeManager.instance;
   //
   final formKey = GlobalKey<FormState>();
   final AuthencticationConstants constants = AuthencticationConstants.instance;
@@ -45,45 +45,50 @@ abstract class _LoginScreenViewModelBase with Store, BaseViewModel {
   String? passText = '';
   //
   @action
-  void changeEmailText(String? value) {
-    emailText = value;
-  }
+  void changeEmailText(String? value) => emailText = value;
 
   @action
-  void changePassText(String? value) {
-    passText = value;
-  }
+  void changePassText(String? value) => passText = value;
 
   //
 
   void buttonPressed() async {
-    if (formKey.currentState!.validate()) {
-      formKey.currentState!.save();
-      emailFocus.unfocus();
-      passFocus.unfocus();
-    }
-    if (emailText!.isNotEmpty && passText!.isNotEmpty) {
-      //if (emailValid(email: emailText!) && passValid(password: passText!)) {
-      if (AuthenticationFunction.emailValid(
-            email: emailText!,
-            context: baseContext!,
-          ) &&
-          AuthenticationFunction.passValid(
-            password: passText!,
-            baseContext: baseContext,
-          )) {
-        await authManager.signInWithEmailAndPassword(
-          email: emailText,
-          password: passText,
-        );
-        if (authManager.currentUser != null) {
-          await baseContext!.pushNameAndRemoveUntil(AppRoutes.home);
-        }
-      }
-      // Hata Mesajı Gösterir
-      baseContext!.snackbar(errorList: [authManager.loginCatchError]);
-    } else {
+    if (!formKey.currentState!.validate()) return;
+    formKey.currentState!.save();
+    emailFocus.unfocus();
+    passFocus.unfocus();
+    //
+    if (emailText!.isNullOrEmpty || passText!.isNullOrEmpty) {
       baseContext!.snackbar(errorList: [constants.formFieldIsEmpty]);
+      return;
+    }
+    if (!AuthenticationFunction.emailValid(
+      email: emailText!,
+      context: baseContext,
+    )) {
+      baseContext!.snackbar(errorList: [constants.errorEmailNotValid]);
+      return;
+    }
+    // password valid değilse
+    if (!AuthenticationFunction.passValid(
+      password: passText!,
+      baseContext: baseContext,
+    )) {
+      baseContext!.snackbar(errorList: [constants.errorPassNotValid]);
+      return;
+    }
+    // sorun kalmadı
+    await authManager.signInWithEmailAndPassword(
+      email: emailText,
+      password: passText,
+    );
+    // eğer giriş başarısız ise
+    if (authManager.currentUser != null) {
+      authManager.currentUser!.emailVerified
+          ? await baseContext!.pushNameAndRemoveUntil(AppRoutes.home)
+          : await baseContext!.pushNameAndRemoveUntil(AppRoutes.verify);
+    } else {
+      baseContext!.snackbar(errorList: [constants.loginError]);
     }
   }
 }
