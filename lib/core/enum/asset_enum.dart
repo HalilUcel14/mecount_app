@@ -60,6 +60,7 @@ enum AssetLottieEnum {
   errorPage,
   forgotPass,
   succesfull,
+  otpVerify,
 
   // Function Başlatma Yeri
   ;
