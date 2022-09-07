@@ -59,7 +59,9 @@ abstract class _LoginScreenViewModelBase with Store, BaseViewModel {
     passFocus.unfocus();
     //
     if (emailText!.isNullOrEmpty || passText!.isNullOrEmpty) {
-      baseContext!.snackbar(errorList: [constants.formFieldIsEmpty]);
+      baseContext!.snackbar(
+          errorList: [constants.formFieldIsEmpty], labelText: 'Empty Field');
+
       return;
     }
     if (!AuthenticationFunction.emailValid(
@@ -86,7 +88,7 @@ abstract class _LoginScreenViewModelBase with Store, BaseViewModel {
     if (authManager.currentUser != null) {
       authManager.currentUser!.emailVerified
           ? await baseContext!.pushNameAndRemoveUntil(AppRoutes.home)
-          : await baseContext!.pushNameAndRemoveUntil(AppRoutes.verify);
+          : await baseContext!.pushNamed(AppRoutes.verify);
     } else {
       baseContext!.snackbar(errorList: [constants.loginError]);
     }

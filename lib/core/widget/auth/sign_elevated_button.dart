@@ -18,17 +18,19 @@ class SignElevatedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButtonWithStadiumBorder(
-      child: Text(
-        buttonText,
-        style: context.textTheme.subtitle2?.copyWith(
-          color: Colors.white,
-          fontSize: fontSize,
+    return Center(
+      child: ElevatedButtonWithStadiumBorder(
+        child: Text(
+          buttonText,
+          style: context.textTheme.subtitle2?.copyWith(
+            color: Colors.white,
+            fontSize: fontSize,
+          ),
         ),
+        fixedSize: size,
+        styleBackgroundColor: context.theme.primaryColor,
+        onPressed: button,
       ),
-      fixedSize: size,
-      styleBackgroundColor: context.theme.primaryColor,
-      onPressed: button,
     );
   }
 }

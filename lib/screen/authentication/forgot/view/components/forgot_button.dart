@@ -16,22 +16,24 @@ class ForgotButton extends StatelessWidget {
       builder: (context, constraints) {
         return Column(
           children: [
+            const Spacer(),
             SignElevatedButton(
               buttonText: viewModel.constants.sendEmail,
               fontSize: constraints.maxHeight * 0.08,
               size: Size(
-                constraints.maxHeight * 0.6,
-                constraints.maxHeight * 0.2,
+                constraints.maxHeight * 1,
+                constraints.maxHeight * 0.3,
               ),
               button: viewModel.pressButton,
             ),
-            const Spacer(),
+            const Spacer(flex: 2),
             IfHaveAnAccountButton(
               accountText: viewModel.constants.dontHaveAccount,
               fontSize: constraints.maxHeight * 0.075,
               nextPageButtonText: viewModel.constants.signUp,
               pathToPage: AppRoutes.register,
             ),
+            const Spacer(),
           ],
         );
       },

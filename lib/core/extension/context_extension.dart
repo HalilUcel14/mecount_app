@@ -7,7 +7,6 @@ extension LottieAssetExtension on String {
 }
 
 extension FirebaseUserExtension on BuildContext {
-  FirebaseAuthManager get _firebaseAuth => FirebaseAuthManager.instance;
   bool get isUserExist =>
       FirebaseAuthManager.auth.currentUser != null ? true : false;
 }

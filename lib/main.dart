@@ -72,8 +72,7 @@ MultiProvider _multiProvider() {
       StreamProvider(
         create: (_) => FirebaseAuth.instance.authStateChanges(),
         initialData: null,
-        catchError: (_, error) =>
-            error.toString().exceptionMode('Stream Provider Error'),
+        catchError: (_, error) => exceptionMode('Stream Provider Error $error'),
       ),
     ],
     child: const MyApp(),

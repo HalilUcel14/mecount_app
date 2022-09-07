@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:hucel_core/hucel_core.dart';
 
 import '../../../../../product/model/company_model.dart';
-import '../../../constants/home_constants.dart';
+import '../../../constants/product_constants.dart';
 
 class HomeCompanyList extends BaseStateless {
   HomeCompanyList({Key? key, required this.model}) : super(key: key);
   //
-  final HomeConstants constants = HomeConstants.instance;
+  final ProductScreenConstants constants = ProductScreenConstants.instance;
   final CompanyModel model;
   //
 

@@ -35,24 +35,26 @@ class DefaultContainerCreateScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: padding ?? context.padAllN,
-      constraints: constraints ??
-          BoxConstraints(
-              maxWidth:
-                  ResponsivityConstants.instance.mediumScreenSize.toDouble()),
-      alignment: alignment,
-      child: child,
-      clipBehavior: clipBehavior!,
-      color: color,
-      decoration: decoration,
-      foregroundDecoration: foregroundDecoration,
-      height: height,
-      key: key,
-      margin: margin,
-      transform: transform,
-      transformAlignment: transformAlignment,
-      width: width,
+    return Center(
+      child: Container(
+        padding: padding ?? context.padAllN,
+        constraints: constraints ??
+            BoxConstraints(
+                maxWidth:
+                    ResponsivityConstants.instance.mediumScreenSize.toDouble()),
+        alignment: alignment,
+        child: Center(child: child),
+        clipBehavior: clipBehavior!,
+        color: color,
+        decoration: decoration,
+        foregroundDecoration: foregroundDecoration,
+        height: height,
+        key: key,
+        margin: margin,
+        transform: transform,
+        transformAlignment: transformAlignment,
+        width: width,
+      ),
     );
   }
 }

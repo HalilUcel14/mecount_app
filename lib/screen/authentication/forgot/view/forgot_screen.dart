@@ -4,7 +4,6 @@ import 'package:hucel_core/hucel_core.dart';
 
 import '../../../../core/enum/asset_enum.dart';
 import '../../../../core/widget/animate_lottie_builder.dart';
-import '../../../../core/widget/default_container_screen_widget.dart';
 import '../view_model/forgot_viewmodel.dart';
 import 'components/forgot_button.dart';
 import 'components/forgot_form_field.dart';
@@ -41,7 +40,8 @@ class ForgotScreen extends BaseStateless {
 
   Widget _scaffold() {
     return Observer(builder: (context) {
-      return DefaultContainerCreateScreen(
+      return Container(
+        padding: context.padAllN,
         height: _context.height * 0.8,
         decoration: _forgotContainerDecoration(),
         child: _viewModel.isSuccess
@@ -54,10 +54,11 @@ class ForgotScreen extends BaseStateless {
   Column _column() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         _context.isKeyboardOpen
             ? const SizedBox()
-            : const Expanded(child: ForgotLottieImage()),
+            : const Expanded(child: ForgotLottieImage(), flex: 2),
         Expanded(child: _forgotTitleAndForm()),
         Expanded(child: ForgotButton(viewModel: _viewModel)),
       ],

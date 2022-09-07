@@ -57,10 +57,12 @@ enum AssetLottieEnum {
   contact,
   cycleBike,
   dayNight,
+  emailSend,
   errorPage,
   forgotPass,
-  succesfull,
   otpVerify,
+  succesfull,
+  support,
 
   // Function Başlatma Yeri
   ;

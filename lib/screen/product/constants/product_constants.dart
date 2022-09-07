@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hucel_core/hucel_core.dart';
 
-class HomeConstants {
-  static HomeConstants? _instance;
-  static HomeConstants get instance {
-    _instance ??= HomeConstants._init();
+class ProductScreenConstants {
+  static ProductScreenConstants? _instance;
+  static ProductScreenConstants get instance {
+    _instance ??= ProductScreenConstants._init();
     return _instance!;
   }
 
-  HomeConstants._init();
+  ProductScreenConstants._init();
 
   String isActiveText(bool value) => value ? 'Active' : 'Deactive';
 

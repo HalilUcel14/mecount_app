@@ -33,7 +33,7 @@ class AppRoutes {
     home: (context) => HomeScreen(),
     register: (context) => RegisterScreen(),
     forgot: (context) => ForgotScreen(),
-    verify: (context) => const VerifyScreen(),
+    verify: (context) => VerifyScreen(),
     authController: (context) => const AuthControllerWidget(),
   };
 }

@@ -46,6 +46,7 @@ class AuthencticationConstants {
   String forgotSubTitle = 'and we send a mail for your reset password';
 
   /// Verifiy
+  String resendEmail = 'Resend Email';
   String verifyTitle = 'Verification';
   String verifySubtitle =
       'Please enter your email\nto receive a verification link';

@@ -21,10 +21,10 @@ class RegisterButtons extends StatelessWidget {
         return Column(
           children: [
             _signButton(constraints, context),
-            const Spacer(flex: 3),
-            _dividerOrSign(constraints, context),
-            const Spacer(),
-            _socialButton(constraints, context),
+            // const Spacer(flex: 3),
+            // _dividerOrSign(constraints, context),
+            // const Spacer(),
+            // _socialButton(constraints, context),
             const Spacer(flex: 3),
             _alreadyHaveAccount(constraints, context),
           ],

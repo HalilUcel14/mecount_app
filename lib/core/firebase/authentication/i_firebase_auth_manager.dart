@@ -47,7 +47,6 @@ class FirebaseAuthManager implements IFirebaseAuthManager {
   ///
 
   /// For Firebase auth İnstanse
-  @override
   static late FirebaseAuth auth = FirebaseAuth.instance;
 
   /// auth için durum değişmeleri yakalanır.
@@ -126,7 +125,6 @@ class FirebaseAuthManager implements IFirebaseAuthManager {
     // Once signed in, return the UserCredential
 
     await auth.signInWithCredential(googleCredential);
-    //notifyListeners();
   }
 
   signInWithFacebook() async {
@@ -139,7 +137,6 @@ class FirebaseAuthManager implements IFirebaseAuthManager {
 
     // Once signed in, return the UserCredential
     await auth.signInWithCredential(facebookAuthCredential);
-    //notifyListeners();
   }
 
   signInWithTwitter() async {
@@ -160,7 +157,18 @@ class FirebaseAuthManager implements IFirebaseAuthManager {
 
     // Once signed in, return the UserCredential
     await auth.signInWithCredential(twitterAuthCredential);
-    //notifyListeners();
+  }
+
+  signINWithPhoneNumber(String? phoneNumber) async {
+    auth.verifyPhoneNumber(
+      phoneNumber: phoneNumber,
+      verificationCompleted: (phone) {},
+      verificationFailed: (e) {
+        loginCatchError = 'Verification is Failed';
+      },
+      codeSent: (String? verification, int? value) {},
+      codeAutoRetrievalTimeout: (text) {},
+    );
   }
 
   getAnonymousCredential() async {

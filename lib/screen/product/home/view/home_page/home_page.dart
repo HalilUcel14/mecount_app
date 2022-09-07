@@ -3,15 +3,15 @@ import 'package:hucel_core/hucel_core.dart';
 import 'package:hucel_widget/hucel_widget.dart';
 
 import '../../../../../product/model/company_model.dart';
+import '../../../constants/product_constants.dart';
 import '../../viewmodel/home_view_model.dart';
-import '../../../constants/home_constants.dart';
 import 'home_company_list.dart';
 
 class HomeViewPage extends StatelessWidget {
   HomeViewPage({Key? key}) : super(key: key);
   //
   final HomeScreenViewModel viewModel = HomeScreenViewModel();
-  final HomeConstants constants = HomeConstants.instance;
+  final ProductScreenConstants constants = ProductScreenConstants.instance;
   //
   @override
   Widget build(BuildContext context) {

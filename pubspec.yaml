@@ -43,7 +43,7 @@ dependencies:
   flutter_mobx: ^2.0.6+1
   ##
   ## Halil Ücel Packages
-  hucel_core: ^0.2.4
+  hucel_core: ^0.2.5
   hucel_widget: ^0.0.9
   ##
   ## Firebase Packages

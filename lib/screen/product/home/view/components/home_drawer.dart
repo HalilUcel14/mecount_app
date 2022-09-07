@@ -1,9 +1,8 @@
-import 'package:account_app/core/extension/context_extension.dart';
-import 'package:account_app/core/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:hucel_core/hucel_core.dart';
 
-import '../../../detail/detail_screen.dart';
+import '../../../../../core/extension/context_extension.dart';
+import '../../../../../core/routes/app_routes.dart';
 import '../../viewmodel/home_view_model.dart';
 
 class HomeDrawerLayout extends StatelessWidget {
@@ -71,9 +70,7 @@ class HomeDrawerLayout extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.favorite_border),
             title: const Text('Favourites'),
-            onTap: () {
-              context.push(const DetailScreen());
-            },
+            onTap: () {},
           ),
           ListTile(
             leading: const Icon(Icons.workspaces_outline),

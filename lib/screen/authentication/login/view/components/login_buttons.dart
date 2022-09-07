@@ -22,11 +22,11 @@ class LoginFormButtons extends StatelessWidget {
             const Spacer(flex: 2),
             _signinButton(constraints, context),
             // ------ Or ----- Bölümü
-            const Spacer(flex: 5),
-            _dividerOrSign(constraints, context),
-            // Social Button Login
-            const Spacer(flex: 1),
-            _socialButton(constraints, context),
+            // const Spacer(flex: 5),
+            // _dividerOrSign(constraints, context),
+            // // Social Button Login
+            // const Spacer(flex: 1),
+            // _socialButton(constraints, context),
             const Spacer(flex: 6),
             // Dont Have Account
             _dontHaveAccount(constraints, context),

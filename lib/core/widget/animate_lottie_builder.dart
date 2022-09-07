@@ -43,17 +43,20 @@ class _AnimatedLottieBuilderState extends State<AnimatedLottieBuilder>
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Lottie.asset(
+    return LayoutBuilder(builder: (context, constraints) {
+      return Lottie.asset(
         widget.iconPath,
         fit: BoxFit.cover,
         // default olarak true gelir animasyon durdurma oynatma,
+        height: constraints.maxHeight,
+        width: constraints.maxWidth,
+
         animate: true,
         onLoaded: (composition) {
           lottieController.duration = composition.duration;
           lottieController.forward();
         },
-      ),
-    );
+      );
+    });
   }
 }

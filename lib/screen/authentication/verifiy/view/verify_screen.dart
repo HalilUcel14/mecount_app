@@ -1,81 +1,56 @@
-import 'dart:async';
+// ignore_for_file: must_be_immutable, unused_field
 
+import 'package:account_app/core/enum/asset_enum.dart';
+import 'package:account_app/core/widget/animate_lottie_builder.dart';
+import 'package:account_app/screen/authentication/verifiy/view/components/verify_buttons.dart';
+import 'package:account_app/screen/authentication/verifiy/view/components/verify_text_message.dart';
 import 'package:flutter/material.dart';
 import 'package:hucel_core/hucel_core.dart';
 
-import '../../../../core/firebase/authentication/i_firebase_auth_manager.dart';
-import '../../../../core/routes/app_routes.dart';
+import '../../../../core/widget/default_container_screen_widget.dart';
 import '../view_model/verify_viewmodel.dart';
-import 'components/verify_buttons.dart';
-import 'components/verify_logo_and_title.dart';
 
-class VerifyScreen extends StatefulWidget {
-  const VerifyScreen({Key? key}) : super(key: key);
-
-  @override
-  State<VerifyScreen> createState() => _VerifyScreenState();
-}
-
-class _VerifyScreenState extends State<VerifyScreen> {
-  //
-  bool isEmailVerified = false;
-  late final FirebaseAuthManager authManager;
-  Timer? timer;
-  final VerifyScreenViewModel viewModel = VerifyScreenViewModel();
-
-  @override
-  void initState() async {
-    authManager = FirebaseAuthManager.instance;
-    isEmailVerified = authManager.currentUser!.emailVerified;
-
-    if (!isEmailVerified) {
-      sendEmailValid;
-      //
-      timer = Timer.periodic(
-        const Duration(seconds: 3),
-        (_) => checkEmailVerified,
-      );
-    }
-
-    //
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
-  }
-
-  Future checkEmailVerified() async {
-    await authManager.currentUser!.reload();
-    setState(() {
-      isEmailVerified = authManager.currentUser!.emailVerified;
-    });
-
-    if (isEmailVerified) timer?.cancel();
-  }
-
-  void sendEmailValid() {
-    try {
-      authManager.verifyUserEmail();
-    } catch (e) {
-      ''.exceptionMode('$e');
-    }
-  }
-
+class VerifyScreen extends BaseStateless {
+  VerifyScreen({Key? key}) : super(key: key);
+  late VerifyScreenViewModel _viewModel;
+  late BuildContext _context;
   @override
   Widget build(BuildContext context) {
-    if (isEmailVerified) {
-      context.pushNameAndRemoveUntil(AppRoutes.home);
-      return Container();
-    } else {
-      return Column(
-        children: [
-          Expanded(child: VerifyLogoAndTitle(viewModel: viewModel)),
-          Expanded(child: VerifyButtons(viewModel: viewModel)),
-        ],
-      );
-    }
+    return BaseView<VerifyScreenViewModel>(
+      viewModel: VerifyScreenViewModel(),
+      onModelReady: (model) {
+        model.setContext(context);
+        model.init();
+      },
+      onPageBuilder: (BuildContext context, VerifyScreenViewModel viewModel) {
+        _viewModel = viewModel;
+        _context = context;
+        return _scaffold();
+      },
+      onDispose: () {
+        _viewModel.buttonTimer?.cancel();
+      },
+    );
   }
+
+  Scaffold _scaffold() => Scaffold(
+        body: DefaultContainerCreateScreen(
+          child: SafeArea(
+            child: Column(
+              children: [
+                Expanded(
+                  child: AnimatedLottieBuilder(
+                      iconPath: AssetLottieEnum.emailSend.path),
+                  flex: 2,
+                ),
+                Expanded(
+                  child: VerifyTextColumn(viewModel: _viewModel),
+                  flex: 2,
+                ),
+                Expanded(child: VerifyButtons(viewModel: _viewModel)),
+              ],
+            ),
+          ),
+        ),
+      );
 }

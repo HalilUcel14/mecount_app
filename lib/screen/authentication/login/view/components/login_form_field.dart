@@ -67,17 +67,6 @@ class LoginFormField extends StatelessWidget {
             context,
             child: ForgotScreen(baseEmailAddress: viewModel.emailText),
           );
-          // showModalBottomSheet(
-          //   isScrollControlled: true,
-          //   context: context,
-          //   shape: OutlineInputBorder(
-          //     borderRadius: BorderRadius.only(
-          //       topLeft: Radius.circular(context.height * 0.05),
-          //       topRight: Radius.circular(context.height * 0.05),
-          //     ),
-          //   ),
-          //   builder: (_) => ForgotScreen(baseEmailAddress: viewModel.emailText),
-          // );
         },
         child: Text(
           viewModel.constants.forgot,
