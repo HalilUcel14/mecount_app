@@ -1,3 +1,4 @@
+import 'package:account_app/core/function/default_values_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:hucel_core/hucel_core.dart';
 
@@ -38,10 +39,7 @@ class DefaultContainerCreateScreen extends StatelessWidget {
     return Center(
       child: Container(
         padding: padding ?? context.padAllN,
-        constraints: constraints ??
-            BoxConstraints(
-                maxWidth:
-                    ResponsivityConstants.instance.mediumScreenSize.toDouble()),
+        constraints: constraints ?? DefaultValuesOfWidget().authConstraints,
         alignment: alignment,
         child: Center(child: child),
         clipBehavior: clipBehavior!,

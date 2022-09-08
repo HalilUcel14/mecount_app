@@ -1,19 +1,61 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-class AnimatedLottieBuilder extends StatefulWidget {
-  const AnimatedLottieBuilder({
+class AnimatedLottieAssetBuilder extends StatefulWidget {
+  const AnimatedLottieAssetBuilder({
     Key? key,
     required this.iconPath,
+    this.controller,
+    this.animate = true,
+    this.frameRate,
+    this.repeat,
+    this.reverse,
+    this.delegates,
+    this.options,
+    this.onLoaded,
+    this.imageProviderFactory,
+    this.bundle,
+    this.frameBuilder,
+    this.errorBuilder,
+    this.width,
+    this.height,
+    this.fit = BoxFit.cover,
+    this.alignment,
+    this.package,
+    this.addRepaintBoundary,
+    this.filterQuality,
+    this.onWarning,
   }) : super(key: key);
 
   final String iconPath;
 
+  final Animation<double>? controller;
+  final bool? animate;
+  final FrameRate? frameRate;
+  final bool? repeat;
+  final bool? reverse;
+  final LottieDelegates? delegates;
+  final LottieOptions? options;
+  final void Function(LottieComposition)? onLoaded;
+  final ImageProvider<Object>? Function(LottieImageAsset)? imageProviderFactory;
+  final AssetBundle? bundle;
+  final Widget Function(BuildContext, Widget, LottieComposition?)? frameBuilder;
+  final Widget Function(BuildContext, Object, StackTrace?)? errorBuilder;
+  final double? width;
+  final double? height;
+  final BoxFit? fit;
+  final AlignmentGeometry? alignment;
+  final String? package;
+  final bool? addRepaintBoundary;
+  final FilterQuality? filterQuality;
+  final void Function(String)? onWarning;
+
   @override
-  State<AnimatedLottieBuilder> createState() => _AnimatedLottieBuilderState();
+  State<AnimatedLottieAssetBuilder> createState() =>
+      _AnimatedLottieAssetBuilderState();
 }
 
-class _AnimatedLottieBuilderState extends State<AnimatedLottieBuilder>
+class _AnimatedLottieAssetBuilderState extends State<AnimatedLottieAssetBuilder>
     with SingleTickerProviderStateMixin {
   late AnimationController lottieController;
 
@@ -46,16 +88,32 @@ class _AnimatedLottieBuilderState extends State<AnimatedLottieBuilder>
     return LayoutBuilder(builder: (context, constraints) {
       return Lottie.asset(
         widget.iconPath,
-        fit: BoxFit.cover,
+        fit: widget.fit,
         // default olarak true gelir animasyon durdurma oynatma,
-        height: constraints.maxHeight,
-        width: constraints.maxWidth,
+        height: widget.height ?? constraints.maxHeight,
+        width: widget.width ?? constraints.maxWidth,
 
-        animate: true,
-        onLoaded: (composition) {
-          lottieController.duration = composition.duration;
-          lottieController.forward();
-        },
+        animate: widget.animate,
+        onLoaded: widget.onLoaded ??
+            (composition) {
+              lottieController.duration = composition.duration;
+              lottieController.forward();
+            },
+        addRepaintBoundary: widget.addRepaintBoundary,
+        alignment: widget.alignment,
+        bundle: widget.bundle,
+        controller: widget.controller,
+        delegates: widget.delegates,
+        errorBuilder: widget.errorBuilder,
+        filterQuality: widget.filterQuality,
+        frameBuilder: widget.frameBuilder,
+        frameRate: widget.frameRate,
+        imageProviderFactory: widget.imageProviderFactory,
+        onWarning: widget.onWarning,
+        options: widget.options,
+        package: widget.package,
+        repeat: widget.repeat,
+        reverse: widget.reverse,
       );
     });
   }

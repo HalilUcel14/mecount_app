@@ -39,7 +39,7 @@ class VerifyScreen extends BaseStateless {
             child: Column(
               children: [
                 Expanded(
-                  child: AnimatedLottieBuilder(
+                  child: AnimatedLottieAssetBuilder(
                       iconPath: AssetLottieEnum.emailSend.path),
                   flex: 2,
                 ),

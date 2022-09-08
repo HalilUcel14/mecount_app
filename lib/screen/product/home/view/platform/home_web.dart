@@ -13,6 +13,7 @@ class HomeViewDesktopWeb extends StatelessWidget {
       body: Row(
         children: [
           HomeDrawerLayout(),
+          Container(),
         ],
       ),
     );

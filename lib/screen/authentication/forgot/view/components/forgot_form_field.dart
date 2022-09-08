@@ -7,31 +7,38 @@ import '../../view_model/forgot_viewmodel.dart';
 
 class ForgotFormField extends StatelessWidget {
   const ForgotFormField(
-      {Key? key, required this.viewModel, this.baseEmailAddress})
+      {Key? key,
+      required this.viewModel,
+      this.baseEmailAddress,
+      required this.maxContainerHeight})
       : super(key: key);
 
   final ForgotScreenViewModel viewModel;
   final String? baseEmailAddress;
+  final double maxContainerHeight;
 
   @override
   Widget build(BuildContext context) {
     viewModel.emailController.text = baseEmailAddress ?? '';
     return Form(
       key: viewModel.formKey,
-      child: SpecialTextFormField(
-        defaultHeight: context.height * 0.1,
-        keyboardType: TextInputType.emailAddress,
-        labelText: viewModel.constants.emailLabelText,
-        labelStyle: context.textTheme.bodyText1?.copyWith(
-          color: context.theme.primaryColorDark,
+      child: Padding(
+        padding: context.padHorizontalN,
+        child: SpecialTextFormField(
+          defaultHeight: maxContainerHeight * 0.15,
+          keyboardType: TextInputType.emailAddress,
+          labelText: viewModel.constants.emailLabelText,
+          labelStyle: context.textTheme.bodyText1?.copyWith(
+            color: context.theme.primaryColorDark,
+          ),
+          hintText: viewModel.constants.emailHintText,
+          hintStyle: context.textTheme.bodyText1?.copyWith(
+            color: context.theme.primaryColorDark,
+          ),
+          logoIconName: AssetIcon.mail.string,
+          controller: viewModel.emailController,
+          onSaved: (value) => viewModel.changeEmailText(value ?? ''),
         ),
-        hintText: viewModel.constants.emailHintText,
-        hintStyle: context.textTheme.bodyText1?.copyWith(
-          color: context.theme.primaryColorDark,
-        ),
-        logoIconName: AssetIcon.mail.string,
-        controller: viewModel.emailController,
-        onSaved: (value) => viewModel.changeEmailText(value ?? ''),
       ),
     );
   }

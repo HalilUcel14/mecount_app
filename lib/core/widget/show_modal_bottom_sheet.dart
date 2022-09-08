@@ -1,11 +1,11 @@
+import 'package:account_app/core/function/default_values_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:hucel_core/hucel_core.dart';
 
 class CustomShowModelBottomSheet {
   Future<void> sheet(BuildContext context, {required Widget child}) {
     return showModalBottomSheet(
-      constraints: BoxConstraints(
-          maxWidth: ResponsivityConstants.instance.mediumScreenSize.toDouble()),
+      constraints: DefaultValuesOfWidget().authConstraints,
       isScrollControlled: true,
       context: context,
       shape: OutlineInputBorder(

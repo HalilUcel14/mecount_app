@@ -30,7 +30,6 @@ class LoginScreen extends BaseStateless {
       onDispose: () {
         _viewModel.passController.dispose();
         _viewModel.emailController.dispose();
-
         _viewModel.emailFocus.dispose();
         _viewModel.passFocus.dispose();
       },

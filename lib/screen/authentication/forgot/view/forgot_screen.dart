@@ -40,27 +40,40 @@ class ForgotScreen extends BaseStateless {
 
   Widget _scaffold() {
     return Observer(builder: (context) {
+      double containerMaxHeight = _context.height * 0.8;
       return Container(
         padding: context.padAllN,
-        height: _context.height * 0.8,
+        height: containerMaxHeight,
         decoration: _forgotContainerDecoration(),
         child: _viewModel.isSuccess
-            ? AnimatedLottieBuilder(iconPath: AssetLottieEnum.succesfull.path)
-            : _column(),
+            ? _lottieColumn()
+            : _column(containerMaxHeight),
       );
     });
   }
 
-  Column _column() {
+  Widget _lottieColumn() {
+    return Container(
+      child: AnimatedLottieAssetBuilder(
+        iconPath: AssetLottieEnum.succesfull.path,
+      ),
+    );
+  }
+
+  Column _column(double containerMaxHeight) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         _context.isKeyboardOpen
-            ? const SizedBox()
-            : const Expanded(child: ForgotLottieImage(), flex: 2),
-        Expanded(child: _forgotTitleAndForm()),
-        Expanded(child: ForgotButton(viewModel: _viewModel)),
+            ? const SizedBox.shrink()
+            : Expanded(
+                child:
+                    ForgotLottieImage(maxContainerHeight: containerMaxHeight)),
+        Expanded(child: _forgotTitleAndForm(containerMaxHeight)),
+        Expanded(
+            child: ForgotButton(
+                viewModel: _viewModel, maxContainerHeight: containerMaxHeight)),
       ],
     );
   }
@@ -75,14 +88,15 @@ class ForgotScreen extends BaseStateless {
     );
   }
 
-  Column _forgotTitleAndForm() {
+  Column _forgotTitleAndForm(double containerMaxHeight) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         ForgotTitleSubTitle(viewModel: _viewModel),
         ForgotFormField(
           viewModel: _viewModel,
           baseEmailAddress: baseEmailAddress,
+          maxContainerHeight: containerMaxHeight,
         ),
       ],
     );
